@@ -1,24 +1,17 @@
 <?xml version="1.0"?>
-<rss version="2.0">
-    <channel>
-        <title>超算之路</title>
-        <link>http://example.com</link>
-        <description>记录从0开始的超算学习之路</description>
-        <language>zh-CN</language>
-        <pubDate>Sun, 08 Sep 2024 23:13:23 +0800</pubDate>
-        <lastBuildDate>Sun, 08 Sep 2024 23:13:23 +0800</lastBuildDate>
-        <category>Linux</category>
-        <category>vim程序编辑器</category>
-        <category>高性能计算</category>
-        <item>
-            <guid isPermalink="true">http://example.com/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/</guid>
-            <title>Linux基础（1）：vim程序编辑器</title>
-            <link>http://example.com/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/</link>
-            <category>Linux</category>
-            <category>vim程序编辑器</category>
-            <category>高性能计算</category>
-            <pubDate>Sun, 08 Sep 2024 23:13:23 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Linux的熟练应用对高性能计算领域而言是非常重要的，由于博主已自学过一点点Linux的基本命令，故本文将直接从vim程序编辑器开始记录学习，在学习的过程中夯实基本命令。在此，也默认虚拟机等必要环境都已配备完毕，接下来我将以VMware虚拟机环境下的CentOS 7系统为例，并搭配MobaXterm远程计算工具箱进行学习。本博客的参考资料为鸟哥的《Linux私房菜：基础版》以及黑马程序员的Linux课程笔记（主要用于基本命令的查阅）。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://example.com</id>
+    <title>超算之路 • Posts by &#34;linux&#34; tag</title>
+    <link href="http://example.com" />
+    <updated>2024-09-08T15:13:23.000Z</updated>
+    <category term="Linux" />
+    <category term="vim程序编辑器" />
+    <category term="高性能计算" />
+    <entry>
+        <id>http://example.com/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/</id>
+        <title>Linux基础（1）：vim程序编辑器</title>
+        <link rel="alternate" href="http://example.com/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/"/>
+        <content type="html">&lt;p&gt;Linux的熟练应用对高性能计算领域而言是非常重要的，由于博主已自学过一点点Linux的基本命令，故本文将直接从vim程序编辑器开始记录学习，在学习的过程中夯实基本命令。在此，也默认虚拟机等必要环境都已配备完毕，接下来我将以VMware虚拟机环境下的CentOS 7系统为例，并搭配MobaXterm远程计算工具箱进行学习。本博客的参考资料为鸟哥的《Linux私房菜：基础版》以及黑马程序员的Linux课程笔记（主要用于基本命令的查阅）。&lt;/p&gt;
 &lt;h1 id=&#34;vim程序编辑器&#34;&gt;&lt;a href=&#34;#vim程序编辑器&#34; class=&#34;headerlink&#34; title=&#34;vim程序编辑器&#34;&gt;&lt;/a&gt;vim程序编辑器&lt;/h1&gt;&lt;h2 id=&#34;三种工作模式&#34;&gt;&lt;a href=&#34;#三种工作模式&#34; class=&#34;headerlink&#34; title=&#34;三种工作模式&#34;&gt;&lt;/a&gt;三种工作模式&lt;/h2&gt;&lt;p&gt;我们将以test.txt文件为例，介绍vi的三种模式，首先我们进入文档文件夹，新建一个test.txt的文件。&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://i-blog.csdnimg.cn/direct/af908313fe0a4148820cdb32a147f2da.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;①指令模式（command mode）&lt;/p&gt;
@@ -67,7 +60,10 @@
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://i-blog.csdnimg.cn/direct/244212c508d646b897a83faf46599f03.png&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;挑字补全功能&#34;&gt;&lt;a href=&#34;#挑字补全功能&#34; class=&#34;headerlink&#34; title=&#34;挑字补全功能&#34;&gt;&lt;/a&gt;挑字补全功能&lt;/h4&gt;&lt;p&gt; 其功能表如下图所示，因bash自带补全一键补全功能，在此不再赘述O(∩_∩)O~~&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://i-blog.csdnimg.cn/direct/8e6472fb2a914318a2f5e1806e1ecaa0.png&#34;&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-    </channel>
-</rss>
+</content>
+        <category term="Linux" />
+        <category term="vim程序编辑器" />
+        <category term="高性能计算" />
+        <updated>2024-09-08T15:13:23.000Z</updated>
+    </entry>
+</feed>
