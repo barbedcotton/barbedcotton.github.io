@@ -5,11 +5,23 @@
         <link>http://example.com</link>
         <description>记录从0开始的超算学习之路</description>
         <language>zh-CN</language>
-        <pubDate>Sun, 08 Sep 2024 23:13:23 +0800</pubDate>
-        <lastBuildDate>Sun, 08 Sep 2024 23:13:23 +0800</lastBuildDate>
+        <pubDate>Mon, 16 Sep 2024 16:43:14 +0800</pubDate>
+        <lastBuildDate>Mon, 16 Sep 2024 16:43:14 +0800</lastBuildDate>
         <category>Linux</category>
         <category>vim程序编辑器</category>
         <category>高性能计算</category>
+        <item>
+            <guid isPermalink="true">http://example.com/2024/09/16/%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E8%B6%85%E7%AE%97%E7%8E%AF%E5%A2%83/</guid>
+            <title>前置准备：如何快速配置超算环境</title>
+            <link>http://example.com/2024/09/16/%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E8%B6%85%E7%AE%97%E7%8E%AF%E5%A2%83/</link>
+            <pubDate>Mon, 16 Sep 2024 16:43:14 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;cuda的安装&#34;&gt;&lt;a href=&#34;#cuda的安装&#34; class=&#34;headerlink&#34; title=&#34;cuda的安装&#34;&gt;&lt;/a&gt;cuda的安装&lt;/h1&gt;&lt;h2 id=&#34;确认系统信息&#34;&gt;&lt;a href=&#34;#确认系统信息&#34; class=&#34;headerlink&#34; title=&#34;确认系统信息&#34;&gt;&lt;/a&gt;确认系统信息&lt;/h2&gt;&lt;p&gt;当拿到一个服务器时，最重要的就是先确定该服务器的系统信息，我们首先要执行&lt;code&gt;cat /etc/issue&lt;/code&gt;查看版本当前操作系统发行版信息。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%AC%E5%8F%B7%E4%BF%A1%E6%81%AF.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;由此可知我们接下来将使用Ubantu系统的相关语法来进行操作。接下来我们执行&lt;code&gt;nvidia-smi&lt;/code&gt;来查看 GPU 支持的最高 CUDA 版本。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E6%98%BE%E5%8D%A1%E6%94%AF%E6%8C%81%E4%BF%A1%E6%81%AF.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;笔者这里显示的是 12.4 ，这意味着，安装的 CUDA 版本必须 &amp;lt;&amp;#x3D; 12.4 。&lt;/p&gt;
+&lt;h2 id=&#34;&#34;&gt;&lt;a href=&#34;#&#34; class=&#34;headerlink&#34; title=&#34;&#34;&gt;&lt;/a&gt;&lt;/h2&gt; ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://example.com/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/</guid>
             <title>Linux基础（1）：vim程序编辑器</title>
