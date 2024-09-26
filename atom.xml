@@ -3,21 +3,145 @@
     <id>http://example.com</id>
     <title>超算之路</title>
     <link href="http://example.com" />
-    <updated>2024-09-16T08:43:14.000Z</updated>
+    <updated>2024-09-16T14:37:35.000Z</updated>
     <category term="Linux" />
     <category term="vim程序编辑器" />
     <category term="高性能计算" />
     <entry>
-        <id>http://example.com/2024/09/16/%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E8%B6%85%E7%AE%97%E7%8E%AF%E5%A2%83/</id>
-        <title>前置准备：如何快速配置超算环境</title>
-        <link rel="alternate" href="http://example.com/2024/09/16/%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E8%B6%85%E7%AE%97%E7%8E%AF%E5%A2%83/"/>
-        <content type="html">&lt;h1 id=&#34;cuda的安装&#34;&gt;&lt;a href=&#34;#cuda的安装&#34; class=&#34;headerlink&#34; title=&#34;cuda的安装&#34;&gt;&lt;/a&gt;cuda的安装&lt;/h1&gt;&lt;h2 id=&#34;确认系统信息&#34;&gt;&lt;a href=&#34;#确认系统信息&#34; class=&#34;headerlink&#34; title=&#34;确认系统信息&#34;&gt;&lt;/a&gt;确认系统信息&lt;/h2&gt;&lt;p&gt;当拿到一个服务器时，最重要的就是先确定该服务器的系统信息，我们首先要执行&lt;code&gt;cat /etc/issue&lt;/code&gt;查看版本当前操作系统发行版信息。&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%AC%E5%8F%B7%E4%BF%A1%E6%81%AF.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;由此可知我们接下来将使用Ubantu系统的相关语法来进行操作。接下来我们执行&lt;code&gt;nvidia-smi&lt;/code&gt;来查看 GPU 支持的最高 CUDA 版本。&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E6%98%BE%E5%8D%A1%E6%94%AF%E6%8C%81%E4%BF%A1%E6%81%AF.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;笔者这里显示的是 12.4 ，这意味着，安装的 CUDA 版本必须 &amp;lt;&amp;#x3D; 12.4 。&lt;/p&gt;
-&lt;h2 id=&#34;&#34;&gt;&lt;a href=&#34;#&#34; class=&#34;headerlink&#34; title=&#34;&#34;&gt;&lt;/a&gt;&lt;/h2&gt;</content>
-        <updated>2024-09-16T08:43:14.000Z</updated>
+        <id>http://example.com/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/</id>
+        <title>超算真题一：OpenCAEPoro的优化</title>
+        <link rel="alternate" href="http://example.com/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/"/>
+        <content type="html">&lt;h1 id=&#34;赛题编译&#34;&gt;&lt;a href=&#34;#赛题编译&#34; class=&#34;headerlink&#34; title=&#34;赛题编译&#34;&gt;&lt;/a&gt;赛题编译&lt;/h1&gt;&lt;p&gt;在正式开始之前，我尝试配置cuda、git等环境，但都因权限受限没有成功。于是这里直接使用原有的&lt;strong&gt;cuda_12.2&lt;/strong&gt;以及windows本地的&lt;strong&gt;git bash&lt;/strong&gt;，整个克隆、编译及优化过程都是通过 &lt;strong&gt;MobaXterm&lt;/strong&gt; 完成的，这里也非常推荐大家使用这款免费且功能强大的远程终端控制软件。这也是我在个人博客网站利用 &lt;strong&gt;markdown&lt;/strong&gt; 写的第一篇博客，欢迎大家留言讨论！&lt;/p&gt;
+&lt;h2 id=&#34;一、赛题克隆&#34;&gt;&lt;a href=&#34;#一、赛题克隆&#34; class=&#34;headerlink&#34; title=&#34;一、赛题克隆&#34;&gt;&lt;/a&gt;一、赛题克隆&lt;/h2&gt;&lt;p&gt;首先我们进入项目主页：&lt;a href=&#34;https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024&#34;&gt;OpenCAEPoro for ASC 2024 &lt;/a&gt;，之后进行下图选择复制该项目的URL。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;D:\HexoBlog\blog\source\imgs\OpenCAEPoro\项目url.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;完成后，在本地新建一个文件夹，并在此文件夹内启动 &lt;strong&gt;git bash&lt;/strong&gt; 输入&lt;code&gt;git init&lt;/code&gt;初始化项目，之后执行如下命令进行项目的克隆（克隆其他项目时只需要更换URL即可）：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;git clone https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;克隆成功后如下图所示（PS：末尾加的&lt;code&gt;--depth 1&lt;/code&gt;是为了加速 clone ，此项目无需历史版本及更新，因此可进行此操作加快克隆）&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E5%85%8B%E9%9A%86%E6%88%90%E5%8A%9F.png&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;二、依赖安装及环境配置&#34;&gt;&lt;a href=&#34;#二、依赖安装及环境配置&#34; class=&#34;headerlink&#34; title=&#34;二、依赖安装及环境配置&#34;&gt;&lt;/a&gt;二、依赖安装及环境配置&lt;/h2&gt;&lt;h3 id=&#34;（1）创建目录&#34;&gt;&lt;a href=&#34;#（1）创建目录&#34; class=&#34;headerlink&#34; title=&#34;（1）创建目录&#34;&gt;&lt;/a&gt;（1）创建目录&lt;/h3&gt;&lt;p&gt;首先我们在用户 home 目录下创建一个名为 &lt;strong&gt;OpenCAEPoro&lt;/strong&gt; 的父文件夹，用于存储本项目的所有文件，并在此基础上下设两个子文件夹：&lt;strong&gt;libraries&lt;/strong&gt; 用于存储依赖， &lt;strong&gt;src&lt;/strong&gt; 用于存储源码（后续发现解压 OpenCAEPoro 后，其解压目录下自带 src 文件夹，故后续删除了父目录下的 src 文件夹。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;mkdir OpenCAEPoro &amp;amp;&amp;amp; cd OpenCAEPoro
+mkdir libraries src
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;之后通过 &lt;strong&gt;MobaXterm&lt;/strong&gt; 将所需依赖移动到 &lt;strong&gt;libraries&lt;/strong&gt; 下，OpenCAEPoro的安装包直接放在父文件夹下。然后来到 &lt;strong&gt;libraries&lt;/strong&gt; 文件夹，依次解压依赖安装包以方便下面进行安装。 同时直接在 &lt;strong&gt;OpenCAEPoro&lt;/strong&gt; 的父文件夹下解压OpenCAEPoro。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;tar zxvf hypre-2.28.0.tar.gz
+tar zxvf parmetis-4.0.3.tar.gz
+tar zxvf petsc_solver.tar.gz
+tar zxvf lapack-3.11.tar.gz
+tar zxvf petsc-3.19.3.tar.gz
+cd ..
+tar zxvf OpenCAEPoro.tar.gz 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;（2）环境配置&#34;&gt;&lt;a href=&#34;#（2）环境配置&#34; class=&#34;headerlink&#34; title=&#34;（2）环境配置&#34;&gt;&lt;/a&gt;（2）环境配置&lt;/h3&gt;&lt;h4 id=&#34;①oneapi2024-0的环境配置&#34;&gt;&lt;a href=&#34;#①oneapi2024-0的环境配置&#34; class=&#34;headerlink&#34; title=&#34;①oneapi2024.0的环境配置&#34;&gt;&lt;/a&gt;①oneapi2024.0的环境配置&lt;/h4&gt;&lt;p&gt;&lt;u&gt;注：根据oneapi官网的&lt;a href=&#34;https://www.intel.com/content/www/us/en/developer/articles/release-notes/oneapi-c-compiler-release-notes.html&#34;&gt;更新公告&lt;/a&gt;, icc，icpc在2023.2月之后的版本被废弃，取而代之的是icx&lt;/u&gt;。而服务器的MPI是2021版的，但是Compiler是2024版的,而MPI里面的程序用到了Compiler里的icc，于是这里不得不使用老版本的oneapi进行配置，请点此跳转：&lt;a href=&#34;#%E2%91%A1oneapi2022.2%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&#34;&gt;旧版本oneapi配置&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我的用户所在目录自带 &lt;strong&gt;cmake3.22.1&lt;/strong&gt; ，所以这里主要进行 &lt;strong&gt;oneapi&lt;/strong&gt; 的环境配置。其实这里不需要自己重新下载安装的，直接在服务器的根目录下找到 &lt;strong&gt;oneapi&lt;/strong&gt; 的安装位置即可（绝大多数位置都是一样的）。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd /opt/intel/oneapi &amp;amp;&amp;amp; ls
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;执行上文指令后即可看到我们服务器配置了2024最新版的oneapi，其中的 &lt;strong&gt;setvars.sh&lt;/strong&gt; 文件&lt;strong&gt;包含了所安装的所有oneAPI工具包的环境变量&lt;/strong&gt;。确定好环境变量所在的位置，我们接下来进行配置即可。执行&lt;code&gt;vi ~/.bashrc&lt;/code&gt;，并在文件末尾添加如下语句（将 &lt;code&gt;xxx&lt;/code&gt; 改为你的用户名）&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;source /opt/intel/oneapi/setvars.sh intel64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;退出保存后再执行&lt;code&gt;source ~/.bashrc&lt;/code&gt;使环境变量立即生效即可，之后执行如下指令进行环境测试。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;icx -v
+gdb-oneapi -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如下图一样正常回显版本信息即为配置成功！&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240921174711807.png&#34; alt=&#34;image-20240921174711807&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;②oneapi2022-2的环境配置&#34;&gt;&lt;a href=&#34;#②oneapi2022-2的环境配置&#34; class=&#34;headerlink&#34; title=&#34;②oneapi2022.2的环境配置&#34;&gt;&lt;/a&gt;②oneapi2022.2的环境配置&lt;/h4&gt;&lt;p&gt;首先执行以下命令进行安装包的下载及安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;wget https://registrationcenter-download.intel.com/akdlm/irc_nas/18679/l_HPCKit_p_2022.2.0.191_offline.sh
+sh l_HPCKit_p_2022.2.0.191_offline.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;当然这里也可以直接先下载到本地，再直接传到服务器上进行安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd ~/intel/oneapi &amp;amp;&amp;amp; ls
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;执行以上指令后即可看到我们刚刚安装好的2022.2版本的oneapi，其中的 &lt;strong&gt;setvars.sh&lt;/strong&gt; 文件&lt;strong&gt;包含了所安装的所有oneAPI工具包的环境变量&lt;/strong&gt;。确定好环境变量所在的位置，我们接下来进行配置即可。执行&lt;code&gt;vi ~/.bashrc&lt;/code&gt;，并在文件末尾添加如下语句（将 &lt;code&gt;xxx&lt;/code&gt; 改为你的用户名）。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;source /home/xxx/intel/oneapi/setvars.sh intel64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;退出保存后再执行&lt;code&gt;source ~/.bashrc&lt;/code&gt;使环境变量立即生效即可，之后执行如下指令进行环境测试。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;icx -v
+gdb-oneapi -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如下图一样正常回显版本信息即为配置成功！&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240921204248392.png&#34; alt=&#34;image-20240921204248392&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;（3）依赖安装&#34;&gt;&lt;a href=&#34;#（3）依赖安装&#34; class=&#34;headerlink&#34; title=&#34;（3）依赖安装&#34;&gt;&lt;/a&gt;（3）依赖安装&lt;/h3&gt;&lt;h4 id=&#34;①lapack安装&#34;&gt;&lt;a href=&#34;#①lapack安装&#34; class=&#34;headerlink&#34; title=&#34;①lapack安装&#34;&gt;&lt;/a&gt;①lapack安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd lapack-3.11
+make blaslib
+make cblaslib
+make lapacklib
+make lapackelib
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;②parmetis安装&#34;&gt;&lt;a href=&#34;#②parmetis安装&#34; class=&#34;headerlink&#34; title=&#34;②parmetis安装&#34;&gt;&lt;/a&gt;②parmetis安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd parmetis-4.0.3
+vim build-parmetis.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+make configcc=mpiicc prefix=ROOT_DIR/parmetis-4.0.3/parmetis-install #修改“build-parmetis.sh”脚本的安装路径
+#其中 ROOT_DIR 是存储库的根目录，可根据自己实际的目录设置（下同）
+sh build-parmetis.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;③hypre安装&#34;&gt;&lt;a href=&#34;#③hypre安装&#34; class=&#34;headerlink&#34; title=&#34;③hypre安装&#34;&gt;&lt;/a&gt;③hypre安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd hypre-2.28.0
+vim build-hypre.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+./configure --prefix=ROOT_DIR/hypre-2.28.0/install --with-MPI --enable-shared
+###
+sh build-hypre.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;④petsc安装&#34;&gt;&lt;a href=&#34;#④petsc安装&#34; class=&#34;headerlink&#34; title=&#34;④petsc安装&#34;&gt;&lt;/a&gt;④petsc安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd petsc-3.19.3
+vim build-petsc.sh 
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+export PETSC_DIR=ROOT_DIR/petsc-3.19.3
+export PETSC_ARCH=petsc_install
+./configure CC=mpiicc CXX=mpiicpc \
+--with-fortran-bindings=0 \
+--with-hypre-dir=ROOT_DIR/hypre-2.28.0/install \
+--with-debugging=0 \
+COPTFLAGS=&amp;quot;-O3&amp;quot; \
+CXXOPTFLAGS=&amp;quot;-O3&amp;quot; \
+make -j 20 PETSC_DIR=ROOT_DIR/petsc-3.19.3 PETSC_ARCH=petsc_install all
+###
+sh build-petsc.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;⑤petsc-solver安装&#34;&gt;&lt;a href=&#34;#⑤petsc-solver安装&#34; class=&#34;headerlink&#34; title=&#34;⑤petsc_solver安装&#34;&gt;&lt;/a&gt;⑤petsc_solver安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd petsc_solver
+vim build-petscsolver.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+export CPATH=ROOT_DIR/lapack-3.11/CBLAS/include:ROOT_DIR/lapack-3.11/LAPACKE/include:$CPATH
+export LD_LIBRARY_PATH=ROOT_DIR/lapack-3.11:$LD_LIBRARY_PATH
+###
+vim CMakeLists.txt
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+set(PETSC_DIR &amp;quot;ROOT_DIR/petsc-3.19.3/&amp;quot;)
+set(PETSC_ARCH &amp;quot;petsc_install&amp;quot;)
+###
+sh build-petscsolver.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;三、OpenCAEPoro的安装与运行&#34;&gt;&lt;a href=&#34;#三、OpenCAEPoro的安装与运行&#34; class=&#34;headerlink&#34; title=&#34;三、OpenCAEPoro的安装与运行&#34;&gt;&lt;/a&gt;三、OpenCAEPoro的安装与运行&lt;/h2&gt;&lt;h3 id=&#34;（1）OpenCAEPoro的安装&#34;&gt;&lt;a href=&#34;#（1）OpenCAEPoro的安装&#34; class=&#34;headerlink&#34; title=&#34;（1）OpenCAEPoro的安装&#34;&gt;&lt;/a&gt;（1）OpenCAEPoro的安装&lt;/h3&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd OpenCAEPoro
+vim mpi-build-petsc.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+export PARMETIS_DIR=ROOT_DIR/parmetis-4.0.3
+export PARMETIS_BUILD_DIR=ROOT_DIR/parmetis-4.0.3/build/Linux-x86_64
+export METIS_DIR=ROOT_DIR/parmetis-4.0.3/metis
+export METIS_BUILD_DIR=ROOT_DIR/parmetis-4.0.3/build/Linux-x86_64
+export PETSC_DIR=ROOT_DIR/petsc-3.19.3
+export PETSC_ARCH=petsc_install
+export PETSCSOLVER_DIR=ROOT_DIR/petsc_solver
+export CPATH=ROOT_DIR/petsc-3.19.3/include/:$CPATH
+export CPATH=ROOT_DIR/petsc-3.19.3/petsc_install/include/:ROOT_DIR/parmetis-4.0.3/metis/include:
+ROOT_DIR/parmetis-4.0.3/include:$CPATH
+export CPATH=ROOT_DIR/lapack-3.11/CBLAS/include/:$CPATH
+###
+sh mpi-build-petsc.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;（2）OpenCAEPoro的运行&#34;&gt;&lt;a href=&#34;#（2）OpenCAEPoro的运行&#34; class=&#34;headerlink&#34; title=&#34;（2）OpenCAEPoro的运行&#34;&gt;&lt;/a&gt;（2）OpenCAEPoro的运行&lt;/h3&gt;&lt;p&gt;继续在此目录下运行&lt;code&gt;mpirun -np &amp;lt;core_num&amp;gt; ./testOpenCAEPoro ./data/case1 verbose=1&lt;/code&gt;进行运行测试（&lt;core_num&gt;为&lt;strong&gt;进程数&lt;/strong&gt;，可自行指定）。这里为了体现优化前后的差异度，我将进程数设为8。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100711674.png&#34; alt=&#34;image-20240926100711674&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100754075.png&#34; alt=&#34;image-20240926100754075&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100831459.png&#34; alt=&#34;image-20240926100831459&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;四、&#34;&gt;&lt;a href=&#34;#四、&#34; class=&#34;headerlink&#34; title=&#34;四、&#34;&gt;&lt;/a&gt;四、&lt;/h2&gt;</content>
+        <updated>2024-09-16T14:37:35.000Z</updated>
     </entry>
     <entry>
         <id>http://example.com/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/</id>

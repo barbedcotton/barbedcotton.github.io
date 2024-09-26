@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"/><meta name="theme-color" content="#222"/><meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/><meta name="renderer" content="webkit"/><link rel="icon" type="image/ico" sizes="32x32" href="/image/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/image/apple-touch-icon.png"/><link rel="alternate" href="/rss.xml" title="超算之路" type="application/rss+xml"><link rel="alternate" href="/atom.xml" title="超算之路" type="application/atom+xml"><link rel="alternate" type="application/json" title="超算之路" href="http://example.com/feed.json"/><link rel="preconnect" href="https://s4.zstatic.net"/><link rel="preconnect" href="https://at.alicdn.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CFredericka%20the%20Great:400,400italic,700,700italic%7CNoto%20Serif%20JP:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CInconsolata:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" media="none" onload="this.media&#x3D;&#39;all&#39;"><link rel="stylesheet" href="/css/app.css?v=0.4.11"><link rel="modulepreload" href="/js/chunk-3QGRG5LW.js"></link><link rel="modulepreload" href="/js/chunk-64QDCBPR.js"></link><link rel="modulepreload" href="/js/chunk-DLW5NPKO.js"></link><link rel="modulepreload" href="/js/copy-tex-GI2VJ6VW.js"></link><link rel="modulepreload" href="/js/index.esm-DXPHZY3Y.js"></link><link rel="modulepreload" href="/js/post-6TH5QDVL.js"></link><link rel="modulepreload" href="/js/quicklink-62XF4N7I.js"></link><link rel="modulepreload" href="/js/siteInit.js"></link><link rel="preload" href="https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_sea_summer_941681_2560x1080.webp" as="image" fetchpriority="high"><link rel="preload" href="https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_guitar_anime_141048_1920x1200.webp" as="image" fetchpriority="high"><link rel="preload" href="https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_pose_smile_1011693_2560x1080.webp" as="image" fetchpriority="high"><link rel="preload" href="https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_walk_anime_153292_2560x1080.webp" as="image" fetchpriority="high"><link rel="preload" href="https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/sakura_art_sky_122545_1920x1080.webp" as="image" fetchpriority="high"><link rel="preload" href="https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_glow_magic_165898_2560x1080.webp" as="image" fetchpriority="high"><meta name="keywords" content="高性能计算,并行计算,cuda编程"/><meta name="description" content="记录从0开始的超算学习之路"/><link rel="canonical" href="http://example.com/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/"><title>超算真题一：OpenCAEPoro的优化</title><meta name="generator" content="Hexo 7.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">超算真题一：OpenCAEPoro的优化</h1><div class="meta"><span class="item" title="创建时间：2024-09-16 22:37:35"><span class="icon"><i class="ic i-calendar"></i></span><span class="text">发表于</span><time itemprop="dateCreated datePublished" datetime="2024-09-16T22:37:35+08:00">2024-09-16</time></span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i></span><span class="text">本文字数</span><span>5.8k</span><span class="text">字</span></span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i></span><span class="text">阅读时长</span><span>5 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span><span class="line"></span><span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">The Path of HPC</a></li></ul><ul class="right" id="rightNav"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div class="pjax" id="imgs"><ul><li class="item" style="background-image: url(&quot;https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_sea_summer_941681_2560x1080.webp&quot;);"></li><li class="item" style="background-image: url(&quot;https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_guitar_anime_141048_1920x1200.webp&quot;);"></li><li class="item" style="background-image: url(&quot;https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_pose_smile_1011693_2560x1080.webp&quot;);"></li><li class="item" style="background-image: url(&quot;https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_walk_anime_153292_2560x1080.webp&quot;);"></li><li class="item" style="background-image: url(&quot;https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/sakura_art_sky_122545_1920x1080.webp&quot;);"></li><li class="item" style="background-image: url(&quot;https://images.weserv.nl/?url=https://gitee.com/fufan1025/blog_img/raw/master/girl_glow_magic_165898_2560x1080.webp&quot;);"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"></use><use xlink:href="#gentle-wave" x="48" y="3"></use><use xlink:href="#gentle-wave" x="48" y="5"></use><use xlink:href="#gentle-wave" x="48" y="7"></use></g></svg></div><main><div class="inner"><div class="pjax" id="main"><div class="article wrap"><div class="breadcrumb" itemListElement itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i><span><a href="/">首页</a></span></div><article class="post block" itemscope="itemscope" itemtype="http://schema.org/Article" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://example.com/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/"/><span hidden="hidden" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><meta itemprop="image" content="/image/D:/HexoBlog/blog/themes/shokax/source/_data/image/avatar.webp"/><meta itemprop="name" content="织心星笛"/><meta itemprop="description" content="从菜鸟到小白, 记录从0开始的超算学习之路"/></span><span hidden="hidden" itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><meta itemprop="name" content="超算之路"/></span><div class="body md" itemprop="articleBody"><h1 id="赛题编译"><a href="#赛题编译" class="headerlink" title="赛题编译"></a>赛题编译</h1><p>在正式开始之前，我尝试配置cuda、git等环境，但都因权限受限没有成功。于是这里直接使用原有的<strong>cuda_12.2</strong>以及windows本地的<strong>git bash</strong>，整个克隆、编译及优化过程都是通过 <strong>MobaXterm</strong> 完成的，这里也非常推荐大家使用这款免费且功能强大的远程终端控制软件。这也是我在个人博客网站利用 <strong>markdown</strong> 写的第一篇博客，欢迎大家留言讨论！</p>
+<h2 id="一、赛题克隆"><a href="#一、赛题克隆" class="headerlink" title="一、赛题克隆"></a>一、赛题克隆</h2><p>首先我们进入项目主页：<a target="_blank" rel="noopener" href="https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024">OpenCAEPoro for ASC 2024 </a>，之后进行下图选择复制该项目的URL。</p>
+<p><img loading="lazy" data-src="D:\HexoBlog\blog\source\imgs\OpenCAEPoro\项目url.png"></p>
+<p>完成后，在本地新建一个文件夹，并在此文件夹内启动 <strong>git bash</strong> 输入<code>git init</code>初始化项目，之后执行如下命令进行项目的克隆（克隆其他项目时只需要更换URL即可）：</p>
+<pre><code class="bash">git clone https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024.git
+</code></pre>
+<p>克隆成功后如下图所示（PS：末尾加的<code>--depth 1</code>是为了加速 clone ，此项目无需历史版本及更新，因此可进行此操作加快克隆）</p>
+<p><img loading="lazy" data-src="https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E5%85%8B%E9%9A%86%E6%88%90%E5%8A%9F.png"></p>
+<h2 id="二、依赖安装及环境配置"><a href="#二、依赖安装及环境配置" class="headerlink" title="二、依赖安装及环境配置"></a>二、依赖安装及环境配置</h2><h3 id="（1）创建目录"><a href="#（1）创建目录" class="headerlink" title="（1）创建目录"></a>（1）创建目录</h3><p>首先我们在用户 home 目录下创建一个名为 <strong>OpenCAEPoro</strong> 的父文件夹，用于存储本项目的所有文件，并在此基础上下设两个子文件夹：<strong>libraries</strong> 用于存储依赖， <strong>src</strong> 用于存储源码（后续发现解压 OpenCAEPoro 后，其解压目录下自带 src 文件夹，故后续删除了父目录下的 src 文件夹。</p>
+<pre><code class="bash">mkdir OpenCAEPoro &amp;&amp; cd OpenCAEPoro
+mkdir libraries src
+</code></pre>
+<p>之后通过 <strong>MobaXterm</strong> 将所需依赖移动到 <strong>libraries</strong> 下，OpenCAEPoro的安装包直接放在父文件夹下。然后来到 <strong>libraries</strong> 文件夹，依次解压依赖安装包以方便下面进行安装。 同时直接在 <strong>OpenCAEPoro</strong> 的父文件夹下解压OpenCAEPoro。</p>
+<pre><code class="bash">tar zxvf hypre-2.28.0.tar.gz
+tar zxvf parmetis-4.0.3.tar.gz
+tar zxvf petsc_solver.tar.gz
+tar zxvf lapack-3.11.tar.gz
+tar zxvf petsc-3.19.3.tar.gz
+cd ..
+tar zxvf OpenCAEPoro.tar.gz 
+</code></pre>
+<h3 id="（2）环境配置"><a href="#（2）环境配置" class="headerlink" title="（2）环境配置"></a>（2）环境配置</h3><h4 id="①oneapi2024-0的环境配置"><a href="#①oneapi2024-0的环境配置" class="headerlink" title="①oneapi2024.0的环境配置"></a>①oneapi2024.0的环境配置</h4><p><u>注：根据oneapi官网的<a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/articles/release-notes/oneapi-c-compiler-release-notes.html">更新公告</a>, icc，icpc在2023.2月之后的版本被废弃，取而代之的是icx</u>。而服务器的MPI是2021版的，但是Compiler是2024版的,而MPI里面的程序用到了Compiler里的icc，于是这里不得不使用老版本的oneapi进行配置，请点此跳转：<a href="#%E2%91%A1oneapi2022.2%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">旧版本oneapi配置</a></p>
+<p>我的用户所在目录自带 <strong>cmake3.22.1</strong> ，所以这里主要进行 <strong>oneapi</strong> 的环境配置。其实这里不需要自己重新下载安装的，直接在服务器的根目录下找到 <strong>oneapi</strong> 的安装位置即可（绝大多数位置都是一样的）。</p>
+<pre><code class="bash">cd /opt/intel/oneapi &amp;&amp; ls
+</code></pre>
+<p>执行上文指令后即可看到我们服务器配置了2024最新版的oneapi，其中的 <strong>setvars.sh</strong> 文件<strong>包含了所安装的所有oneAPI工具包的环境变量</strong>。确定好环境变量所在的位置，我们接下来进行配置即可。执行<code>vi ~/.bashrc</code>，并在文件末尾添加如下语句（将 <code>xxx</code> 改为你的用户名）</p>
+<pre><code class="bash">source /opt/intel/oneapi/setvars.sh intel64
+</code></pre>
+<p>退出保存后再执行<code>source ~/.bashrc</code>使环境变量立即生效即可，之后执行如下指令进行环境测试。</p>
+<pre><code class="bash">icx -v
+gdb-oneapi -v
+</code></pre>
+<p>如下图一样正常回显版本信息即为配置成功！</p>
+<p><img loading="lazy" data-src="https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240921174711807.png" alt="image-20240921174711807"></p>
+<h4 id="②oneapi2022-2的环境配置"><a href="#②oneapi2022-2的环境配置" class="headerlink" title="②oneapi2022.2的环境配置"></a>②oneapi2022.2的环境配置</h4><p>首先执行以下命令进行安装包的下载及安装。</p>
+<pre><code class="bash">wget https://registrationcenter-download.intel.com/akdlm/irc_nas/18679/l_HPCKit_p_2022.2.0.191_offline.sh
+sh l_HPCKit_p_2022.2.0.191_offline.sh
+</code></pre>
+<p>当然这里也可以直接先下载到本地，再直接传到服务器上进行安装。</p>
+<pre><code class="bash">cd ~/intel/oneapi &amp;&amp; ls
+</code></pre>
+<p>执行以上指令后即可看到我们刚刚安装好的2022.2版本的oneapi，其中的 <strong>setvars.sh</strong> 文件<strong>包含了所安装的所有oneAPI工具包的环境变量</strong>。确定好环境变量所在的位置，我们接下来进行配置即可。执行<code>vi ~/.bashrc</code>，并在文件末尾添加如下语句（将 <code>xxx</code> 改为你的用户名）。</p>
+<pre><code class="bash">source /home/xxx/intel/oneapi/setvars.sh intel64
+</code></pre>
+<p>退出保存后再执行<code>source ~/.bashrc</code>使环境变量立即生效即可，之后执行如下指令进行环境测试。</p>
+<pre><code class="bash">icx -v
+gdb-oneapi -v
+</code></pre>
+<p>如下图一样正常回显版本信息即为配置成功！</p>
+<p><img loading="lazy" data-src="https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240921204248392.png" alt="image-20240921204248392"></p>
+<h3 id="（3）依赖安装"><a href="#（3）依赖安装" class="headerlink" title="（3）依赖安装"></a>（3）依赖安装</h3><h4 id="①lapack安装"><a href="#①lapack安装" class="headerlink" title="①lapack安装"></a>①lapack安装</h4><p>执行以下指令进入解压后的文件夹并安装。</p>
+<pre><code class="bash">cd lapack-3.11
+make blaslib
+make cblaslib
+make lapacklib
+make lapackelib
+</code></pre>
+<h4 id="②parmetis安装"><a href="#②parmetis安装" class="headerlink" title="②parmetis安装"></a>②parmetis安装</h4><p>执行以下指令进入解压后的文件夹并安装。</p>
+<pre><code class="bash">cd parmetis-4.0.3
+vim build-parmetis.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+make configcc=mpiicc prefix=ROOT_DIR/parmetis-4.0.3/parmetis-install #修改“build-parmetis.sh”脚本的安装路径
+#其中 ROOT_DIR 是存储库的根目录，可根据自己实际的目录设置（下同）
+sh build-parmetis.sh
+</code></pre>
+<h4 id="③hypre安装"><a href="#③hypre安装" class="headerlink" title="③hypre安装"></a>③hypre安装</h4><p>执行以下指令进入解压后的文件夹并安装。</p>
+<pre><code class="bash">cd hypre-2.28.0
+vim build-hypre.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+./configure --prefix=ROOT_DIR/hypre-2.28.0/install --with-MPI --enable-shared
+###
+sh build-hypre.sh
+</code></pre>
+<h4 id="④petsc安装"><a href="#④petsc安装" class="headerlink" title="④petsc安装"></a>④petsc安装</h4><p>执行以下指令进入解压后的文件夹并安装。</p>
+<pre><code class="bash">cd petsc-3.19.3
+vim build-petsc.sh 
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+export PETSC_DIR=ROOT_DIR/petsc-3.19.3
+export PETSC_ARCH=petsc_install
+./configure CC=mpiicc CXX=mpiicpc \
+--with-fortran-bindings=0 \
+--with-hypre-dir=ROOT_DIR/hypre-2.28.0/install \
+--with-debugging=0 \
+COPTFLAGS=&quot;-O3&quot; \
+CXXOPTFLAGS=&quot;-O3&quot; \
+make -j 20 PETSC_DIR=ROOT_DIR/petsc-3.19.3 PETSC_ARCH=petsc_install all
+###
+sh build-petsc.sh
+</code></pre>
+<h4 id="⑤petsc-solver安装"><a href="#⑤petsc-solver安装" class="headerlink" title="⑤petsc_solver安装"></a>⑤petsc_solver安装</h4><p>执行以下指令进入解压后的文件夹并安装。</p>
+<pre><code class="bash">cd petsc_solver
+vim build-petscsolver.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+export CPATH=ROOT_DIR/lapack-3.11/CBLAS/include:ROOT_DIR/lapack-3.11/LAPACKE/include:$CPATH
+export LD_LIBRARY_PATH=ROOT_DIR/lapack-3.11:$LD_LIBRARY_PATH
+###
+vim CMakeLists.txt
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+set(PETSC_DIR &quot;ROOT_DIR/petsc-3.19.3/&quot;)
+set(PETSC_ARCH &quot;petsc_install&quot;)
+###
+sh build-petscsolver.sh
+</code></pre>
+<h2 id="三、OpenCAEPoro的安装与运行"><a href="#三、OpenCAEPoro的安装与运行" class="headerlink" title="三、OpenCAEPoro的安装与运行"></a>三、OpenCAEPoro的安装与运行</h2><h3 id="（1）OpenCAEPoro的安装"><a href="#（1）OpenCAEPoro的安装" class="headerlink" title="（1）OpenCAEPoro的安装"></a>（1）OpenCAEPoro的安装</h3><p>执行以下指令进入解压后的文件夹并安装。</p>
+<pre><code class="bash">cd OpenCAEPoro
+vim mpi-build-petsc.sh
+#进入编辑模式后，将下方代码进行修改并保存退出
+###
+export PARMETIS_DIR=ROOT_DIR/parmetis-4.0.3
+export PARMETIS_BUILD_DIR=ROOT_DIR/parmetis-4.0.3/build/Linux-x86_64
+export METIS_DIR=ROOT_DIR/parmetis-4.0.3/metis
+export METIS_BUILD_DIR=ROOT_DIR/parmetis-4.0.3/build/Linux-x86_64
+export PETSC_DIR=ROOT_DIR/petsc-3.19.3
+export PETSC_ARCH=petsc_install
+export PETSCSOLVER_DIR=ROOT_DIR/petsc_solver
+export CPATH=ROOT_DIR/petsc-3.19.3/include/:$CPATH
+export CPATH=ROOT_DIR/petsc-3.19.3/petsc_install/include/:ROOT_DIR/parmetis-4.0.3/metis/include:
+ROOT_DIR/parmetis-4.0.3/include:$CPATH
+export CPATH=ROOT_DIR/lapack-3.11/CBLAS/include/:$CPATH
+###
+sh mpi-build-petsc.sh
+</code></pre>
+<h3 id="（2）OpenCAEPoro的运行"><a href="#（2）OpenCAEPoro的运行" class="headerlink" title="（2）OpenCAEPoro的运行"></a>（2）OpenCAEPoro的运行</h3><p>继续在此目录下运行<code>mpirun -np &lt;core_num&gt; ./testOpenCAEPoro ./data/case1 verbose=1</code>进行运行测试（<core_num>为<strong>进程数</strong>，可自行指定）。这里为了体现优化前后的差异度，我将进程数设为8。</p>
+<p><img loading="lazy" data-src="https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100711674.png" alt="image-20240926100711674"></p>
+<p><img loading="lazy" data-src="https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100754075.png" alt="image-20240926100754075"></p>
+<p><img loading="lazy" data-src="https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100831459.png" alt="image-20240926100831459"></p>
+<h2 id="四、"><a href="#四、" class="headerlink" title="四、"></a>四、</h2></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i></span><span class="text">更新于</span><time title="修改时间：2024-09-26 10:09:17" itemprop="dateModified" datetime="2024-09-26T10:09:17+08:00">2024-09-26</time></span></div><div class="reward"><button><i class="ic i-heartbeat"></i>赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img loading="lazy" data-src="/image/wechatpay.png" alt="织心星笛 微信支付"/><p>微信支付</p></div><div><img loading="lazy" data-src="/image/alipay.png" alt="织心星笛 支付宝"/><p>支付宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者：</strong>织心星笛<i class="ic i-at"><em>@</em></i>超算之路</li><li class="link"><strong>本文链接：</strong><a href="http://example.com/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/" title="超算真题一：OpenCAEPoro的优化">http://example.com/2024/09/16/超算真题一：OpenCAEPoro的优化/</a></li><li class="license"><strong>版权声明：</strong>本站所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/" rel="prev" itemprop="url" data-background-image="https:&#x2F;&#x2F;images.weserv.nl&#x2F;?url&#x3D;https:&#x2F;&#x2F;gitee.com&#x2F;fufan1025&#x2F;blog_img&#x2F;raw&#x2F;master&#x2F;girl_blonde_cloak_1044103_1920x1200.webp" title="Linux基础（1）：vim程序编辑器"><span class="type">上一篇</span><span class="category"><i class="ic i-flag"></i>Linux</span><h3>Linux基础（1）：vim程序编辑器</h3></a></div><div class="item right"></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%9B%E9%A2%98%E7%BC%96%E8%AF%91"><span class="toc-number">1.</span> <span class="toc-text">赛题编译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%B5%9B%E9%A2%98%E5%85%8B%E9%9A%86"><span class="toc-number">1.1.</span> <span class="toc-text">一、赛题克隆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">二、依赖安装及环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">（1）创建目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">（2）环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A0oneapi2024-0%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">①oneapi2024.0的环境配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A1oneapi2022-2%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">②oneapi2022.2的环境配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.3.</span> <span class="toc-text">（3）依赖安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A0lapack%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">①lapack安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A1parmetis%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">②parmetis安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A2hypre%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">③hypre安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A3petsc%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.3.4.</span> <span class="toc-text">④petsc安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A4petsc-solver%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.3.5.</span> <span class="toc-text">⑤petsc_solver安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81OpenCAEPoro%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">三、OpenCAEPoro的安装与运行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89OpenCAEPoro%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">1.3.1.</span> <span class="toc-text">（1）OpenCAEPoro的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89OpenCAEPoro%E7%9A%84%E8%BF%90%E8%A1%8C"><span class="toc-number">1.3.2.</span> <span class="toc-text">（2）OpenCAEPoro的运行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81"><span class="toc-number">1.4.</span> <span class="toc-text">四、</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><img class="image" loading="lazy" decoding="async" itemprop="image" alt="织心星笛" src="/image/D:/HexoBlog/blog/themes/shokax/source/_data/image/avatar.webp"/><p class="name" itemprop="name">织心星笛</p><div class="description" itemprop="description">记录从0开始的超算学习之路</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">2</span><span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">1</span><span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">3</span><span class="name">标签</span></a></div></nav><div class="social"><a target="_blank" rel="noopener" href="https://github.com/barbedcotton" class="item github" title="https:&#x2F;&#x2F;github.com&#x2F;barbedcotton"><i class="ic i-github"></i></a></div><div class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li></div></div></div></div><ul id="quick"><li class="prev pjax"></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/">超算真题一：OpenCAEPoro的优化</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Linux/" title="分类于Linux">Linux</a></div><span><a href="/2024/09/08/Linux%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89%EF%BC%9Avim%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%BE%91%E5%99%A8/">Linux基础（1）：vim程序编辑器</a></span></li></ul></div><div class="rpost pjax"><h2>最新评论</h2></div></div><div class="status"><div class="copyright">&copy; 2022 -<span itemprop="copyrightYear">2024</span><span class="with-love"><i class="ic i-sakura rotate"></i></span><span class="author" itemprop="copyrightHolder">织心星笛 @ The Path of HPC</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i></span><span title="站点总字数">9k 字</span><span class="post-meta-divider"> | </span><span class="post-meta-item-icon"><i class="ic i-coffee"></i></span><span title="站点阅读时长">8 分钟</span></div><div class="powered-by">基于 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & Theme.<a target="_blank" rel="noopener" href="https://github.com/theme-shoka-x/hexo-theme-shokaX/">ShokaX</a></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL = {
+    ispost: true,
+        path: `2024/09/16/超算真题一：OpenCAEPoro的优化/`,
+        favicon: {
+        show: `织心星笛的超算世界`,
+        hide: `别摸鱼了，快来看博客`
+    },
+    search: {
+        placeholder: "文章搜索",
+        empty: "关于 「 ${query} 」，什么也没搜到",
+        stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    copy_tex: false,
+    katex: false,
+    mermaid: false,
+    audio: undefined,
+    fancybox: true,
+    nocopy: false,
+    outime: true,
+    template: `<div class="note warning"><p><span class="label warning">文章时效性提示</span><br>这是一篇发布于 {{publish}} 天前，最后一次更新在 {{updated}} 天前的文章，部分信息可能已经发生改变，请注意甄别。</p></div>`,
+    quiz: {
+        choice: `单选题`,
+        multiple: `多选题`,
+        true_false: `判断题`,
+        essay: `问答题`,
+        gap_fill: `填空题`,
+        mistake: `错题备注`
+    },
+    ignores: [
+        (uri) => uri.includes('#'),
+        (uri) => new RegExp(LOCAL.path + '$').test(uri),
+            []
+    ]
+};
+</script><script src="https://s4.zstatic.net/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous" fetchpriority="high"></script><script src="https://s4.zstatic.net/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha384-ZvpUoO&#x2F;+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn&#x2F;6Z&#x2F;hRTt8+pR6L4N2" crossorigin="anonymous" fetchpriority="high"></script><script src="/js/siteInit.js?v=0.4.11" type="module" fetchpriority="high" defer></script></body></html>
