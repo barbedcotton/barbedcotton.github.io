@@ -12,14 +12,14 @@
         <title>超算真题一：OpenCAEPoro的优化</title>
         <link rel="alternate" href="http://example.com/2024/09/16/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/"/>
         <content type="html">&lt;h1 id=&#34;赛题编译&#34;&gt;&lt;a href=&#34;#赛题编译&#34; class=&#34;headerlink&#34; title=&#34;赛题编译&#34;&gt;&lt;/a&gt;赛题编译&lt;/h1&gt;&lt;p&gt;在正式开始之前，我尝试配置cuda、git等环境，但都因权限受限没有成功。于是这里直接使用原有的&lt;strong&gt;cuda_12.2&lt;/strong&gt;以及windows本地的&lt;strong&gt;git bash&lt;/strong&gt;，整个克隆、编译及优化过程都是通过 &lt;strong&gt;MobaXterm&lt;/strong&gt; 完成的，这里也非常推荐大家使用这款免费且功能强大的远程终端控制软件。这也是我在个人博客网站利用 &lt;strong&gt;markdown&lt;/strong&gt; 写的第一篇博客，欢迎大家留言讨论！&lt;/p&gt;
-&lt;h2 id=&#34;一、赛题克隆&#34;&gt;&lt;a href=&#34;#一、赛题克隆&#34; class=&#34;headerlink&#34; title=&#34;一、赛题克隆&#34;&gt;&lt;/a&gt;一、赛题克隆&lt;/h2&gt;&lt;p&gt;首先我们进入项目主页：&lt;a href=&#34;https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024&#34;&gt;OpenCAEPoro for ASC 2024 &lt;/a&gt;，之后进行下图选择复制该项目的URL。&lt;/p&gt;
+&lt;h2 id=&#34;赛题克隆&#34;&gt;&lt;a href=&#34;#赛题克隆&#34; class=&#34;headerlink&#34; title=&#34;赛题克隆&#34;&gt;&lt;/a&gt;赛题克隆&lt;/h2&gt;&lt;p&gt;首先我们进入项目主页：&lt;a href=&#34;https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024&#34;&gt;OpenCAEPoro for ASC 2024 &lt;/a&gt;，之后进行下图选择复制该项目的URL。&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;D:\HexoBlog\blog\source\imgs\OpenCAEPoro\项目url.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;完成后，在本地新建一个文件夹，并在此文件夹内启动 &lt;strong&gt;git bash&lt;/strong&gt; 输入&lt;code&gt;git init&lt;/code&gt;初始化项目，之后执行如下命令进行项目的克隆（克隆其他项目时只需要更换URL即可）：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;git clone https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024.git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;克隆成功后如下图所示（PS：末尾加的&lt;code&gt;--depth 1&lt;/code&gt;是为了加速 clone ，此项目无需历史版本及更新，因此可进行此操作加快克隆）&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/%E5%85%8B%E9%9A%86%E6%88%90%E5%8A%9F.png&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;二、依赖安装及环境配置&#34;&gt;&lt;a href=&#34;#二、依赖安装及环境配置&#34; class=&#34;headerlink&#34; title=&#34;二、依赖安装及环境配置&#34;&gt;&lt;/a&gt;二、依赖安装及环境配置&lt;/h2&gt;&lt;h3 id=&#34;（1）创建目录&#34;&gt;&lt;a href=&#34;#（1）创建目录&#34; class=&#34;headerlink&#34; title=&#34;（1）创建目录&#34;&gt;&lt;/a&gt;（1）创建目录&lt;/h3&gt;&lt;p&gt;首先我们在用户 home 目录下创建一个名为 &lt;strong&gt;OpenCAEPoro&lt;/strong&gt; 的父文件夹，用于存储本项目的所有文件，并在此基础上下设两个子文件夹：&lt;strong&gt;libraries&lt;/strong&gt; 用于存储依赖， &lt;strong&gt;src&lt;/strong&gt; 用于存储源码（后续发现解压 OpenCAEPoro 后，其解压目录下自带 src 文件夹，故后续删除了父目录下的 src 文件夹。&lt;/p&gt;
+&lt;h2 id=&#34;依赖安装及环境配置&#34;&gt;&lt;a href=&#34;#依赖安装及环境配置&#34; class=&#34;headerlink&#34; title=&#34;依赖安装及环境配置&#34;&gt;&lt;/a&gt;依赖安装及环境配置&lt;/h2&gt;&lt;h3 id=&#34;创建目录&#34;&gt;&lt;a href=&#34;#创建目录&#34; class=&#34;headerlink&#34; title=&#34;创建目录&#34;&gt;&lt;/a&gt;创建目录&lt;/h3&gt;&lt;p&gt;首先我们在用户 home 目录下创建一个名为 &lt;strong&gt;OpenCAEPoro&lt;/strong&gt; 的父文件夹，用于存储本项目的所有文件，并在此基础上下设两个子文件夹：&lt;strong&gt;libraries&lt;/strong&gt; 用于存储依赖， &lt;strong&gt;src&lt;/strong&gt; 用于存储源码（后续发现解压 OpenCAEPoro 后，其解压目录下自带 src 文件夹，故后续删除了父目录下的 src 文件夹。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;mkdir OpenCAEPoro &amp;amp;&amp;amp; cd OpenCAEPoro
 mkdir libraries src
 &lt;/code&gt;&lt;/pre&gt;
@@ -32,7 +32,7 @@ tar zxvf petsc-3.19.3.tar.gz
 cd ..
 tar zxvf OpenCAEPoro.tar.gz 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;（2）环境配置&#34;&gt;&lt;a href=&#34;#（2）环境配置&#34; class=&#34;headerlink&#34; title=&#34;（2）环境配置&#34;&gt;&lt;/a&gt;（2）环境配置&lt;/h3&gt;&lt;h4 id=&#34;①oneapi2024-0的环境配置&#34;&gt;&lt;a href=&#34;#①oneapi2024-0的环境配置&#34; class=&#34;headerlink&#34; title=&#34;①oneapi2024.0的环境配置&#34;&gt;&lt;/a&gt;①oneapi2024.0的环境配置&lt;/h4&gt;&lt;p&gt;&lt;u&gt;注：根据oneapi官网的&lt;a href=&#34;https://www.intel.com/content/www/us/en/developer/articles/release-notes/oneapi-c-compiler-release-notes.html&#34;&gt;更新公告&lt;/a&gt;, icc，icpc在2023.2月之后的版本被废弃，取而代之的是icx&lt;/u&gt;。而服务器的MPI是2021版的，但是Compiler是2024版的,而MPI里面的程序用到了Compiler里的icc，于是这里不得不使用老版本的oneapi进行配置，请点此跳转：&lt;a href=&#34;#%E2%91%A1oneapi2022.2%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&#34;&gt;旧版本oneapi配置&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;环境配置&#34;&gt;&lt;a href=&#34;#环境配置&#34; class=&#34;headerlink&#34; title=&#34;环境配置&#34;&gt;&lt;/a&gt;环境配置&lt;/h3&gt;&lt;h4 id=&#34;oneapi2024-0的环境配置&#34;&gt;&lt;a href=&#34;#oneapi2024-0的环境配置&#34; class=&#34;headerlink&#34; title=&#34;oneapi2024.0的环境配置&#34;&gt;&lt;/a&gt;oneapi2024.0的环境配置&lt;/h4&gt;&lt;p&gt;&lt;u&gt;注：根据oneapi官网的&lt;a href=&#34;https://www.intel.com/content/www/us/en/developer/articles/release-notes/oneapi-c-compiler-release-notes.html&#34;&gt;更新公告&lt;/a&gt;, icc，icpc在2023.2月之后的版本被废弃，取而代之的是icx&lt;/u&gt;。而服务器的MPI是2021版的，但是Compiler是2024版的,而MPI里面的程序用到了Compiler里的icc，于是这里不得不使用老版本的oneapi进行配置，请点此跳转：&lt;a href=&#34;#%E2%91%A1oneapi2022.2%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE&#34;&gt;旧版本oneapi配置&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我的用户所在目录自带 &lt;strong&gt;cmake3.22.1&lt;/strong&gt; ，所以这里主要进行 &lt;strong&gt;oneapi&lt;/strong&gt; 的环境配置。其实这里不需要自己重新下载安装的，直接在服务器的根目录下找到 &lt;strong&gt;oneapi&lt;/strong&gt; 的安装位置即可（绝大多数位置都是一样的）。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd /opt/intel/oneapi &amp;amp;&amp;amp; ls
 &lt;/code&gt;&lt;/pre&gt;
@@ -45,7 +45,7 @@ gdb-oneapi -v
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;如下图一样正常回显版本信息即为配置成功！&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240921174711807.png&#34; alt=&#34;image-20240921174711807&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;②oneapi2022-2的环境配置&#34;&gt;&lt;a href=&#34;#②oneapi2022-2的环境配置&#34; class=&#34;headerlink&#34; title=&#34;②oneapi2022.2的环境配置&#34;&gt;&lt;/a&gt;②oneapi2022.2的环境配置&lt;/h4&gt;&lt;p&gt;首先执行以下命令进行安装包的下载及安装。&lt;/p&gt;
+&lt;h4 id=&#34;oneapi2022-2的环境配置&#34;&gt;&lt;a href=&#34;#oneapi2022-2的环境配置&#34; class=&#34;headerlink&#34; title=&#34;oneapi2022.2的环境配置&#34;&gt;&lt;/a&gt;oneapi2022.2的环境配置&lt;/h4&gt;&lt;p&gt;首先执行以下命令进行安装包的下载及安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;wget https://registrationcenter-download.intel.com/akdlm/irc_nas/18679/l_HPCKit_p_2022.2.0.191_offline.sh
 sh l_HPCKit_p_2022.2.0.191_offline.sh
 &lt;/code&gt;&lt;/pre&gt;
@@ -61,14 +61,14 @@ gdb-oneapi -v
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;如下图一样正常回显版本信息即为配置成功！&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240921204248392.png&#34; alt=&#34;image-20240921204248392&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;（3）依赖安装&#34;&gt;&lt;a href=&#34;#（3）依赖安装&#34; class=&#34;headerlink&#34; title=&#34;（3）依赖安装&#34;&gt;&lt;/a&gt;（3）依赖安装&lt;/h3&gt;&lt;h4 id=&#34;①lapack安装&#34;&gt;&lt;a href=&#34;#①lapack安装&#34; class=&#34;headerlink&#34; title=&#34;①lapack安装&#34;&gt;&lt;/a&gt;①lapack安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;h3 id=&#34;依赖安装&#34;&gt;&lt;a href=&#34;#依赖安装&#34; class=&#34;headerlink&#34; title=&#34;依赖安装&#34;&gt;&lt;/a&gt;依赖安装&lt;/h3&gt;&lt;h4 id=&#34;lapack安装&#34;&gt;&lt;a href=&#34;#lapack安装&#34; class=&#34;headerlink&#34; title=&#34;lapack安装&#34;&gt;&lt;/a&gt;lapack安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd lapack-3.11
 make blaslib
 make cblaslib
 make lapacklib
 make lapackelib
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;②parmetis安装&#34;&gt;&lt;a href=&#34;#②parmetis安装&#34; class=&#34;headerlink&#34; title=&#34;②parmetis安装&#34;&gt;&lt;/a&gt;②parmetis安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;h4 id=&#34;parmetis安装&#34;&gt;&lt;a href=&#34;#parmetis安装&#34; class=&#34;headerlink&#34; title=&#34;parmetis安装&#34;&gt;&lt;/a&gt;parmetis安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd parmetis-4.0.3
 vim build-parmetis.sh
 #进入编辑模式后，将下方代码进行修改并保存退出
@@ -76,7 +76,7 @@ make configcc=mpiicc prefix=ROOT_DIR/parmetis-4.0.3/parmetis-install #修改“b
 #其中 ROOT_DIR 是存储库的根目录，可根据自己实际的目录设置（下同）
 sh build-parmetis.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;③hypre安装&#34;&gt;&lt;a href=&#34;#③hypre安装&#34; class=&#34;headerlink&#34; title=&#34;③hypre安装&#34;&gt;&lt;/a&gt;③hypre安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;h4 id=&#34;hypre安装&#34;&gt;&lt;a href=&#34;#hypre安装&#34; class=&#34;headerlink&#34; title=&#34;hypre安装&#34;&gt;&lt;/a&gt;hypre安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd hypre-2.28.0
 vim build-hypre.sh
 #进入编辑模式后，将下方代码进行修改并保存退出
@@ -84,7 +84,7 @@ vim build-hypre.sh
 ###
 sh build-hypre.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;④petsc安装&#34;&gt;&lt;a href=&#34;#④petsc安装&#34; class=&#34;headerlink&#34; title=&#34;④petsc安装&#34;&gt;&lt;/a&gt;④petsc安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;h4 id=&#34;petsc安装&#34;&gt;&lt;a href=&#34;#petsc安装&#34; class=&#34;headerlink&#34; title=&#34;petsc安装&#34;&gt;&lt;/a&gt;petsc安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd petsc-3.19.3
 vim build-petsc.sh 
 #进入编辑模式后，将下方代码进行修改并保存退出
@@ -101,7 +101,7 @@ make -j 20 PETSC_DIR=ROOT_DIR/petsc-3.19.3 PETSC_ARCH=petsc_install all
 ###
 sh build-petsc.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;⑤petsc-solver安装&#34;&gt;&lt;a href=&#34;#⑤petsc-solver安装&#34; class=&#34;headerlink&#34; title=&#34;⑤petsc_solver安装&#34;&gt;&lt;/a&gt;⑤petsc_solver安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;h4 id=&#34;petsc-solver安装&#34;&gt;&lt;a href=&#34;#petsc-solver安装&#34; class=&#34;headerlink&#34; title=&#34;petsc_solver安装&#34;&gt;&lt;/a&gt;petsc_solver安装&lt;/h4&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd petsc_solver
 vim build-petscsolver.sh
 #进入编辑模式后，将下方代码进行修改并保存退出
@@ -117,7 +117,7 @@ set(PETSC_ARCH &amp;quot;petsc_install&amp;quot;)
 ###
 sh build-petscsolver.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;三、OpenCAEPoro的安装与运行&#34;&gt;&lt;a href=&#34;#三、OpenCAEPoro的安装与运行&#34; class=&#34;headerlink&#34; title=&#34;三、OpenCAEPoro的安装与运行&#34;&gt;&lt;/a&gt;三、OpenCAEPoro的安装与运行&lt;/h2&gt;&lt;h3 id=&#34;（1）OpenCAEPoro的安装&#34;&gt;&lt;a href=&#34;#（1）OpenCAEPoro的安装&#34; class=&#34;headerlink&#34; title=&#34;（1）OpenCAEPoro的安装&#34;&gt;&lt;/a&gt;（1）OpenCAEPoro的安装&lt;/h3&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
+&lt;h2 id=&#34;OpenCAEPoro的安装与运行&#34;&gt;&lt;a href=&#34;#OpenCAEPoro的安装与运行&#34; class=&#34;headerlink&#34; title=&#34;OpenCAEPoro的安装与运行&#34;&gt;&lt;/a&gt;OpenCAEPoro的安装与运行&lt;/h2&gt;&lt;h3 id=&#34;OpenCAEPoro的安装&#34;&gt;&lt;a href=&#34;#OpenCAEPoro的安装&#34; class=&#34;headerlink&#34; title=&#34;OpenCAEPoro的安装&#34;&gt;&lt;/a&gt;OpenCAEPoro的安装&lt;/h3&gt;&lt;p&gt;执行以下指令进入解压后的文件夹并安装。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;cd OpenCAEPoro
 vim mpi-build-petsc.sh
 #进入编辑模式后，将下方代码进行修改并保存退出
@@ -136,11 +136,288 @@ export CPATH=ROOT_DIR/lapack-3.11/CBLAS/include/:$CPATH
 ###
 sh mpi-build-petsc.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;（2）OpenCAEPoro的运行&#34;&gt;&lt;a href=&#34;#（2）OpenCAEPoro的运行&#34; class=&#34;headerlink&#34; title=&#34;（2）OpenCAEPoro的运行&#34;&gt;&lt;/a&gt;（2）OpenCAEPoro的运行&lt;/h3&gt;&lt;p&gt;继续在此目录下运行&lt;code&gt;mpirun -np &amp;lt;core_num&amp;gt; ./testOpenCAEPoro ./data/case1 verbose=1&lt;/code&gt;进行运行测试（&lt;core_num&gt;为&lt;strong&gt;进程数&lt;/strong&gt;，可自行指定）。这里为了体现优化前后的差异度，我将进程数设为8。&lt;/p&gt;
+&lt;h3 id=&#34;OpenCAEPoro的运行&#34;&gt;&lt;a href=&#34;#OpenCAEPoro的运行&#34; class=&#34;headerlink&#34; title=&#34;OpenCAEPoro的运行&#34;&gt;&lt;/a&gt;OpenCAEPoro的运行&lt;/h3&gt;&lt;p&gt;继续在此目录下运行&lt;code&gt;mpirun -np &amp;lt;core_num&amp;gt; ./testOpenCAEPoro ./data/case1/case1.data verbose=1&lt;/code&gt;进行运行测试（&lt;core_num&gt;为&lt;strong&gt;进程数&lt;/strong&gt;，可自行指定，这里设为8）。程序的运行情况如下图所示。&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100711674.png&#34; alt=&#34;image-20240926100711674&#34;&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;code&gt;Timestep&lt;/code&gt; 表示每一步的时间步长，&lt;code&gt;Wall time&lt;/code&gt; 表示每一步仿真所耗费的实际计算时间。这里对三条警告信息进行解释：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NR not fully converged&lt;/strong&gt;：这代表数值解法（Newton-Raphson方法）未完全收敛。尽管未收敛，但程序仍在继续运行，以趋于&lt;strong&gt;稳定&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cut time step size&lt;/strong&gt;：时间步长被缩小的提示，这通常是为了确保数值计算的稳定性。当出现非收敛情况时，程序会自动减小时间步以尝试解决&lt;strong&gt;不稳定&lt;/strong&gt;或者&lt;strong&gt;不合理&lt;/strong&gt;的解。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100754075.png&#34; alt=&#34;image-20240926100754075&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20240926100831459.png&#34; alt=&#34;image-20240926100831459&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;四、&#34;&gt;&lt;a href=&#34;#四、&#34; class=&#34;headerlink&#34; title=&#34;四、&#34;&gt;&lt;/a&gt;四、&lt;/h2&gt;</content>
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Negative Ni&lt;/strong&gt; 警告：仿真中的 &lt;code&gt;Ni&lt;/code&gt; 值出现负值，表示仿真中的某些变量在某个位置出现了不合理的数值结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241003163802399.png&#34; alt=&#34;image-20241003163802399&#34;&gt;&lt;/p&gt;
+&lt;p&gt;最终的运行结果如上图所示。&lt;/p&gt;
+&lt;h1 id=&#34;赛题优化&#34;&gt;&lt;a href=&#34;#赛题优化&#34; class=&#34;headerlink&#34; title=&#34;赛题优化&#34;&gt;&lt;/a&gt;赛题优化&lt;/h1&gt;&lt;h2 id=&#34;优化思路&#34;&gt;&lt;a href=&#34;#优化思路&#34; class=&#34;headerlink&#34; title=&#34;优化思路&#34;&gt;&lt;/a&gt;优化思路&lt;/h2&gt;&lt;p&gt;对于HPC优化而言，无非就是两大类：①以优化&lt;strong&gt;并行度&lt;/strong&gt;和&lt;strong&gt;进程数&lt;/strong&gt;为核心的“&lt;strong&gt;硬件优化&lt;/strong&gt;”，即“&lt;strong&gt;并行优化&lt;/strong&gt;”②以优化&lt;strong&gt;算法&lt;/strong&gt;、&lt;strong&gt;编译器&lt;/strong&gt;、&lt;strong&gt;数学库&lt;/strong&gt;为核心的“&lt;strong&gt;软件优化&lt;/strong&gt;”。在没有明显算法瓶颈的情况下，通过增加进程数、节点数，可以迅速获得性能提升。如果性能瓶颈是因为算法的效率低下（比如存在大量冗余计算或非最优的数值方法），软件优化能带来更大提升。并且如果程序的并行扩展性不好，增加进程数反而导致性能下降（因为通信开销增加等问题），此时需要先优化算法。&lt;/p&gt;
+&lt;p&gt;而从上图不难看出，在进行迭代时，Newton步数和线性步数都存在浪费，意味着某些&lt;strong&gt;迭代过程未能快速收敛&lt;/strong&gt;，这部分耗时是潜在的优化点。分析模拟时间，可以发现&lt;strong&gt;线性求解器（Linear Solver）&lt;/strong&gt;是性能瓶颈（不完全对，解释&lt;a href=&#34;#%E7%BA%BF%E6%80%A7%E6%B1%82%E8%A7%A3%E5%99%A8&#34;&gt;点此跳转&lt;/a&gt;，占用了91.611%的时间，主要的耗时来源。同时，&lt;strong&gt;Newton 步数&lt;/strong&gt;占比非常小，表明 Newton 的执行效率较高。结合 &lt;strong&gt;Object Time&lt;/strong&gt; 还可以得到&lt;strong&gt;Assembling&lt;/strong&gt;是除线性求解器外的主要耗时来源。而&lt;strong&gt;通信&lt;/strong&gt;花费了相对较少的时间，后续在&lt;strong&gt;并行环境&lt;/strong&gt;下再进行测试。&lt;/p&gt;
+&lt;p&gt;因此这里的主体优化采取“&lt;strong&gt;先软后硬&lt;/strong&gt;”的优化策略。&lt;/p&gt;
+&lt;h2 id=&#34;进程修改&#34;&gt;&lt;a href=&#34;#进程修改&#34; class=&#34;headerlink&#34; title=&#34;进程修改&#34;&gt;&lt;/a&gt;进程修改&lt;/h2&gt;&lt;p&gt;因为pdf文件中告知，&lt;strong&gt;改变运行的进程数是最有效的方法&lt;/strong&gt;，因此这里先寻找一个最佳进程数。经过多次尝试，博主发现当进程数为52时，程序的&lt;code&gt;object time&lt;/code&gt;最小，为54.890s，如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241003225420855.png&#34; alt=&#34;image-20241003225420855&#34;&gt;&lt;/p&gt;
+&lt;p&gt;但是为什么随着进程数的增加，&lt;code&gt;object time&lt;/code&gt;会先降后增呢？经过查阅与思考后，得到以下几条原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在增加进程数时，如果任务不能均匀分配到所有进程中，程序完成不同步，&lt;strong&gt;负载不均衡&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;随着进程数增加，进程间&lt;strong&gt;通信开销&lt;/strong&gt;也会增加，通信频繁的情况会导致性能瓶颈。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数据&lt;/strong&gt;需要在更多进程之间&lt;strong&gt;传输&lt;/strong&gt;，可能引入更多的&lt;strong&gt;延迟&lt;/strong&gt;和开销。&lt;/li&gt;
+&lt;li&gt;多个进程可能&lt;strong&gt;竞争同一资源&lt;/strong&gt;（如 CPU、内存、I&amp;#x2F;O 设备），当进程数过多时，资源争用加剧。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因此，后续通过多机提升&lt;strong&gt;并行度&lt;/strong&gt;时，也需考虑&lt;strong&gt;通信开销&lt;/strong&gt;、&lt;strong&gt;负载均衡&lt;/strong&gt;等问题，此内容将在硬件优化部分介绍，这里不再赘述。&lt;/p&gt;
+&lt;h2 id=&#34;软件优化&#34;&gt;&lt;a href=&#34;#软件优化&#34; class=&#34;headerlink&#34; title=&#34;软件优化&#34;&gt;&lt;/a&gt;软件优化&lt;/h2&gt;&lt;h3 id=&#34;性能分析准备&#34;&gt;&lt;a href=&#34;#性能分析准备&#34; class=&#34;headerlink&#34; title=&#34;性能分析准备&#34;&gt;&lt;/a&gt;性能分析准备&lt;/h3&gt;&lt;p&gt;我们这里选择 &lt;strong&gt;Intel VTune Profiler&lt;/strong&gt; 进行性能分析，因为他有非常直观的图形化界面，且支持详细的热点分析、并行性能评估（如负载均衡、线程同步问题）以及硬件性能计数器。首先我们在超算服务器上找到 &lt;strong&gt;vtune&lt;/strong&gt; 的环境变量路径，之后在用户目录下执行以下代码进行环境配置。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;vim ~/.bashrc
+#进入编辑模式后，将下方代码写入底部
+source /opt/intel/oneapi/vtune/2022.4.0/env/vars.sh #因为oneapi是2022的版本，出于兼容性的考虑，这里也选用2022版本的vtune
+#保存退出后，更新环境变量
+source ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;之后执行&lt;code&gt;vtune-gui&lt;/code&gt;进行测试以打开图形化界面，出现下图界面即代表配置成功。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241003153354108.png&#34; alt=&#34;image-20241003153354108&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;线性求解器优化&#34;&gt;&lt;a href=&#34;#线性求解器优化&#34; class=&#34;headerlink&#34; title=&#34;线性求解器优化&#34;&gt;&lt;/a&gt;线性求解器优化&lt;/h3&gt;&lt;p&gt;这里本来打算利用vtune辅助定位进行优化的，可是vtune只能分析可执行二进制文件，而源文件&lt;code&gt;PETSC_FIM_solver.cpp&lt;/code&gt;没有进行编译，在编译过程中，遇到了一些问题，比如&lt;strong&gt;头文件的嵌套调用&lt;/strong&gt;、&lt;strong&gt;链接器未正确链接到所需的 PETSc 库&lt;/strong&gt;等问题。解决一系列问题后，发现&lt;code&gt;petsc-config&lt;/code&gt;命令更新为了&lt;code&gt;pkg-config&lt;/code&gt;，后续又出现了一系列的兼容问题，为了不耽误更多时间，以下内容不再使用vtune进行定位优化，而是凭借程序设计经验对复杂度进行优化。&lt;/p&gt;
+&lt;p&gt;为了操作快捷，这里先将该代码拷贝到本地修改，之后再传回服务器进行测试。后续修改的部分源代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;// Modifiable Area  v
+    for (int i = 0; i &amp;lt; nBlockRows; i++)
+    &amp;#123;
+        nDCount[i] = 0;
+        for (int j = rpt[i]; j &amp;lt; rpt[i + 1]; j++)
+        &amp;#123;
+            if (cpt[j] &amp;gt;= Istart &amp;amp;&amp;amp; cpt[j] &amp;lt;= Iend)
+            &amp;#123;
+                nDCount[i]++;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+
+    for (int i = 0; i &amp;lt; nBlockRows; i++)
+    &amp;#123;
+        nNDCount[i] = rpt[i + 1] - rpt[i] - nDCount[i];
+    &amp;#125;
+
+    int *globalx = (int *)malloc(blockSize * sizeof(int));
+    int *globaly = (int *)malloc(blockSize * sizeof(int));
+    for (Ii = 0; Ii &amp;lt; nBlockRows; Ii++)
+    &amp;#123;
+        for (i = 0; i &amp;lt; blockSize; i++)
+        &amp;#123;
+            globalx[i] = (Ii + Istart) * blockSize + i;
+        &amp;#125;
+
+        for (int i = rpt[Ii]; i &amp;lt; rpt[Ii + 1]; i++)
+        &amp;#123;
+
+            for (int j = 0; j &amp;lt; blockSize; j++)
+            &amp;#123;
+                globaly[j] = cpt[i] * blockSize + j;
+            &amp;#125;
+            ierr = MatSetValues(A, blockSize, globalx, blockSize, globaly, valpt, INSERT_VALUES);
+            CHKERRQ(ierr);
+            valpt += blockSize * blockSize;
+        &amp;#125;
+    &amp;#125;
+// Modifiable Area  ^
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;不难看出，这段代码中多次用到了嵌套循环，使复杂度达到了$O(n^2)$ 甚至$O(n^3)$，因此优化循环内的代码可获得更大的速度提升。同时，用于计算当前块在全局行索引（&lt;code&gt;globalx&lt;/code&gt;）和全局列索引（&lt;code&gt;globaly&lt;/code&gt;）中位置的变量，&lt;strong&gt;反复申请释放内存&lt;/strong&gt;会增大内存分配开销，因此可以将其改为&lt;strong&gt;静态内存&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;减少内存分配开销&#34;&gt;&lt;a href=&#34;#减少内存分配开销&#34; class=&#34;headerlink&#34; title=&#34;减少内存分配开销&#34;&gt;&lt;/a&gt;减少内存分配开销&lt;/h4&gt;&lt;p&gt;原代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;    int *globalx = (int *)malloc(blockSize * sizeof(int));
+    int *globaly = (int *)malloc(blockSize * sizeof(int));
+/----------------------------------------------------------------/
+    free(globalx);
+    free(globaly);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最简单的操作应该是将 &lt;code&gt;globalx&lt;/code&gt; 和 &lt;code&gt;globaly&lt;/code&gt; 等数组的&lt;strong&gt;内存分配移到外部&lt;/strong&gt;，并进行&lt;strong&gt;静态分配&lt;/strong&gt;，以减少内存分配开销，但是这样做就超出了代码可修改范围。因此这里只能在所指定的&lt;code&gt;FIM_solver_p_cpr&lt;/code&gt;函数内进行修改。在查阅文档的时候，发现PETSc自己实现了一个内存池的操作——&lt;code&gt;PetscMalloc1&lt;/code&gt;，能够&lt;strong&gt;高效对齐分配的内存&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241003202136993.png&#34; alt=&#34;image-20241003202136993&#34;&gt;&lt;/p&gt;
+&lt;p&gt;因此修改后的代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;    static int *globalx = nullptr;  //int *globalx = (int *)malloc(blockSize * sizeof(int));
+    if(globalx == NULL)
+    &amp;#123;
+        PetscMalloc1(blockSize * sizeof(int), &amp;amp;globalx);  //使用 PetscMa1loc1 高效分配对齐的内存 
+    &amp;#125;
+
+    static int *globaly = nullptr;  //int *globaly = (int *)malloc(blockSize * sizeof(int));
+    if(globaly == NULL)
+    &amp;#123;
+        PetscMalloc1(blockSize * sizeof(int), &amp;amp;globaly);  //使用 PetscMa1loc1 高效分配对齐的内存
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重跑项目，发现&lt;code&gt;object time&lt;/code&gt;为 54.533，性能几乎没有提升 ，如下图。失败案例+1&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241004011805774.png&#34; alt=&#34;image-20241004011805774&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;嵌套循环的优化&#34;&gt;&lt;a href=&#34;#嵌套循环的优化&#34; class=&#34;headerlink&#34; title=&#34;嵌套循环的优化&#34;&gt;&lt;/a&gt;嵌套循环的优化&lt;/h4&gt;&lt;p&gt;经过研究后，发现复杂度通过正常方法是没法改变的，可能需要借助更高级的数学库以降低复杂度，这里只找到了两处可以略微提高速率的地方，并且不再单独进行测试，肯定不会有很大的改进，代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;    for (int i = 0; i &amp;lt; nBlockRows; i++)
+    &amp;#123;
+        nDCount[i] = 0;
+        for (int j = rpt[i]; j &amp;lt; rpt[i + 1]; j++)
+        &amp;#123;
+            if (cpt[j] &amp;gt;= Istart &amp;amp;&amp;amp; cpt[j] &amp;lt;= Iend)
+            &amp;#123;
+                nDCount[i]++;
+            &amp;#125;
+        &amp;#125;
+        nNDCount[i] = rpt[i + 1] - rpt[i] - nDCount[i]; /*合并 nDCount 和 nNDCount 的计算，减少不必要的遍历*/
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;    for (Ii = 0; Ii &amp;lt; nBlockRows; Ii++)
+    &amp;#123;
+        int baseGlobalX = (Ii + Istart) * blockSize;  // 计算baseGlobalX，避免在循环中重复计算
+        for (i = 0; i &amp;lt; blockSize; i++)
+        &amp;#123;
+            globalx[i] = baseGlobalX + i;
+        &amp;#125;
+
+        for (int i = rpt[Ii]; i &amp;lt; rpt[Ii + 1]; i++)
+        &amp;#123;
+            int baseGlobalY = cpt[i] * blockSize;  // 计算baseGlobalY，避免在循环中重复计算
+            for (int j = 0; j &amp;lt; blockSize; j++)
+            &amp;#123;
+                globaly[j] = baseGlobalY + j;
+            &amp;#125;
+
+            ierr = MatSetValues(A, blockSize, globalx, blockSize, globaly, valpt, INSERT_VALUES);
+            CHKERRQ(ierr);
+            valpt += blockSize * blockSize;
+        &amp;#125;
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;后续补充&#34;&gt;&lt;a href=&#34;#后续补充&#34; class=&#34;headerlink&#34; title=&#34;后续补充&#34;&gt;&lt;/a&gt;后续补充&lt;a name=&#34;线性求解器&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;后面利用vtune进行性能分析时，发现该可修改部分所处的函数，一共才用时不到16s，这说明&lt;strong&gt;在模拟时间的显示中，线性求解器所用的时间虽然是最长的，但是实际上petsc_solver只是整个线性求解过程中的一个子调用，有其他函数或模块在调用这个求解器，并在其中花费了大量时间。&lt;/strong&gt;这里给我带来的经验就是，不要想当然，要通过具体的分析工具来进行确定！并且，&lt;strong&gt;矩阵计算并行化&lt;/strong&gt;也会得到很大的提升，详见&lt;a href=&#34;#%E5%B9%B6%E8%A1%8C%E4%BC%98%E5%8C%96*&#34;&gt;此处&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241003235632007.png&#34; alt=&#34;image-20241003235632007&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;OpenCAEPoro源文件优化&#34;&gt;&lt;a href=&#34;#OpenCAEPoro源文件优化&#34; class=&#34;headerlink&#34; title=&#34;OpenCAEPoro源文件优化&#34;&gt;&lt;/a&gt;OpenCAEPoro源文件优化&lt;/h3&gt;&lt;h4 id=&#34;定位优化函数&#34;&gt;&lt;a href=&#34;#定位优化函数&#34; class=&#34;headerlink&#34; title=&#34;定位优化函数&#34;&gt;&lt;/a&gt;定位优化函数&lt;/h4&gt;&lt;p&gt;执行下方指令，利用vtune进行性能分析。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt; mpirun -np 52 vtune -collect hotspots -r ./vtune_results -- ./testOpenCAEPoro ./data/case1/case1.data verbose=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;分析结果如下图所示，&lt;strong&gt;位于前列的函数即为我们需要着重进行优化的函数&lt;/strong&gt;。首先，&lt;code&gt;hypre_BoomerAMGBuildCoarseOperatorKT&lt;/code&gt; 和 &lt;code&gt;hypre_BigBinarySearch&lt;/code&gt;来自 HYPRE 库，虽然耗时很长，但由于它们属于外部库（&lt;code&gt;libHYPRE&lt;/code&gt;），无法直接对其进行源码级别的优化。&lt;code&gt;PMPI_Waitall&lt;/code&gt; 和 &lt;code&gt;PMPI_Testall&lt;/code&gt;属于 MPI 库，表明程序的大量时间花费在等待和通信中。&lt;strong&gt;通信开销较高意味着并行化效率不足&lt;/strong&gt;，优化详见&lt;a href=&#34;#%E5%B9%B6%E8%A1%8C%E4%BC%98%E5%8C%96&#34;&gt;此处&lt;/a&gt;。&lt;code&gt;MatSolve_SeqBAIJ_4_NaturalOrdering&lt;/code&gt;和&lt;code&gt;MatMult_SeqBAIJ_4&lt;/code&gt; 来自 PETSc 库，负责矩阵乘法和矩阵求解操作，后续可&lt;strong&gt;利用 GPU 优化矩阵操作&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241003235753565.png&#34; alt=&#34;image-20241003235753565&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;组分连接函数优化&#34;&gt;&lt;a href=&#34;#组分连接函数优化&#34; class=&#34;headerlink&#34; title=&#34;组分连接函数优化&#34;&gt;&lt;/a&gt;组分连接函数优化&lt;/h4&gt;&lt;p&gt;在&lt;code&gt;Partition&lt;/code&gt;的源码中不难发现，其不同组分直接的连接是通过&lt;strong&gt;遍历数组&lt;/strong&gt;实现的。这就导致查找不同组分的连接，在2x2x2的组分中，获得连接信息就要跑24次。所以这里尝试用哈希表降维打击。修改代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;/// Get neighbors&amp;#39; process from other process
+    std::unordered_map&amp;lt;idx_t, idx_t&amp;gt; ump_right_neighbor; 
+    std::unordered_map&amp;lt;idx_t, idx_t&amp;gt; ump_send_buffer; //创建哈希表
+    vector&amp;lt;vector&amp;lt;idx_t&amp;gt;&amp;gt;     left_neighbor_proc;
+    vector&amp;lt;vector&amp;lt;NeighborP&amp;gt;&amp;gt; right_neighbor;
+    vector&amp;lt;vector&amp;lt;idx_t&amp;gt;&amp;gt;     right_neighbor_proc;
+
+    for (idx_t i = 0; i &amp;lt; numElementLocal; i++) &amp;#123;
+        for (idx_t j = xadj[i]; j &amp;lt; xadj[i + 1]; j++) &amp;#123;
+            if (adjncy[j] &amp;lt; vtxdist[myrank] || adjncy[j] &amp;gt;= vtxdist[myrank + 1]) &amp;#123;
+                // adjncy[j] 不在当前进程中，找到其对应的进程
+                // 首先进行估算
+                idx_t p = adjncy[j] / numElementLocal;
+                if (adjncy[j] &amp;gt;= vtxdist[p]) &amp;#123;
+                    while (adjncy[j] &amp;gt;= vtxdist[p + 1]) &amp;#123; p++; &amp;#125;
+                &amp;#125; else &amp;#123;
+                    while (adjncy[j] &amp;lt; vtxdist[--p]) &amp;#123;&amp;#125;
+                &amp;#125;
+                // adjncy[j] 现在在进程 p 中 (p != myrank)
+                
+                if (ump_right_neighbor.find(p) != ump_right_neighbor.end()) &amp;#123;
+                    // 如果进程 p 已经存在于right_neighbor中，直接访问
+                    idx_t k = ump_right_neighbor[p];
+                    right_neighbor[k].push_back(NeighborP(adjncy[j], j));
+                    left_neighbor_proc[k].push_back(part[i]);
+                &amp;#125; else &amp;#123;
+                    // 如果是新邻居进程
+                    right_neighbor.push_back(vector&amp;lt;NeighborP&amp;gt;&amp;#123;NeighborP(p, p), NeighborP(adjncy[j], j)&amp;#125;);
+                    left_neighbor_proc.push_back(vector&amp;lt;idx_t&amp;gt;&amp;#123;p, part[i]&amp;#125;);
+                    ump_right_neighbor[p] = right_neighbor.size() - 1;  // 更新哈希表
+                &amp;#125;
+            &amp;#125; else &amp;#123;
+                // adjncy[j] 在当前进程
+                adjproc[j] = part[adjncy[j] - vtxdist[myrank]];
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+
+    
+    // Calculate necessary memory first
+    for (idx_t i = 0; i &amp;lt; numElementLocal; i++) &amp;#123;
+        if (part[i] == myrank) &amp;#123;
+            recv_buffer[0][1]++;
+            recv_buffer[0][2] += (xadj[i + 1] - xadj[i]);
+        &amp;#125;
+        else &amp;#123;
+            // 使用哈希表进行查找
+            if (ump_send_buffer.find(part[i]) != ump_send_buffer.end()) &amp;#123;
+                // 如果哈希表中已经有part[i]，直接访问
+                idx_t k = ump_send_buffer[part[i]] - 1;
+                send_buffer[k][1]++;
+                send_buffer[k][2] += (xadj[i + 1] - xadj[i]);
+            &amp;#125;
+            else &amp;#123;
+                // 如果哈希表中没有part[i]，新建条目
+                send_buffer.push_back(vector&amp;lt;idx_t&amp;gt;&amp;#123;part[i], 1, xadj[i + 1] - xadj[i]&amp;#125;);
+                ump_send_buffer[part[i]] = send_buffer.size();  // 更新哈希表，索引从1开始
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最终优化结果也是出乎意料的好，&lt;code&gt;object time&lt;/code&gt;为44.833，性能提高了36.8%！不难看出&lt;code&gt;Assembling&lt;/code&gt;所耗时间明显降低（从25.837秒到16.932秒），证明此优化极大地提高了连接不同组分的效率。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241004035307412.png&#34; alt=&#34;image-20241004035307412&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;硬件优化&#34;&gt;&lt;a href=&#34;#硬件优化&#34; class=&#34;headerlink&#34; title=&#34;硬件优化&#34;&gt;&lt;/a&gt;硬件优化&lt;/h2&gt;&lt;h3 id=&#34;多机运行&#34;&gt;&lt;a href=&#34;#多机运行&#34; class=&#34;headerlink&#34; title=&#34;多机运行&#34;&gt;&lt;/a&gt;多机运行&lt;/h3&gt;&lt;p&gt;首先配置SSH密钥对以实现多机免密登录：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;mkdir .ssh
+ssh-keygen -t rsa #连续输入三次回车即可
+ssh-copy-id zhaozongxing@gpu02
+ssh-copy-id zhaozongxing@gpu03
+ssh-copy-id zhaozongxing@gpu04
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;之后编写hostfile文件，指定运行的机器以及进程数：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;txt&#34;&gt;gpu01:52
+gpu02:52
+gpu03:52
+gpu04:52
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;执行以下命令开始运行程序：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;bash&#34;&gt;mpirun -np 208 -machinefile ../hostfile ./testOpenCAEPoro ./data/case1/case1.data verbose=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;运行结果如下图，&lt;code&gt;object time&lt;/code&gt;直接突破20秒，来到了&lt;strong&gt;19.719秒&lt;/strong&gt;，相对于单机性能整整提高了一倍多。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241004053135367.png&#34; alt=&#34;image-20241004053135367&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;并行优化&#34;&gt;&lt;a href=&#34;#并行优化&#34; class=&#34;headerlink&#34; title=&#34;并行优化*&#34;&gt;&lt;/a&gt;并行优化*&lt;/h3&gt;&lt;h4 id=&#34;矩阵计算并行化&#34;&gt;&lt;a href=&#34;#矩阵计算并行化&#34; class=&#34;headerlink&#34; title=&#34;矩阵计算并行化&#34;&gt;&lt;/a&gt;矩阵计算并行化&lt;/h4&gt;&lt;p&gt;其实这里不仅局限于矩阵计算，&lt;strong&gt;所有的循环基本都可以通过并行计算进行优化&lt;/strong&gt;，出于时间问题，这里还是以&lt;code&gt;PETSC_FIM_solver&lt;/code&gt;函数为例。当使用 &lt;code&gt;#pragma omp parallel for&lt;/code&gt; 时，OpenMP 会将 &lt;code&gt;for&lt;/code&gt; 循环的迭代任务划分给不同的线程，并行执行，从而加快代码的运行速度，在计算密集型任务中尤其明显。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;    #pragma omp parallel for
+    for (int i = 0; i &amp;lt; nBlockRows; i++) &amp;#123;
+        int local_nDCount = 0;	/*这里使用新变量（local_nDCount）而不是直接使用nDCount[0]，
+                                是为了避免数据竞争，避免多个线程同时尝试写入同一个变量（nDCount[0]）*/
+        for (int j = rpt[i]; j &amp;lt; rpt[i + 1]; j++) &amp;#123;
+            if (cpt[j] &amp;gt;= Istart &amp;amp;&amp;amp; cpt[j] &amp;lt;= Iend) &amp;#123;
+                local_nDCount++;
+            &amp;#125;
+        &amp;#125;
+        nDCount[i] = local_nDCount;
+        nNDCount[i] = rpt[i + 1] - rpt[i] - local_nDCount; 
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;c++&#34;&gt;    int localError = 0;
+
+    #pragma omp parallel for private(globalx, globaly, valpt) shared(localError) schedule(static)
+    /*
+    （1）每个线程在处理不同的 Ii 时会有不同的值，因此globalx, globaly, valpt等变量应该是私有的
+    （2）需要检查所有线程是否发生错误并在外部处理，因此应该共享localError变量
+    （3）schedule 指令可以优化线程负载分配和负载平衡，以提高并行效率。
+    */
+    for (Ii = 0; Ii &amp;lt; nBlockRows; Ii++)
+    &amp;#123;
+        for (i = 0; i &amp;lt; blockSize; i++)
+        &amp;#123;
+            globalx[i] = (Ii + Istart) * blockSize + i;
+        &amp;#125;
+
+        for (int i = rpt[Ii]; i &amp;lt; rpt[Ii + 1]; i++)
+        &amp;#123;
+
+            for (int j = 0; j &amp;lt; blockSize; j++)
+            &amp;#123;
+                globaly[j] = cpt[i] * blockSize + j;
+            &amp;#125;
+            ierr = MatSetValues(A, blockSize, globalx, blockSize, globaly, valpt, INSERT_VALUES);
+            if (ierr)
+            &amp;#123;
+                #pragma omp critical // 防止多个线程同时修改 localError
+                &amp;#123;localError = ierr;&amp;#125;        
+            &amp;#125;
+            valpt += blockSize * blockSize;
+        &amp;#125;
+    &amp;#125;
+    if (localError) &amp;#123;
+        CHKERRQ(localError);//CHKERRQ(ierr)含return操作（当发生错误时会返回非零值），而OpenMP并行块中并不允许。
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;单机运行时，&lt;code&gt;object time&lt;/code&gt; 为&lt;strong&gt;42.162&lt;/strong&gt;，多机运行时，&lt;code&gt;object time&lt;/code&gt; 为&lt;strong&gt;18.236&lt;/strong&gt;，相比之下，多机运行提升的效率更高。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241004064635777.png&#34; alt=&#34;image-20241004064635777&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20241004064846984.png&#34; alt=&#34;image-20241004064846984&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;其他并行化操作&#34;&gt;&lt;a href=&#34;#其他并行化操作&#34; class=&#34;headerlink&#34; title=&#34;其他并行化操作&#34;&gt;&lt;/a&gt;其他并行化操作&lt;/h4&gt;&lt;p&gt;除了矩阵运算外，还可以通过&lt;strong&gt;合并信息&lt;/strong&gt;、&lt;strong&gt;非阻塞通信&lt;/strong&gt;等手段来&lt;strong&gt;减少通信开销&lt;/strong&gt;，而针对于&lt;code&gt;MPI&lt;/code&gt;也可利用其&lt;strong&gt;集体通信函数&lt;/strong&gt;，并通过调优其&lt;strong&gt;参数&lt;/strong&gt;进行优化。因为时间问题，这里不再赘述，后续有时间可以对此进行更新！&lt;/p&gt;
+</content>
         <updated>2024-09-16T14:37:35.000Z</updated>
     </entry>
     <entry>
