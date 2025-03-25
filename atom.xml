@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://barbedcotton.github.io</id>
+    <id>http://blog.barbedcotton.cn</id>
     <title>知微書閣</title>
     <subtitle>低头赶路，敬事如仪</subtitle>
-    <icon>http://barbedcotton.github.io/assets/favicon.ico</icon>
-    <link href="http://barbedcotton.github.io" />
+    <icon>http://blog.barbedcotton.cn/assets/favicon.ico</icon>
+    <link href="http://blog.barbedcotton.cn" />
     <author>
       <name>织心星笛</name>
     </author>
@@ -15,9 +15,9 @@
     <category term="生活" />
     <category term="成长" />
     <entry>
-        <id>http://barbedcotton.github.io/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/</id>
+        <id>http://blog.barbedcotton.cn/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/</id>
         <title>超算真题一：OpenCAEPoro的优化</title>
-        <link rel="alternate" href="http://barbedcotton.github.io/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/"/>
+        <link rel="alternate" href="http://blog.barbedcotton.cn/%E8%B6%85%E7%AE%97%E7%9C%9F%E9%A2%98%E4%B8%80%EF%BC%9AOpenCAEPoro%E7%9A%84%E4%BC%98%E5%8C%96/"/>
         <content type="html">&lt;h1 id=&#34;赛题编译&#34;&gt;&lt;a href=&#34;#赛题编译&#34; class=&#34;headerlink&#34; title=&#34;赛题编译&#34;&gt;&lt;/a&gt;赛题编译&lt;/h1&gt;&lt;p&gt;在正式开始之前，我尝试配置cuda、git等环境，但都因权限受限没有成功。于是这里直接使用原有的&lt;strong&gt;cuda_12.2&lt;/strong&gt;以及windows本地的&lt;strong&gt;git bash&lt;/strong&gt;，整个克隆、编译及优化过程都是通过 &lt;strong&gt;MobaXterm&lt;/strong&gt; 完成的，这里也非常推荐大家使用这款免费且功能强大的远程终端控制软件。这也是我在个人博客网站利用 &lt;strong&gt;markdown&lt;/strong&gt; 写的第一篇博客，欢迎大家留言讨论！&lt;/p&gt;
 &lt;h2 id=&#34;赛题克隆&#34;&gt;&lt;a href=&#34;#赛题克隆&#34; class=&#34;headerlink&#34; title=&#34;赛题克隆&#34;&gt;&lt;/a&gt;赛题克隆&lt;/h2&gt;&lt;p&gt;首先我们进入项目主页：&lt;a href=&#34;https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024&#34;&gt;OpenCAEPoro for ASC 2024 &lt;/a&gt;，之后进行下图选择复制该项目的URL。&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;D:\HexoBlog\blog\source\imgs\OpenCAEPoro\项目url.png&#34;&gt;&lt;/p&gt;
