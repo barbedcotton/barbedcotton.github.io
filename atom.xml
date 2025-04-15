@@ -8,12 +8,32 @@
     <author>
       <name>织心星笛</name>
     </author>
-    <updated>2024-09-16T14:37:35.000Z</updated>
+    <updated>2025-04-08T08:34:11.000Z</updated>
     <category term="高性能计算" />
     <category term="算法设计" />
     <category term="人工智能" />
     <category term="生活" />
     <category term="成长" />
+    <entry>
+        <id>http://blog.barbedcotton.cn/25041/</id>
+        <title>状态空间搜索——无信息搜索</title>
+        <link rel="alternate" href="http://blog.barbedcotton.cn/25041/"/>
+        <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;状态空间搜索根据是否使用&lt;strong&gt;启发式信息&lt;/strong&gt;（Heuristic information）分为&lt;strong&gt;无信息搜索&lt;/strong&gt;（Uninformed Search）和&lt;strong&gt;有信息搜索&lt;/strong&gt;（Uninformed Search）。在本文中，我们先对无信息搜索的算法进行学习和复现。常用的无信息搜索算法包括：&lt;strong&gt;深度优先搜索&lt;/strong&gt;（Depth-First Search, DFS）、&lt;strong&gt;广度优先搜索&lt;/strong&gt;（Breadth-First Search, BFS）、&lt;strong&gt;迭代加深深度优先搜索&lt;/strong&gt;（Iterative Deepening Depth-First Search, IDDFS）和&lt;strong&gt;一致代价搜索&lt;/strong&gt;（Uniform Cost Search, UCS）。众所周知，连通无回路图与树在本质上是等价的，它们可以相互转换，因此本文只以&lt;strong&gt;无环有向图&lt;/strong&gt;为例来实现各种无信息搜索算法。&lt;/p&gt;
+&lt;h1 id=&#34;深度优先搜索（DFS）&#34;&gt;&lt;a href=&#34;#深度优先搜索（DFS）&#34; class=&#34;headerlink&#34; title=&#34;深度优先搜索（DFS）&#34;&gt;&lt;/a&gt;深度优先搜索（DFS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;深度优先，顾名思义即深度较大的节点会被优先遍历。在DFS中，使用&lt;strong&gt;栈&lt;/strong&gt;（Stack）数据结构来实现上述特性。栈是一种&lt;strong&gt;先入后出&lt;/strong&gt;（LIFO）的容器，如下图：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415220307113.png&#34; alt=&#34;image-20250415220307113&#34; style=&#34;zoom:50%;&#34; /&gt;
+
+&lt;p&gt;以在课件中给出的&lt;strong&gt;无权图&lt;/strong&gt;中找到从节点&lt;code&gt;S&lt;/code&gt;到节点&lt;code&gt;G&lt;/code&gt;的路径为例，说明一下DFS算法的工作流程&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415221259379.png&#34; alt=&#34;image-20250415221259379&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;按照图搜索算法的基本流程进行搜索，过程如下：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415224606846.png&#34; alt=&#34;image-20250415224606846&#34; style=&#34;zoom:80%;&#34; /&gt;
+
+&lt;p&gt;但我们不只是为了找到最终的目标点，还要记录其经过的路径。因此在状态4，发现节点&lt;code&gt;a&lt;/code&gt;没有未访问过的邻接节点时，再回溯至状态3，发现节点&lt;code&gt;c&lt;/code&gt;也没有未访问过的邻接节点，因此再回溯至状态2，此时&lt;code&gt;d&lt;/code&gt;的邻接节点&lt;code&gt;e&lt;/code&gt;还未被访问，因此弹出&lt;code&gt;d&lt;/code&gt;压入&lt;code&gt;e&lt;/code&gt;，而此时&lt;code&gt;e&lt;/code&gt;已在栈中，因此只需要弹出&lt;code&gt;d&lt;/code&gt;即可，如下图：&lt;br&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415230113024.png&#34; alt=&#34;image-20250415230113024&#34; style=&#34;zoom:70%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;从&lt;code&gt;G&lt;/code&gt;回溯，依次弹出的节点即为所经过的路径：&lt;code&gt;S&lt;/code&gt;-&amp;gt;&lt;code&gt;d&lt;/code&gt;-&amp;gt;&lt;code&gt;e&lt;/code&gt;-&amp;gt;&lt;code&gt;r&lt;/code&gt;-&amp;gt;&lt;code&gt;f&lt;/code&gt;-&amp;gt;&lt;code&gt;G&lt;/code&gt;，如下：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415225906171.png&#34; alt=&#34;image-20250415225906171&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;实现&#34;&gt;&lt;a href=&#34;#实现&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点&#34;&gt;&lt;a href=&#34;#优缺点&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;广度优先搜索（BFS）&#34;&gt;&lt;a href=&#34;#广度优先搜索（BFS）&#34; class=&#34;headerlink&#34; title=&#34;广度优先搜索（BFS）&#34;&gt;&lt;/a&gt;广度优先搜索（BFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点-1&#34;&gt;&lt;a href=&#34;#优缺点-1&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a href=&#34;#原理-2&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-2&#34;&gt;&lt;a href=&#34;#实现-2&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点-2&#34;&gt;&lt;a href=&#34;#优缺点-2&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;</content>
+        <updated>2025-04-08T08:34:11.000Z</updated>
+    </entry>
     <entry>
         <id>http://blog.barbedcotton.cn/24101/</id>
         <title>超算真题一：OpenCAEPoro的优化</title>
