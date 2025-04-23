@@ -15,15 +15,15 @@
     <category term="生活" />
     <category term="成长" />
     <entry>
-        <id>http://blog.barbedcotton.cn/25041/</id>
+        <id>http://blog.barbedcotton.cn/25031/</id>
         <title>状态空间搜索——无信息搜索</title>
-        <link rel="alternate" href="http://blog.barbedcotton.cn/25041/"/>
-        <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;状态空间搜索根据是否使用&lt;strong&gt;启发式信息&lt;/strong&gt;（Heuristic information）分为&lt;strong&gt;无信息搜索&lt;/strong&gt;（Uninformed Search）和&lt;strong&gt;有信息搜索&lt;/strong&gt;（Uninformed Search）。在本文中，我们先对无信息搜索的算法进行学习和复现。常用的无信息搜索算法包括：&lt;strong&gt;深度优先搜索&lt;/strong&gt;（Depth-First Search, DFS）、&lt;strong&gt;广度优先搜索&lt;/strong&gt;（Breadth-First Search, BFS）、&lt;strong&gt;迭代加深深度优先搜索&lt;/strong&gt;（Iterative Deepening Depth-First Search, IDDFS）和&lt;strong&gt;一致代价搜索&lt;/strong&gt;（Uniform Cost Search, UCS）。众所周知，连通无回路图与树在本质上是等价的，它们可以相互转换，因此本文只以&lt;strong&gt;无环有向图&lt;/strong&gt;为例来实现各种无信息搜索算法。&lt;/p&gt;
+        <link rel="alternate" href="http://blog.barbedcotton.cn/25031/"/>
+        <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;状态空间搜索根据是否使用&lt;strong&gt;启发式信息&lt;/strong&gt;（Heuristic information）分为&lt;strong&gt;无信息搜索&lt;/strong&gt;（Uninformed Search）和&lt;strong&gt;有信息搜索&lt;/strong&gt;（Uninformed Search）。在本文中，我们先对无信息搜索的算法进行学习和复现。常用的无信息搜索算法包括：&lt;strong&gt;深度优先搜索&lt;/strong&gt;（Depth-First Search, DFS）、&lt;strong&gt;广度优先搜索&lt;/strong&gt;（Breadth-First Search, BFS）、&lt;strong&gt;迭代加深搜索&lt;/strong&gt;（Iterative Deepening Depth-First Search, IDDFS）和&lt;strong&gt;一致代价搜索&lt;/strong&gt;（Uniform Cost Search, UCS）。众所周知，连通无回路图与树在本质上是等价的，它们可以相互转换，因此本文只以&lt;strong&gt;无环有向图&lt;/strong&gt;为例来实现各种无信息搜索算法。&lt;/p&gt;
 &lt;h1 id=&#34;深度优先搜索（DFS）&#34;&gt;&lt;a href=&#34;#深度优先搜索（DFS）&#34; class=&#34;headerlink&#34; title=&#34;深度优先搜索（DFS）&#34;&gt;&lt;/a&gt;深度优先搜索（DFS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;深度优先，顾名思义即深度较大的节点会被优先遍历。在DFS中，使用&lt;strong&gt;栈&lt;/strong&gt;（Stack）数据结构来实现上述特性。栈是一种&lt;strong&gt;先入后出&lt;/strong&gt;（LIFO）的容器，如下图：&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415220307113.png&#34; alt=&#34;image-20250415220307113&#34; style=&#34;zoom:50%;&#34; /&gt;
 
 &lt;p&gt;以在课件中给出的&lt;strong&gt;无权图&lt;/strong&gt;中找到从节点&lt;code&gt;S&lt;/code&gt;到节点&lt;code&gt;G&lt;/code&gt;的路径为例，说明一下DFS算法的工作流程&lt;/p&gt;
-&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415221259379.png&#34; alt=&#34;image-20250415221259379&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;img id=&#34;example&#34; loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415221259379.png&#34; alt=&#34;image-20250415221259379&#34; style=&#34;zoom:67%;&#34; /&gt;
 
 &lt;p&gt;按照图搜索算法的基本流程进行搜索，过程如下：&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250416155354590.png&#34; alt=&#34;image-20250416155354590&#34; style=&#34;zoom:80%;&#34; /&gt;
@@ -72,7 +72,7 @@ function reconstruct_path(parent, target):
     返回 path
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/dfs_animation.gif&#34; alt=&#34;dfs_animation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;![dfs_animation](D:\Principles of AI\uninformed search\dfs\dfs_animation.gif)&lt;/p&gt;
 &lt;h2 id=&#34;算法特性&#34;&gt;&lt;a href=&#34;#算法特性&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;因DFS需要借助递归工作栈的特性，其节点访问顺序取决于压栈顺序，若需要特定顺序（如字母序），可对邻接节点进行排序。在时空复杂度方面，在本次使用&lt;strong&gt;邻接表&lt;/strong&gt;来表示图的情况下，时间复杂度为&lt;strong&gt;O(V+E)&lt;/strong&gt;（V为顶点数，E为边数），空间复杂度为&lt;strong&gt;O(V)&lt;/strong&gt;（最坏情况存储所有节点）。在路径回溯时，通过父节点字典反向追踪路径，并使用头部插入保持路径顺序，实现路径的正常输出。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点：&lt;/p&gt;
@@ -88,7 +88,87 @@ function reconstruct_path(parent, target):
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;广度优先搜索（BFS）&#34;&gt;&lt;a href=&#34;#广度优先搜索（BFS）&#34; class=&#34;headerlink&#34; title=&#34;广度优先搜索（BFS）&#34;&gt;&lt;/a&gt;广度优先搜索（BFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-1&#34;&gt;&lt;a href=&#34;#算法特性-1&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a href=&#34;#原理-2&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-2&#34;&gt;&lt;a href=&#34;#实现-2&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;</content>
+&lt;h1 id=&#34;广度优先搜索（BFS）&#34;&gt;&lt;a href=&#34;#广度优先搜索（BFS）&#34; class=&#34;headerlink&#34; title=&#34;广度优先搜索（BFS）&#34;&gt;&lt;/a&gt;广度优先搜索（BFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;在BFS中，采用**队列(Queue)&lt;strong&gt;作为openlist的数据结构。队列是一种&lt;/strong&gt;先进先出(FIFO)**的容器，如下图&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423221503990.png&#34; alt=&#34;image-20250423221503990&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;在课件中给出的&lt;a href=&#34;#example&#34;&gt;&lt;strong&gt;无权图&lt;/strong&gt;&lt;/a&gt;中找到从节点&lt;code&gt;S&lt;/code&gt;到节点&lt;code&gt;G&lt;/code&gt;的路径为例，说明一下BFS算法的工作流程。其流程与上节中DFS类似，继续以上节的图举例，过程如下，首先创建一个队列作为容器，将节点&lt;code&gt;s&lt;/code&gt;加入队列：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423230643736.png&#34; alt=&#34;image-20250423230643736&#34;&gt;&lt;/p&gt;
+&lt;p&gt;接着将节点&lt;code&gt;S&lt;/code&gt;弹出队列，将节点&lt;code&gt;S&lt;/code&gt;周围没有访问过的节点加入队列&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423224833929.png&#34; alt=&#34;image-20250423224833929&#34;&gt;&lt;/p&gt;
+&lt;p&gt;按照上面的流程不断地&lt;strong&gt;弹出、扩展&lt;/strong&gt;节点，直到找到节点&lt;code&gt;G&lt;/code&gt;为止，完整流程如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423224935740.png&#34; alt=&#34;image-20250423224935740&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423224948517.png&#34; alt=&#34;image-20250423224948517&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225010767.png&#34; alt=&#34;image-20250423225010767&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225022821.png&#34; alt=&#34;image-20250423225022821&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225034764.png&#34; alt=&#34;image-20250423225034764&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225052180.png&#34; alt=&#34;image-20250423225052180&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225105170.png&#34; alt=&#34;image-20250423225105170&#34;&gt;&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225117648.png&#34; alt=&#34;image-20250423225117648&#34; style=&#34;zoom: 67%;&#34; /&gt;
+
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225130068.png&#34; alt=&#34;image-20250423225130068&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225148180.png&#34; alt=&#34;image-20250423225148180&#34;&gt;&lt;/p&gt;
+&lt;p&gt;之后从终点开始回溯，不断寻找当前节点的父节点（即&lt;strong&gt;push该节点时，pop出去的节点&lt;/strong&gt;），&lt;code&gt;G&lt;/code&gt;的父节点为&lt;code&gt;f&lt;/code&gt;，&lt;code&gt;f&lt;/code&gt;的父节点为&lt;code&gt;r&lt;/code&gt;，依次类推直到找到&lt;code&gt;S&lt;/code&gt;节点，这样就可以得到&lt;code&gt;S&lt;/code&gt;到&lt;code&gt;G&lt;/code&gt;的&lt;strong&gt;最短路径&lt;/strong&gt;为：&lt;code&gt;S&lt;/code&gt;-&amp;gt;&lt;code&gt;e&lt;/code&gt;-&amp;gt;&lt;code&gt;r&lt;/code&gt;-&amp;gt;&lt;code&gt;f&lt;/code&gt;-&amp;gt;&lt;code&gt;G&lt;/code&gt;，如下：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423230517127.png&#34; alt=&#34;image-20250423230517127&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;根据上述原理，很容易得到广度优先搜索的伪代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;算法：广度优先搜索（BFS）
+输入：图 G = (V, E)，起始节点 start，目标节点 target
+输出：从 start 到 target 的路径（如果存在），否则返回空列表
+
+procedure BFS(G, start, target):  
+    初始化：  
+        queue ← 空队列                // 使用队列记录待探索节点  
+        visited ← 空集合             // 记录已访问节点  
+        parent ← 空字典              // 记录节点的父节点用于回溯路径  
+
+        queue.enqueue(start)         // 将起始节点加入队列  
+        visited.add(start)  
+        parent[start] ← null  
+
+    while queue 非空:  
+        current ← queue.dequeue()    // 取出队列头部节点  
+
+        if current == target:        // 找到目标节点  
+            返回 reconstruct_path(parent, target)  
+
+        for each neighbor in G.adjacent_nodes(current):  // 遍历相邻节点  
+            if neighbor 未在 visited 中:  
+                visited.add(neighbor)  
+                parent[neighbor] ← current  
+                queue.enqueue(neighbor)  // 将未访问的邻居加入队列尾部  
+
+    返回 空列表                      // 未找到路径  
+
+// 辅助函数：通过父节点字典回溯路径（与DFS相同）  
+function reconstruct_path(parent, target):  
+    path ← 空列表  
+    current ← target  
+
+    while current ≠ null:  
+        path.insert(0, current)      // 在头部插入节点  
+        current ← parent[current]  
+
+    返回 path  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/bfs_animation.gif&#34; alt=&#34;bfs_animation&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;算法特性-1&#34;&gt;&lt;a href=&#34;#算法特性-1&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;BFS 需要借助队列来工作，其节点访问顺序是按照先进先出（FIFO）的原则，从起始节点开始逐层向外扩展。若需要特定顺序（如字母序），同样可对邻接节点进行排序，使得在同一层中按照特定顺序访问节点。在时空复杂度方面，在本次使用&lt;strong&gt;邻接表&lt;/strong&gt;来表示图的情况下，时间复杂度为&lt;strong&gt;O(V+E)&lt;/strong&gt;（V 为顶点数，E 为边数，因为每个顶点和每条边都最多被访问一次），空间复杂度为&lt;strong&gt;O(V)&lt;/strong&gt;（在最坏情况下，队列中可能存储图中所有的顶点）。在路径回溯时，通过父节点字典反向追踪路径，并使用头部插入保持路径顺序，实现路径的正常输出。综上所述，其具有以下优缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;若存在最短路径（例如在无权图或边权相等的图中），BFS 能直接找到从起始节点到目标节点的最短路径。&lt;/li&gt;
+&lt;li&gt;由于是&lt;strong&gt;逐层搜索&lt;/strong&gt;，在处理有环图时相对更稳健，不会因为深度过深而导致效率极低或陷入死循环&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;缺点：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;因为需要维护队列来存储待访问的节点，因此在图的规模较大时，具有较大的空间复杂度&lt;/li&gt;
+&lt;li&gt;对于某些问题，如果最优解在较深的层次，BFS 可能会遍历很多不必要的节点，导致搜索效率较低&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;a href=&#34;#迭代加深搜索（IDDFS）&#34; class=&#34;headerlink&#34; title=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;/a&gt;&lt;strong&gt;迭代加深搜索&lt;/strong&gt;（IDDFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a href=&#34;#原理-2&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-2&#34;&gt;&lt;a href=&#34;#实现-2&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-3&#34;&gt;&lt;a href=&#34;#原理-3&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-3&#34;&gt;&lt;a href=&#34;#实现-3&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;</content>
         <updated>2025-04-08T08:34:11.000Z</updated>
     </entry>
     <entry>
