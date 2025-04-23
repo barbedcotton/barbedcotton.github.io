@@ -76,7 +76,7 @@ function reconstruct_path(parent, target):
     返回 path
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
-&lt;p&gt;![dfs_animation](D:\Principles of AI\uninformed search\dfs\dfs_animation.gif)&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/dfs_animation.gif&#34; alt=&#34;dfs_animation&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;算法特性&#34;&gt;&lt;a href=&#34;#算法特性&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;因DFS需要借助递归工作栈的特性，其节点访问顺序取决于压栈顺序，若需要特定顺序（如字母序），可对邻接节点进行排序。在时空复杂度方面，在本次使用&lt;strong&gt;邻接表&lt;/strong&gt;来表示图的情况下，时间复杂度为&lt;strong&gt;O(V+E)&lt;/strong&gt;（V为顶点数，E为边数），空间复杂度为&lt;strong&gt;O(V)&lt;/strong&gt;（最坏情况存储所有节点）。在路径回溯时，通过父节点字典反向追踪路径，并使用头部插入保持路径顺序，实现路径的正常输出。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点：&lt;/p&gt;
@@ -107,9 +107,9 @@ function reconstruct_path(parent, target):
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225034764.png&#34; alt=&#34;image-20250423225034764&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225052180.png&#34; alt=&#34;image-20250423225052180&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225105170.png&#34; alt=&#34;image-20250423225105170&#34;&gt;&lt;/p&gt;
-&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225117648.png&#34; alt=&#34;image-20250423225117648&#34; style=&#34;zoom: 67%;&#34; /&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225117648.png&#34; alt=&#34;image-20250423225117648&#34; style=&#34;zoom: 80%;&#34; /&gt;
 
-&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225130068.png&#34; alt=&#34;image-20250423225130068&#34; style=&#34;zoom:67%;&#34; /&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225130068.png&#34; alt=&#34;image-20250423225130068&#34; style=&#34;zoom: 80%;&#34; /&gt;
 
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225148180.png&#34; alt=&#34;image-20250423225148180&#34;&gt;&lt;/p&gt;
 &lt;p&gt;之后从终点开始回溯，不断寻找当前节点的父节点（即&lt;strong&gt;push该节点时，pop出去的节点&lt;/strong&gt;），&lt;code&gt;G&lt;/code&gt;的父节点为&lt;code&gt;f&lt;/code&gt;，&lt;code&gt;f&lt;/code&gt;的父节点为&lt;code&gt;r&lt;/code&gt;，依次类推直到找到&lt;code&gt;S&lt;/code&gt;节点，这样就可以得到&lt;code&gt;S&lt;/code&gt;到&lt;code&gt;G&lt;/code&gt;的&lt;strong&gt;最短路径&lt;/strong&gt;为：&lt;code&gt;S&lt;/code&gt;-&amp;gt;&lt;code&gt;e&lt;/code&gt;-&amp;gt;&lt;code&gt;r&lt;/code&gt;-&amp;gt;&lt;code&gt;f&lt;/code&gt;-&amp;gt;&lt;code&gt;G&lt;/code&gt;，如下：&lt;/p&gt;
@@ -159,19 +159,19 @@ function reconstruct_path(parent, target):
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/bfs_animation.gif&#34; alt=&#34;bfs_animation&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;算法特性-1&#34;&gt;&lt;a href=&#34;#算法特性-1&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;BFS 需要借助队列来工作，其节点访问顺序是按照先进先出（FIFO）的原则，从起始节点开始逐层向外扩展。若需要特定顺序（如字母序），同样可对邻接节点进行排序，使得在同一层中按照特定顺序访问节点。在时空复杂度方面，在本次使用&lt;strong&gt;邻接表&lt;/strong&gt;来表示图的情况下，时间复杂度为&lt;strong&gt;O(V+E)&lt;/strong&gt;（V 为顶点数，E 为边数，因为每个顶点和每条边都最多被访问一次），空间复杂度为&lt;strong&gt;O(V)&lt;/strong&gt;（在最坏情况下，队列中可能存储图中所有的顶点）。在路径回溯时，通过父节点字典反向追踪路径，并使用头部插入保持路径顺序，实现路径的正常输出。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;优点：&lt;/li&gt;
-&lt;/ul&gt;
+&lt;li&gt;&lt;p&gt;优点：  &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;若存在最短路径（例如在无权图或边权相等的图中），BFS 能直接找到从起始节点到目标节点的最短路径。&lt;/li&gt;
 &lt;li&gt;由于是&lt;strong&gt;逐层搜索&lt;/strong&gt;，在处理有环图时相对更稳健，不会因为深度过深而导致效率极低或陷入死循环&lt;/li&gt;
 &lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;缺点：&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;缺点：  &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;因为需要维护队列来存储待访问的节点，因此在图的规模较大时，具有较大的空间复杂度&lt;/li&gt;
 &lt;li&gt;对于某些问题，如果最优解在较深的层次，BFS 可能会遍历很多不必要的节点，导致搜索效率较低&lt;/li&gt;
 &lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;a href=&#34;#迭代加深搜索（IDDFS）&#34; class=&#34;headerlink&#34; title=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;/a&gt;&lt;strong&gt;迭代加深搜索&lt;/strong&gt;（IDDFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a href=&#34;#原理-2&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-2&#34;&gt;&lt;a href=&#34;#实现-2&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-3&#34;&gt;&lt;a href=&#34;#原理-3&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-3&#34;&gt;&lt;a href=&#34;#实现-3&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt; ]]></description>
         </item>
         <item>
