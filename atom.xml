@@ -8,7 +8,7 @@
     <author>
       <name>织心星笛</name>
     </author>
-    <updated>2025-04-08T08:34:11.000Z</updated>
+    <updated>2025-03-22T08:34:11.000Z</updated>
     <category term="高性能计算" />
     <category term="算法设计" />
     <category term="人工智能" />
@@ -96,18 +96,8 @@ function reconstruct_path(parent, target):
 &lt;p&gt;接着将节点&lt;code&gt;S&lt;/code&gt;弹出队列，将节点&lt;code&gt;S&lt;/code&gt;周围没有访问过的节点加入队列&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423224833929.png&#34; alt=&#34;image-20250423224833929&#34;&gt;&lt;/p&gt;
 &lt;p&gt;按照上面的流程不断地&lt;strong&gt;弹出、扩展&lt;/strong&gt;节点，直到找到节点&lt;code&gt;G&lt;/code&gt;为止，完整流程如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423224935740.png&#34; alt=&#34;image-20250423224935740&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423224948517.png&#34; alt=&#34;image-20250423224948517&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225010767.png&#34; alt=&#34;image-20250423225010767&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225022821.png&#34; alt=&#34;image-20250423225022821&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225034764.png&#34; alt=&#34;image-20250423225034764&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225052180.png&#34; alt=&#34;image-20250423225052180&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225105170.png&#34; alt=&#34;image-20250423225105170&#34;&gt;&lt;/p&gt;
-&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225117648.png&#34; alt=&#34;image-20250423225117648&#34; style=&#34;zoom: 80%;&#34; /&gt;
-
-&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225130068.png&#34; alt=&#34;image-20250423225130068&#34; style=&#34;zoom: 80%;&#34; /&gt;
-
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423225148180.png&#34; alt=&#34;image-20250423225148180&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424152735791.png&#34; alt=&#34;image-20250424152735791&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424152747549.png&#34; alt=&#34;image-20250424152747549&#34;&gt;&lt;/p&gt;
 &lt;p&gt;之后从终点开始回溯，不断寻找当前节点的父节点（即&lt;strong&gt;push该节点时，pop出去的节点&lt;/strong&gt;），&lt;code&gt;G&lt;/code&gt;的父节点为&lt;code&gt;f&lt;/code&gt;，&lt;code&gt;f&lt;/code&gt;的父节点为&lt;code&gt;r&lt;/code&gt;，依次类推直到找到&lt;code&gt;S&lt;/code&gt;节点，这样就可以得到&lt;code&gt;S&lt;/code&gt;到&lt;code&gt;G&lt;/code&gt;的&lt;strong&gt;最短路径&lt;/strong&gt;为：&lt;code&gt;S&lt;/code&gt;-&amp;gt;&lt;code&gt;e&lt;/code&gt;-&amp;gt;&lt;code&gt;r&lt;/code&gt;-&amp;gt;&lt;code&gt;f&lt;/code&gt;-&amp;gt;&lt;code&gt;G&lt;/code&gt;，如下：&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250423230517127.png&#34; alt=&#34;image-20250423230517127&#34; style=&#34;zoom:67%;&#34; /&gt;
 
@@ -168,8 +158,172 @@ function reconstruct_path(parent, target):
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;a href=&#34;#迭代加深搜索（IDDFS）&#34; class=&#34;headerlink&#34; title=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;/a&gt;&lt;strong&gt;迭代加深搜索&lt;/strong&gt;（IDDFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a href=&#34;#原理-2&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-2&#34;&gt;&lt;a href=&#34;#实现-2&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-3&#34;&gt;&lt;a href=&#34;#原理-3&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-3&#34;&gt;&lt;a href=&#34;#实现-3&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;</content>
-        <updated>2025-04-08T08:34:11.000Z</updated>
+&lt;h1 id=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;a href=&#34;#迭代加深搜索（IDDFS）&#34; class=&#34;headerlink&#34; title=&#34;迭代加深搜索（IDDFS）&#34;&gt;&lt;/a&gt;&lt;strong&gt;迭代加深搜索&lt;/strong&gt;（IDDFS）&lt;/h1&gt;&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a href=&#34;#原理-2&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;迭代加深本质上是一种 &lt;strong&gt;每次限制搜索深度的&lt;/strong&gt; 深度优先搜索，只不过在搜索的同时带上了一个深度&lt;code&gt;d&lt;/code&gt;，当&lt;code&gt;d&lt;/code&gt;达到设定的深度时就返回，一般用于找最优解。&lt;/p&gt;
+&lt;p&gt;既然是为了找最优解，为什么不使用 BFS 呢？那是因为 BFS 采用的数据结构基础空间复杂度很大的队列，当状态比较多或者单个状态比较大时，使用队列的 BFS 就显出了劣势。事实上，迭代加深就类似于用 DFS 方式实现的 BFS，它的空间复杂度相对较小。而当搜索树的分支比较多时，每增加一层的搜索复杂度会出现指数级爆炸式增长，这时前面重复进行的部分所带来的复杂度几乎可以忽略，这也就是为什么迭代加深是可以近似看成 BFS。&lt;/p&gt;
+&lt;h2 id=&#34;实现-2&#34;&gt;&lt;a href=&#34;#实现-2&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;首先设定一个较小的深度作为全局变量，进行 DFS。每进入一次 DFS，将当前深度加一，当发现&lt;code&gt;d&lt;/code&gt;大于设定的深度&lt;code&gt;limit&lt;/code&gt;就返回。如果在搜索的途中发现了答案就可以回溯，同时在回溯的过程中可以记录路径。如果没有发现答案，就返回到函数入口，增加设定深度，继续搜索。&lt;/p&gt;
+&lt;p&gt;根据上述原理和步骤，得到迭代加深搜索的伪代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;算法名称：迭代加深搜索（IDDFS）
+输入：图 G = (V, E)，起始节点 start，目标节点 target
+输出：从 start 到 target 的路径（如果存在），否则返回空列表
+
+const int n = 0x3f3f3f3f //实际应用中应根据需求合理设置上限
+
+procedure IDDFS(G, start, target):
+    for limit from 0 to n: 
+        visited ← 空集合
+        parent ← 空字典
+        if DFS(G, start, target, limit, visited, parent):
+            return reconstruct_path(parent, target)
+    return 空列表
+
+function DFS(G, current, target, depth_limit, visited, parent):
+    if current == target:
+        return true
+    if depth_limit &amp;lt;= 0:
+        return false
+    visited.add(current)
+    for each neighbor in G.adjacent_nodes(current):
+        if neighbor not in visited:
+            parent[neighbor] ← current
+            if DFS(G, neighbor, target, depth_limit - 1, visited, parent):
+                return true
+    return false
+
+function reconstruct_path(parent, target):
+    path ← 空列表
+    current ← target
+    while current ≠ null:
+        path.insert(0, current)
+        current ← parent[current]
+    return path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ids_animation.gif&#34; alt=&#34;ids_animation&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;在上图中我们不难发现，IDDFS进行的是**“无记忆”搜索**，即每次搜索都会重置状态，从头开始遍历符合当前深度限制的路径。这是因为迭代加深的每一次深度扩展（如从深度&lt;code&gt;d&lt;/code&gt;到&lt;code&gt;d+1&lt;/code&gt;）都是一次&lt;strong&gt;独立的 DFS 搜索&lt;/strong&gt;，不依赖前一次搜索的中间状态（如已访问节点的标记、路径记录等）。另一方面，虽然IDDFS基于 DFS 实现，但迭代加深通过分层强制搜索，最终效果等价于 BFS 的层次遍历（因为深度优先在固定深度内会遍历完该层所有节点）。其 “无记忆” 的重复搜索，本质上是用&lt;strong&gt;时间换空间&lt;/strong&gt;，避免了 BFS 需要维护大量队列节点的内存开销。&lt;/p&gt;
+&lt;p&gt;因此，迭代加深搜索是&lt;strong&gt;在内存受限的条件下模拟 BFS 的最短路径搜索&lt;/strong&gt;。DFS 虽然省内存，但无法保证找到最短路径；BFS 能保证最短路径，但内存消耗大。迭代加深通过 “重复搜索 + 深度限制”，用可接受的时间重复换取了极小的内存占用（仅需记录当前路径，递归栈深度为当前限制深度）。总而言之，迭代加深算法在 “找最短路径” 和 “内存消耗” 之间找到了平衡，是一种典型的&lt;strong&gt;折中算法&lt;/strong&gt;。其具有以下优缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;具有BFS 的完备性和优选性，在无环或边权相等图中，因逐层加深，先找到的解就是最优解&lt;/li&gt;
+&lt;li&gt;继承了 DFS 的内存优势，只需维护当前搜索路径，适合处理大规模图或内存受限的场景&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;缺点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;时间复杂度高，每次深度增加都要重新从起点搜索，重复访问节点，在深度较大时尤为明显&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-3&#34;&gt;&lt;a href=&#34;#原理-3&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;首先，我们需要在此解释一个概念，无信息搜索与有信息搜索中的**“信息”&lt;strong&gt;究竟是什么？博主最初的思路认为，一致代价搜索（即DijKstra算法，在解决单源最短路径时经常用到）利用到了每条边的&lt;/strong&gt;权值信息**，应该属于有信息搜索才对。但实际上，这里的“信息”指的是&lt;strong&gt;启发式信息&lt;/strong&gt;，有信息搜索（如 A*）会结合启发式信息（如曼哈顿距离、欧氏距离等）引导搜索方向，优先探索更可能接近目标的路径。而 UCS 没有这种 “引导”，只是机械地扩展当前代价最小的路径，即使绕远路也会按部就班计算，&lt;strong&gt;搜索过程未利用问题领域的额外知识或对目标的预估&lt;/strong&gt;，因此符合无信息搜索的定义。&lt;/p&gt;
+&lt;p&gt;DijKstra算法与我们之前提到的算法流程没有本质不同，区别仅在于其采用的数据结构为&lt;strong&gt;优先队列(Priority Queue)&lt;/strong&gt;，其本质是二叉堆，在该算法中为&lt;strong&gt;小根堆&lt;/strong&gt;。普通队列是一种先进先出的数据结构，而在优先队列中元素被赋予了&lt;strong&gt;优先级&lt;/strong&gt;，最高优先级元素优先删除，也就是first in, largest out。&lt;/p&gt;
+&lt;p&gt;以在课件中给出的&lt;strong&gt;有权图&lt;/strong&gt;中找到从节点&lt;code&gt;S&lt;/code&gt;到节点&lt;code&gt;G&lt;/code&gt;的路径为例，说明一下DFS算法的工作流程&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424145708692.png&#34; alt=&#34;image-20250424145708692&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;按照上述原理说明，其算法流程应如下所示：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424151915192.png&#34; alt=&#34;image-20250424151915192&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424151927295.png&#34; alt=&#34;image-20250424151927295&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;最终从&lt;code&gt;G&lt;/code&gt;回溯，依次弹出的节点即为所经过的路径：&lt;code&gt;S&lt;/code&gt;-&amp;gt;&lt;code&gt;d&lt;/code&gt;-&amp;gt;&lt;code&gt;e&lt;/code&gt;-&amp;gt;&lt;code&gt;r&lt;/code&gt;-&amp;gt;&lt;code&gt;f&lt;/code&gt;-&amp;gt;&lt;code&gt;G&lt;/code&gt;，总路径长度为10。&lt;/p&gt;
+&lt;h2 id=&#34;实现-3&#34;&gt;&lt;a href=&#34;#实现-3&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;根据上述原理，得到一致代价搜索的伪代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;算法名称：一致代价搜索（Uniform Cost Search, UCS）
+输入：图 G = (V, E)，起始节点 start，目标节点 target，边的代价函数 cost(u, v)
+输出：从 start 到 target 的最短路径（如果存在），否则返回空列表
+
+procedure UCS(G, start, target, cost):
+    priority_queue ← 空优先队列
+    visited ← 空集合
+    parent ← 空字典
+    g_cost ← 空字典
+    priority_queue.enqueue((start, 0))
+    g_cost[start] = 0
+    parent[start] = null
+
+    while priority_queue 非空:
+        (current, current_cost) ← priority_queue.dequeue()
+
+        if current == target:
+            return reconstruct_path(parent, target)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        for each neighbor in G.adjacent_nodes(current):
+            tentative_g_cost = g_cost[current] + cost(current, neighbor)
+
+            if neighbor not in visited or tentative_g_cost &amp;lt; g_cost[neighbor]:
+                g_cost[neighbor] = tentative_g_cost
+                parent[neighbor] = current
+                priority_queue.enqueue((neighbor, tentative_g_cost))
+
+    return 空列表
+
+function reconstruct_path(parent, target):
+    path ← 空列表
+    current ← target
+    while current ≠ null:
+        path.insert(0, current)
+        current ← parent[current]
+    return path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ucs_animation_1.gif&#34; alt=&#34;ucs_animation_1&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;一致代价搜索（UCS）是一种基于优先队列的 **“有记忆” 最优搜索算法 **，其核心是按照路径代价从小到大扩展节点，确保首次到达目标节点的路径即为最小代价路径。与 IDDFS 的 “无记忆” 重复搜索不同，UCS 会持续维护从起点到各节点的最小已知代价（g-cost），并利用优先队列动态选择当前代价最小的节点进行扩展。这种特性使得 UCS 无需重置状态，而是通过迭代更新节点的代价信息，逐步逼近目标节点的最优解。&lt;/p&gt;
+&lt;p&gt;UCS 本质上是&lt;strong&gt;Dijkstra 算法的简化版本&lt;/strong&gt;（当目标为单个节点时），其搜索过程等价于在状态空间中以代价为优先级的 “分层扩展”—— 每次扩展代价最小的节点，确保先访问的节点路径代价不大于后访问的节点。这种 &lt;strong&gt;“代价优先”&lt;/strong&gt; 的策略使其能够在边权非负的图中严格保证找到最短路径（最小代价路径），但代价是需要维护优先队列和节点代价表，内存开销随图的规模和边权分布而变化。&lt;/p&gt;
+&lt;p&gt;UCS 通过 “优先队列 + 代价记忆” 的机制，在 **“求解最优路径” 和 “计算效率” 之间实现了平衡 **：既避免了 DFS 无法保证最优解的缺陷，也改进了 BFS 仅适用于等权图的局限性。但其代价是需要更复杂的数据结构（优先队列）和动态更新节点状态的计算开销。综上所述，其具有以下优缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在边权非负的图中，总能找到从起点到目标节点的最小代价路径，是理论上保证最优解的搜索算法&lt;/li&gt;
+&lt;li&gt;优先扩展当前代价最小的节点，确保搜索沿着 “最有希望” 的路径推进，减少无效搜索&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;缺点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;需要维护优先队列（通常为堆结构）和节点代价表（g-cost），在大规模图中内存消耗较高&lt;/li&gt;
+&lt;li&gt;每次扩展节点需更新优先队列，在边权较大或图结构复杂时效率下降&lt;/li&gt;
+&lt;li&gt;若图中存在负权边，UCS 可能无法正确计算最小代价&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;算法&lt;/th&gt;
+&lt;th&gt;数据结构&lt;/th&gt;
+&lt;th&gt;优点&lt;/th&gt;
+&lt;th&gt;缺点&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;DFS&lt;/td&gt;
+&lt;td&gt;栈&lt;/td&gt;
+&lt;td&gt;快速找到可行路径，内存需求少&lt;/td&gt;
+&lt;td&gt;无法保证最优解，深度大时效率低&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BFS&lt;/td&gt;
+&lt;td&gt;队列&lt;/td&gt;
+&lt;td&gt;可找到无权图最短路径，处理有环图更稳健&lt;/td&gt;
+&lt;td&gt;空间复杂度大，可能遍历大量不必要节点&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IDDFS&lt;/td&gt;
+&lt;td&gt;递归栈&lt;/td&gt;
+&lt;td&gt;结合 BFS 和 DFS 优势，适合内存受限场景&lt;/td&gt;
+&lt;td&gt;时间复杂度高，重复访问节点&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UCS&lt;/td&gt;
+&lt;td&gt;优先队列&lt;/td&gt;
+&lt;td&gt;边权非负时保证最优解，减少无效搜索&lt;/td&gt;
+&lt;td&gt;内存消耗大，边权大或结构复杂时效率下降&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+</content>
+        <updated>2025-03-22T08:34:11.000Z</updated>
     </entry>
     <entry>
         <id>http://blog.barbedcotton.cn/24101/</id>
