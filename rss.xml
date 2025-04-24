@@ -276,7 +276,7 @@ function reconstruct_path(parent, target):
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ucs_animation_1.gif&#34; alt=&#34;ucs_animation_1&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;一致代价搜索（UCS）是一种基于优先队列的 “&lt;strong&gt;有记忆&lt;/strong&gt;” &lt;strong&gt;最优搜索算法&lt;/strong&gt;，其核心是按照路径代价从小到大扩展节点，确保首次到达目标节点的路径即为最小代价路径。与 IDDFS 的 “无记忆” 重复搜索不同，UCS 会持续维护从起点到各节点的最小已知代价（g-cost），并利用优先队列动态选择当前代价最小的节点进行扩展。这种特性使得 UCS 无需重置状态，而是通过迭代更新节点的代价信息，逐步逼近目标节点的最优解。&lt;/p&gt;
 &lt;p&gt;UCS 本质上是&lt;strong&gt;Dijkstra 算法的简化版本&lt;/strong&gt;（当目标为单个节点时），其搜索过程等价于在状态空间中以代价为优先级的 “分层扩展”—— 每次扩展代价最小的节点，确保先访问的节点路径代价不大于后访问的节点。这种 “&lt;strong&gt;代价优先&lt;/strong&gt;” 的策略使其能够在边权非负的图中严格保证找到最短路径（最小代价路径），但代价是需要维护优先队列和节点代价表，内存开销随图的规模和边权分布而变化。&lt;/p&gt;
-&lt;p&gt;UCS 通过 “优先队列 + 代价记忆” 的机制，在 “&lt;strong&gt;求解最优路径&lt;/strong&gt;”&lt;strong&gt;和&lt;/strong&gt;“&lt;strong&gt;计算效率&lt;/strong&gt;” **之间实现了平衡 **：既避免了 DFS 无法保证最优解的缺陷，也改进了 BFS 仅适用于等权图的局限性。但其代价是需要更复杂的数据结构（优先队列）和动态更新节点状态的计算开销。综上所述，其具有以下优缺点：&lt;/p&gt;
+&lt;p&gt;UCS 通过 “优先队列 + 代价记忆” 的机制，在 “&lt;strong&gt;求解最优路径&lt;/strong&gt;”&lt;strong&gt;和&lt;/strong&gt;“&lt;strong&gt;计算效率&lt;/strong&gt;”之间实现了平衡：既避免了 DFS 无法保证最优解的缺陷，也改进了 BFS 仅适用于等权图的局限性。但其代价是需要更复杂的数据结构（优先队列）和动态更新节点状态的计算开销。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
 &lt;ol&gt;
