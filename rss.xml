@@ -203,7 +203,7 @@ function reconstruct_path(parent, target):
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ids_animation.gif&#34; alt=&#34;ids_animation&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;在上图中我们不难发现，IDDFS进行的是**“无记忆”搜索**，即每次搜索都会重置状态，从头开始遍历符合当前深度限制的路径。这是因为迭代加深的每一次深度扩展（如从深度&lt;code&gt;d&lt;/code&gt;到&lt;code&gt;d+1&lt;/code&gt;）都是一次&lt;strong&gt;独立的 DFS 搜索&lt;/strong&gt;，不依赖前一次搜索的中间状态（如已访问节点的标记、路径记录等）。另一方面，虽然IDDFS基于 DFS 实现，但迭代加深通过分层强制搜索，最终效果等价于 BFS 的层次遍历（因为深度优先在固定深度内会遍历完该层所有节点）。其 “无记忆” 的重复搜索，本质上是用&lt;strong&gt;时间换空间&lt;/strong&gt;，避免了 BFS 需要维护大量队列节点的内存开销。&lt;/p&gt;
+&lt;h2 id=&#34;算法特性-2&#34;&gt;&lt;a href=&#34;#算法特性-2&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;在上图中我们不难发现，IDDFS进行的是“&lt;strong&gt;无记忆&lt;/strong&gt;” 搜索，即每次搜索都会重置状态，从头开始遍历符合当前深度限制的路径。这是因为迭代加深的每一次深度扩展（如从深度&lt;code&gt;d&lt;/code&gt;到&lt;code&gt;d+1&lt;/code&gt;）都是一次&lt;strong&gt;独立的 DFS 搜索&lt;/strong&gt;，不依赖前一次搜索的中间状态（如已访问节点的标记、路径记录等）。另一方面，虽然IDDFS基于 DFS 实现，但迭代加深通过分层强制搜索，最终效果等价于 BFS 的层次遍历（因为深度优先在固定深度内会遍历完该层所有节点）。其 “无记忆” 的重复搜索，本质上是用&lt;strong&gt;时间换空间&lt;/strong&gt;，避免了 BFS 需要维护大量队列节点的内存开销。&lt;/p&gt;
 &lt;p&gt;因此，迭代加深搜索是&lt;strong&gt;在内存受限的条件下模拟 BFS 的最短路径搜索&lt;/strong&gt;。DFS 虽然省内存，但无法保证找到最短路径；BFS 能保证最短路径，但内存消耗大。迭代加深通过 “重复搜索 + 深度限制”，用可接受的时间重复换取了极小的内存占用（仅需记录当前路径，递归栈深度为当前限制深度）。总而言之，迭代加深算法在 “找最短路径” 和 “内存消耗” 之间找到了平衡，是一种典型的&lt;strong&gt;折中算法&lt;/strong&gt;。其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
@@ -218,7 +218,7 @@ function reconstruct_path(parent, target):
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-3&#34;&gt;&lt;a href=&#34;#原理-3&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;首先，我们需要在此解释一个概念，无信息搜索与有信息搜索中的**“信息”&lt;strong&gt;究竟是什么？博主最初的思路认为，一致代价搜索（即DijKstra算法，在解决单源最短路径时经常用到）利用到了每条边的&lt;/strong&gt;权值信息**，应该属于有信息搜索才对。但实际上，这里的“信息”指的是&lt;strong&gt;启发式信息&lt;/strong&gt;，有信息搜索（如 A*）会结合启发式信息（如曼哈顿距离、欧氏距离等）引导搜索方向，优先探索更可能接近目标的路径。而 UCS 没有这种 “引导”，只是机械地扩展当前代价最小的路径，即使绕远路也会按部就班计算，&lt;strong&gt;搜索过程未利用问题领域的额外知识或对目标的预估&lt;/strong&gt;，因此符合无信息搜索的定义。&lt;/p&gt;
+&lt;h1 id=&#34;一致代价搜索（UCS）&#34;&gt;&lt;a href=&#34;#一致代价搜索（UCS）&#34; class=&#34;headerlink&#34; title=&#34;一致代价搜索（UCS）&#34;&gt;&lt;/a&gt;一致代价搜索（UCS）&lt;/h1&gt;&lt;h2 id=&#34;原理-3&#34;&gt;&lt;a href=&#34;#原理-3&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;首先，我们需要在此解释一个概念，无信息搜索与有信息搜索中的“&lt;strong&gt;信息&lt;/strong&gt;”究竟是什么？博主最初的思路认为，一致代价搜索（即DijKstra算法，在解决单源最短路径时经常用到）利用到了每条边的&lt;strong&gt;权值信息&lt;/strong&gt;，应该属于有信息搜索才对。但实际上，这里的“信息”指的是&lt;strong&gt;启发式信息&lt;/strong&gt;，有信息搜索（如 A*）会结合启发式信息（如曼哈顿距离、欧氏距离等）引导搜索方向，优先探索更可能接近目标的路径。而 UCS 没有这种 “引导”，只是机械地扩展当前代价最小的路径，即使绕远路也会按部就班计算，&lt;strong&gt;搜索过程未利用问题领域的额外知识或对目标的预估&lt;/strong&gt;，因此符合无信息搜索的定义。&lt;/p&gt;
 &lt;p&gt;DijKstra算法与我们之前提到的算法流程没有本质不同，区别仅在于其采用的数据结构为&lt;strong&gt;优先队列(Priority Queue)&lt;/strong&gt;，其本质是二叉堆，在该算法中为&lt;strong&gt;小根堆&lt;/strong&gt;。普通队列是一种先进先出的数据结构，而在优先队列中元素被赋予了&lt;strong&gt;优先级&lt;/strong&gt;，最高优先级元素优先删除，也就是first in, largest out。&lt;/p&gt;
 &lt;p&gt;以在课件中给出的&lt;strong&gt;有权图&lt;/strong&gt;中找到从节点&lt;code&gt;S&lt;/code&gt;到节点&lt;code&gt;G&lt;/code&gt;的路径为例，说明一下DFS算法的工作流程&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424145708692.png&#34; alt=&#34;image-20250424145708692&#34; style=&#34;zoom:67%;&#34; /&gt;
@@ -274,9 +274,9 @@ function reconstruct_path(parent, target):
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ucs_animation_1.gif&#34; alt=&#34;ucs_animation_1&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;一致代价搜索（UCS）是一种基于优先队列的 **“有记忆” 最优搜索算法 **，其核心是按照路径代价从小到大扩展节点，确保首次到达目标节点的路径即为最小代价路径。与 IDDFS 的 “无记忆” 重复搜索不同，UCS 会持续维护从起点到各节点的最小已知代价（g-cost），并利用优先队列动态选择当前代价最小的节点进行扩展。这种特性使得 UCS 无需重置状态，而是通过迭代更新节点的代价信息，逐步逼近目标节点的最优解。&lt;/p&gt;
-&lt;p&gt;UCS 本质上是&lt;strong&gt;Dijkstra 算法的简化版本&lt;/strong&gt;（当目标为单个节点时），其搜索过程等价于在状态空间中以代价为优先级的 “分层扩展”—— 每次扩展代价最小的节点，确保先访问的节点路径代价不大于后访问的节点。这种 &lt;strong&gt;“代价优先”&lt;/strong&gt; 的策略使其能够在边权非负的图中严格保证找到最短路径（最小代价路径），但代价是需要维护优先队列和节点代价表，内存开销随图的规模和边权分布而变化。&lt;/p&gt;
-&lt;p&gt;UCS 通过 “优先队列 + 代价记忆” 的机制，在 **“求解最优路径” 和 “计算效率” 之间实现了平衡 **：既避免了 DFS 无法保证最优解的缺陷，也改进了 BFS 仅适用于等权图的局限性。但其代价是需要更复杂的数据结构（优先队列）和动态更新节点状态的计算开销。综上所述，其具有以下优缺点：&lt;/p&gt;
+&lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;一致代价搜索（UCS）是一种基于优先队列的 “&lt;strong&gt;有记忆&lt;/strong&gt;”**最优搜索算法 **，其核心是按照路径代价从小到大扩展节点，确保首次到达目标节点的路径即为最小代价路径。与 IDDFS 的 “无记忆” 重复搜索不同，UCS 会持续维护从起点到各节点的最小已知代价（g-cost），并利用优先队列动态选择当前代价最小的节点进行扩展。这种特性使得 UCS 无需重置状态，而是通过迭代更新节点的代价信息，逐步逼近目标节点的最优解。&lt;/p&gt;
+&lt;p&gt;UCS 本质上是&lt;strong&gt;Dijkstra 算法的简化版本&lt;/strong&gt;（当目标为单个节点时），其搜索过程等价于在状态空间中以代价为优先级的 “分层扩展”—— 每次扩展代价最小的节点，确保先访问的节点路径代价不大于后访问的节点。这种 “&lt;strong&gt;代价优先&lt;/strong&gt;” 的策略使其能够在边权非负的图中严格保证找到最短路径（最小代价路径），但代价是需要维护优先队列和节点代价表，内存开销随图的规模和边权分布而变化。&lt;/p&gt;
+&lt;p&gt;UCS 通过 “优先队列 + 代价记忆” 的机制，在 “&lt;strong&gt;求解最优路径&lt;/strong&gt;”&lt;strong&gt;和&lt;/strong&gt;“&lt;strong&gt;计算效率&lt;/strong&gt;”**之间实现了平衡 **：既避免了 DFS 无法保证最优解的缺陷，也改进了 BFS 仅适用于等权图的局限性。但其代价是需要更复杂的数据结构（优先队列）和动态更新节点状态的计算开销。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
 &lt;ol&gt;
