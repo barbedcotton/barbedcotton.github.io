@@ -9,8 +9,8 @@
         {
             "id": "http://blog.barbedcotton.cn/25032/",
             "url": "http://blog.barbedcotton.cn/25032/",
-            "title": "",
-            "date_published": "2025-03-24T09:59:01.445Z",
+            "title": "状态空间搜索——有信息搜索",
+            "date_published": "2025-03-29T08:13:22.000Z",
             "content_html": "<h1 id=\"前言\"><a href=\"#前言\" class=\"headerlink\" title=\"前言\"></a>前言</h1><h1 id=\"贪心搜索（GBFS）\"><a href=\"#贪心搜索（GBFS）\" class=\"headerlink\" title=\"贪心搜索（GBFS）\"></a>贪心搜索（GBFS）</h1><h2 id=\"原理\"><a href=\"#原理\" class=\"headerlink\" title=\"原理\"></a>原理</h2><h2 id=\"实现\"><a href=\"#实现\" class=\"headerlink\" title=\"实现\"></a>实现</h2><h2 id=\"优缺点\"><a href=\"#优缺点\" class=\"headerlink\" title=\"优缺点\"></a>优缺点</h2><h1 id=\"A-搜索\"><a href=\"#A-搜索\" class=\"headerlink\" title=\"A*搜索\"></a>A*搜索</h1><h2 id=\"原理-1\"><a href=\"#原理-1\" class=\"headerlink\" title=\"原理\"></a>原理</h2><h2 id=\"实现-1\"><a href=\"#实现-1\" class=\"headerlink\" title=\"实现\"></a>实现</h2><h2 id=\"优缺点-1\"><a href=\"#优缺点-1\" class=\"headerlink\" title=\"优缺点\"></a>优缺点</h2><h1 id=\"总结\"><a href=\"#总结\" class=\"headerlink\" title=\"总结\"></a>总结</h1>",
             "tags": []
         },

@@ -10,8 +10,8 @@
         </author>
         <description>于书页间捕捉求知的微光，于生活中采撷繁花的馥郁</description>
         <language>zh-CN</language>
-        <pubDate>Mon, 24 Mar 2025 17:59:01 +0800</pubDate>
-        <lastBuildDate>Mon, 24 Mar 2025 17:59:01 +0800</lastBuildDate>
+        <pubDate>Sat, 29 Mar 2025 16:13:22 +0800</pubDate>
+        <lastBuildDate>Sat, 29 Mar 2025 16:13:22 +0800</lastBuildDate>
         <category term="高性能计算" />
         <category term="算法设计" />
         <category term="人工智能" />
@@ -19,9 +19,9 @@
         <category term="成长" />
         <item>
             <guid isPermalink="true">http://blog.barbedcotton.cn/25032/</guid>
-            <title></title>
+            <title>状态空间搜索——有信息搜索</title>
             <link>http://blog.barbedcotton.cn/25032/</link>
-            <pubDate>Mon, 24 Mar 2025 17:59:01 +0800</pubDate>
+            <pubDate>Sat, 29 Mar 2025 16:13:22 +0800</pubDate>
             <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;h1 id=&#34;贪心搜索（GBFS）&#34;&gt;&lt;a href=&#34;#贪心搜索（GBFS）&#34; class=&#34;headerlink&#34; title=&#34;贪心搜索（GBFS）&#34;&gt;&lt;/a&gt;贪心搜索（GBFS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现&#34;&gt;&lt;a href=&#34;#实现&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点&#34;&gt;&lt;a href=&#34;#优缺点&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;A-搜索&#34;&gt;&lt;a href=&#34;#A-搜索&#34; class=&#34;headerlink&#34; title=&#34;A*搜索&#34;&gt;&lt;/a&gt;A*搜索&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点-1&#34;&gt;&lt;a href=&#34;#优缺点-1&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt; ]]></description>
         </item>
         <item>

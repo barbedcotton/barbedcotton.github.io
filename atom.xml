@@ -8,7 +8,7 @@
     <author>
       <name>织心星笛</name>
     </author>
-    <updated>2025-03-24T09:59:01.445Z</updated>
+    <updated>2025-03-29T08:13:22.000Z</updated>
     <category term="高性能计算" />
     <category term="算法设计" />
     <category term="人工智能" />
@@ -16,10 +16,10 @@
     <category term="成长" />
     <entry>
         <id>http://blog.barbedcotton.cn/25032/</id>
-        <title></title>
+        <title>状态空间搜索——有信息搜索</title>
         <link rel="alternate" href="http://blog.barbedcotton.cn/25032/"/>
         <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;h1 id=&#34;贪心搜索（GBFS）&#34;&gt;&lt;a href=&#34;#贪心搜索（GBFS）&#34; class=&#34;headerlink&#34; title=&#34;贪心搜索（GBFS）&#34;&gt;&lt;/a&gt;贪心搜索（GBFS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现&#34;&gt;&lt;a href=&#34;#实现&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点&#34;&gt;&lt;a href=&#34;#优缺点&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;A-搜索&#34;&gt;&lt;a href=&#34;#A-搜索&#34; class=&#34;headerlink&#34; title=&#34;A*搜索&#34;&gt;&lt;/a&gt;A*搜索&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点-1&#34;&gt;&lt;a href=&#34;#优缺点-1&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;</content>
-        <updated>2025-03-24T09:59:01.445Z</updated>
+        <updated>2025-03-29T08:13:22.000Z</updated>
     </entry>
     <entry>
         <id>http://blog.barbedcotton.cn/25031/</id>
