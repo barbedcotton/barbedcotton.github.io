@@ -10,13 +10,20 @@
         </author>
         <description>于书页间捕捉求知的微光，于生活中采撷繁花的馥郁</description>
         <language>zh-CN</language>
-        <pubDate>Sun, 20 Apr 2025 18:30:04 +0800</pubDate>
-        <lastBuildDate>Sun, 20 Apr 2025 18:30:04 +0800</lastBuildDate>
+        <pubDate>Sat, 26 Apr 2025 18:53:43 +0800</pubDate>
+        <lastBuildDate>Sat, 26 Apr 2025 18:53:43 +0800</lastBuildDate>
         <category term="高性能计算" />
         <category term="算法设计" />
         <category term="人工智能" />
         <category term="生活" />
         <category term="成长" />
+        <item>
+            <guid isPermalink="true">http://blog.barbedcotton.cn/25042/</guid>
+            <title>对抗搜索</title>
+            <link>http://blog.barbedcotton.cn/25042/</link>
+            <pubDate>Sat, 26 Apr 2025 18:53:43 +0800</pubDate>
+            <description><![CDATA[  ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://blog.barbedcotton.cn/25041/</guid>
             <title>约束满足问题</title>
