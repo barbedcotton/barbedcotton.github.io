@@ -10,13 +10,20 @@
         </author>
         <description>于书页间捕捉求知的微光，于生活中采撷繁花的馥郁</description>
         <language>zh-CN</language>
-        <pubDate>Sat, 29 Mar 2025 16:13:22 +0800</pubDate>
-        <lastBuildDate>Sat, 29 Mar 2025 16:13:22 +0800</lastBuildDate>
+        <pubDate>Sun, 20 Apr 2025 18:30:04 +0800</pubDate>
+        <lastBuildDate>Sun, 20 Apr 2025 18:30:04 +0800</lastBuildDate>
         <category term="高性能计算" />
         <category term="算法设计" />
         <category term="人工智能" />
         <category term="生活" />
         <category term="成长" />
+        <item>
+            <guid isPermalink="true">http://blog.barbedcotton.cn/25041/</guid>
+            <title>约束满足问题</title>
+            <link>http://blog.barbedcotton.cn/25041/</link>
+            <pubDate>Sun, 20 Apr 2025 18:30:04 +0800</pubDate>
+            <description><![CDATA[  ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://blog.barbedcotton.cn/25032/</guid>
             <title>状态空间搜索——有信息搜索</title>
@@ -196,7 +203,7 @@ function reconstruct_path(parent, target):
 
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/solution_Astar.gif&#34; alt=&#34;solution_Astar&#34; style=&#34;zoom:150%;&#34; /&gt;
 
-&lt;p&gt;虽然能够得到最终目标状态，但不难发现A* 实现中，有许多的缺点难以避免：在维护过程中需要记录所有搜索到的状态，需要大量的空间存储状态进行判重，也需要一些时间进行排序。因此我们考虑引入 IDDFS，即&lt;strong&gt;迭代加深&lt;/strong&gt;。迭代加深之前介绍过，不了解的可以看&lt;a href=&#34;%22(https://blog.barbedcotton.cn/25031)%22&#34;&gt;这里&lt;/a&gt;。迭代加深是一种限制步数的深搜方式，它具备深搜的特点，但是每次只搜索深度限制范围内的所有点，再加上我们的估价函数进行剪枝，IDA* 就可以实现了。相较于 A*，IDA*具有 &lt;strong&gt;效率高&lt;/strong&gt;、&lt;strong&gt;空间消耗小&lt;/strong&gt;的优点。&lt;/p&gt;
+&lt;p&gt;虽然能够得到最终目标状态，但不难发现A* 实现中，有许多的缺点难以避免：在维护过程中需要记录所有搜索到的状态，需要大量的空间存储状态进行判重，也需要一些时间进行排序。因此我们考虑引入 IDDFS，即&lt;strong&gt;迭代加深&lt;/strong&gt;。迭代加深之前介绍过，不了解的可以看&lt;a href=&#34;%5B%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4%E6%90%9C%E7%B4%A2%E2%80%94%E2%80%94%E6%97%A0%E4%BF%A1%E6%81%AF%E6%90%9C%E7%B4%A2%5D(https://blog.barbedcotton.cn/25031/)&#34;&gt;这里&lt;/a&gt;。迭代加深是一种限制步数的深搜方式，它具备深搜的特点，但是每次只搜索深度限制范围内的所有点，再加上我们的估价函数进行剪枝，IDA* 就可以实现了。相较于 A*，IDA*具有 &lt;strong&gt;效率高&lt;/strong&gt;、&lt;strong&gt;空间消耗小&lt;/strong&gt;的优点。&lt;/p&gt;
 &lt;p&gt;最终只迭代了接近265万次就解决了该问题，且能够找到比单纯的A*算法更快速的操作方式。&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/0fbaf8850516c72781a02dc989bebbe.png&#34; alt=&#34;0fbaf8850516c72781a02dc989bebbe&#34; style=&#34;zoom: 67%;&#34; /&gt;
 
