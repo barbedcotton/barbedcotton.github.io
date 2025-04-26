@@ -22,7 +22,209 @@
             <title>状态空间搜索——有信息搜索</title>
             <link>http://blog.barbedcotton.cn/25032/</link>
             <pubDate>Sat, 29 Mar 2025 16:13:22 +0800</pubDate>
-            <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;h1 id=&#34;贪心搜索（GBFS）&#34;&gt;&lt;a href=&#34;#贪心搜索（GBFS）&#34; class=&#34;headerlink&#34; title=&#34;贪心搜索（GBFS）&#34;&gt;&lt;/a&gt;贪心搜索（GBFS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现&#34;&gt;&lt;a href=&#34;#实现&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点&#34;&gt;&lt;a href=&#34;#优缺点&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;A-搜索&#34;&gt;&lt;a href=&#34;#A-搜索&#34; class=&#34;headerlink&#34; title=&#34;A*搜索&#34;&gt;&lt;/a&gt;A*搜索&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;h2 id=&#34;优缺点-1&#34;&gt;&lt;a href=&#34;#优缺点-1&#34; class=&#34;headerlink&#34; title=&#34;优缺点&#34;&gt;&lt;/a&gt;优缺点&lt;/h2&gt;&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt; ]]></description>
+            <description><![CDATA[ &lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;状态空间搜索根据是否使用&lt;strong&gt;启发式信息&lt;/strong&gt;（Heuristic information）分为&lt;strong&gt;无信息搜索&lt;/strong&gt;（Uninformed Search）和&lt;strong&gt;有信息搜索&lt;/strong&gt;（Uninformed Search）。在本文中，我们先对有信息搜索的算法进行学习和复现。常用的无信息搜索算法包括：&lt;strong&gt;贪婪最佳优先算法&lt;/strong&gt;(Greedy Best First Search, GBFS)和&lt;strong&gt;A*算法&lt;/strong&gt;等。在图搜索算法中，使用&lt;strong&gt;代价函数 $f(n)$&lt;/strong&gt; 来作为优先级判断的标准， $f(n)$ 越小，优先级越高，反之优先级越低。&lt;/p&gt;
+&lt;h1 id=&#34;贪心搜索（GS）&#34;&gt;&lt;a href=&#34;#贪心搜索（GS）&#34; class=&#34;headerlink&#34; title=&#34;贪心搜索（GS）&#34;&gt;&lt;/a&gt;贪心搜索（GS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;BFS和DFS的区别主要在于节点的弹出策略，根据弹出策略的区别，分别使用了队列和栈两种数据结构，而栈和队列作为两种相当基本的容器，只将节点进入容器的顺序作为弹出节点的依据，并未考虑目标位置等因素，这就使搜索过程变得漫无目的，导致效率低下。&lt;/p&gt;
+&lt;p&gt;而贪心搜索也是图搜索算法的一种，其使用的数据结构与狄克特拉斯算法的相同，即&lt;strong&gt;优先队列(Priority Queue)&lt;/strong&gt;。普通队列是一种先进先出的数据结构，而在优先队列中元素被赋予了&lt;strong&gt;优先级&lt;/strong&gt;，最高优先级元素优先删除，也就是first in, largest out。&lt;/p&gt;
+&lt;p&gt;GBFS作为一种启发式搜索算法，使用&lt;strong&gt;启发评估函数&lt;/strong&gt; $h(n)$ 来作为代价函数，也就是&lt;/p&gt;
+&lt;p&gt;$$f(n)&amp;#x3D;h(n)$$&lt;/p&gt;
+&lt;p&gt;其中  $h(n)$ 是当前节点到终点的代价，它可以指引搜索算法往终点靠近，主要用**欧氏距离(Euclidean Distance)&lt;strong&gt;或者&lt;/strong&gt;曼哈顿距离(Manhattan Distance)**来表示，它们的区别如下图：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250425202433171.png&#34; alt=&#34;image-20250425202433171&#34; style=&#34;zoom: 33%;&#34; /&gt;
+
+&lt;p&gt;假设有两个点 $(x1,y1)$ 和 $(x2,y2)$ ，则它们的欧氏距离和曼哈顿距离分别为：&lt;/p&gt;
+&lt;p&gt;$$\begin{aligned}&amp;amp;D_{Euclidean}&amp;#x3D;\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}\&amp;amp;D_{Manhattan}&amp;#x3D;|x_1-x_2|+|y_1-y_2|\end{aligned}$$&lt;/p&gt;
+&lt;h2 id=&#34;实现&#34;&gt;&lt;a href=&#34;#实现&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;由上述原理，不难得到GBFS的伪代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;算法名称：贪婪最佳优先搜索（Greedy Best-First Search, GBFS）
+输入：图 G = (V, E)，起始节点 start，目标节点 target，启发式函数 h (n)
+输出：从 start 到 target 的路径（如果存在），否则返回空列表
+
+procedure GBFS(G, start, target, h):
+    priority_queue ← 空优先队列
+    visited ← 空集合
+    parent ← 空字典
+
+    priority_queue.enqueue((start, h(start)))
+    parent[start] = null
+
+    while priority_queue 非空:
+        (current, _) ← priority_queue.dequeue()
+
+        if current == target:
+            return reconstruct_path(parent, target)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        for each neighbor in G.adjacent_nodes(current):
+            if neighbor not in visited:
+                priority_queue.enqueue((neighbor, h(neighbor)))
+                parent[neighbor] = current
+
+    return 空列表
+
+function reconstruct_path(parent, target):
+    path ← 空列表
+    current ← target
+    while current ≠ null:
+        path.insert(0, current)
+        current ← parent[current]
+    return path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;将GBFS应用在二维地图路径规划中，如下图，可以看到它的&lt;strong&gt;指向性&lt;/strong&gt;非常明显，从起点直扑终点，并且在有大片可扩展区域时，采用欧氏距离会比曼哈顿距离更具有明显的趋向性。&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/gs_maze_man0.gif&#34; alt=&#34;gs_maze_man0&#34; style=&#34;zoom: 50%;&#34; /&gt;
+
+&lt;center&gt;采用曼哈顿距离作为启发式信息&lt;/center&gt;
+
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/gs_maze_ou0.gif&#34; alt=&#34;gs_maze_ou0&#34; style=&#34;zoom:50%;&#34; /&gt;
+
+&lt;center&gt;采用欧式距离作为启发式信息&lt;/center&gt;
+
+&lt;p&gt;但与此同时，在实际的地图中，常常会有很多障碍物，它就很容易陷入&lt;strong&gt;局部最优&lt;/strong&gt;的陷阱。下图的地图中有一个专门设置的局部最优陷阱，很显然GBFS虽然搜索速度够快，但是找不到最优路径（这里以采用曼哈顿距离作为启发式信息为例）。最优路径应该为从下方绕过该障碍物。&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/gs_maze_man2.gif&#34; alt=&#34;gs_maze_man2&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;将其应用到之前使用的复杂二维地图路径规划中，效果如下：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/gs_maze_ou1.gif&#34; alt=&#34;gs_maze_ou1&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;在足够复杂的地图中，采用曼哈顿距离作为启发式函数和采用欧式距离作为启发式函数几乎没有区别。&lt;/p&gt;
+&lt;h2 id=&#34;算法特性&#34;&gt;&lt;a href=&#34;#算法特性&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;在最坏情况下，GBFS 需要遍历图中的所有节点，因此时间复杂度为 $(O(V + E))$，在实际应用中，由于启发式信息的引导，算法通常能够在较短的时间内找到目标节点。另外，GBFS 需要使用优先队列来存储待扩展的节点，因此空间复杂度主要取决于优先队列的大小。不难看出，贪心搜索算法在搜索速度和指向性方面具有一定的优势，但在保证最优解和处理复杂地图方面存在明显的不足。因此，其具有以下优缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;GBFS算法能够迅速地朝着目标节点前进，减少了不必要的搜索，从而显著提高了搜索效率&lt;/li&gt;
+&lt;li&gt;启发式函数的使用赋予了算法明确的搜索方向，避免了像无信息搜索算法那样盲目地扩展节点&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;缺点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;GBFS 只考虑当前节点到目标节点的局部代价，而不考虑从起始节点到当前节点的路径代价，使得算法容易陷入局部最优解，而无法找到全局最优路径&lt;/li&gt;
+&lt;li&gt;GBFS 的性能高度依赖于启发式函数的选择，不同的启发式函数可能会导致不同的搜索效果，甚至可能使算法陷入无效的搜索&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;A-搜索&#34;&gt;&lt;a href=&#34;#A-搜索&#34; class=&#34;headerlink&#34; title=&#34;A*搜索&#34;&gt;&lt;/a&gt;A*搜索&lt;/h1&gt;&lt;h2 id=&#34;原理-1&#34;&gt;&lt;a href=&#34;#原理-1&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;对比GBFS和Dijkstra算法，两者都采用优先队列作为openlist，而代价函数的不同导致两者具有不同的优点：GBFS用&lt;strong&gt;节点到目标点的距离&lt;/strong&gt;作为代价函数，将搜索方向引向目标点，搜索效率高；而Dijkstra算法采用&lt;strong&gt;起点到当前扩展节点的移动代价&lt;/strong&gt;作为代价函数，能够确保路径最优。&lt;/p&gt;
+&lt;p&gt;那么可不可以将两者的代价函数进行融合，从而&lt;strong&gt;在保证路径最优的同时提高搜索效率&lt;/strong&gt;？答案是肯定的，融合后的算法就是&lt;strong&gt;A*算法&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;A*算法也是一种启发式算法，它的代价函数表示为：&lt;/p&gt;
+&lt;p&gt;$$f(n)&amp;#x3D;g(n)+h(n)$$&lt;/p&gt;
+&lt;p&gt;其中 $g(n)$ 为起点到当前扩展节点的移动代价函数， $h(n)$ 是启发函数，用节点到目标点的距离函数来表示。&lt;/p&gt;
+&lt;p&gt;根据这个式子，可以得到A*算法的几个特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果令 h(n)&amp;#x3D;0 ，A&lt;em&gt;算法就退化为Dijkstra算法；如果令 g(n)&amp;#x3D;0&lt;/em&gt;，&lt;em&gt;A&lt;/em&gt;算法就退化为GBFS算法。&lt;/li&gt;
+&lt;li&gt;能否找到最优路径的关键是&lt;strong&gt;启发函数 h(n) 的选取&lt;/strong&gt;，如果 h(n) 在大部分情况下比从当前节点到目标点的移动代价小，则能找到最优路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;由上述原理，不难得到A*算法的伪代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;算法名称：A* 搜索（A* Search）
+输入：图 G = (V, E)，起始节点 start，目标节点 target，边的代价函数 cost (u, v)，启发式函数 h (n)
+输出：从 start 到 target 的最短路径（如果存在），否则返回空列表
+
+procedure AStar(G, start, target, cost, h):
+    priority_queue ← 空优先队列
+    visited ← 空集合
+    parent ← 空字典
+    g_cost ← 空字典
+    f_cost ← 空字典
+
+    g_cost[start] = 0
+    f_cost[start] = h(start)
+    priority_queue.enqueue((start, f_cost[start]))
+    parent[start] = null
+
+    while priority_queue 非空:
+        (current, _) ← priority_queue.dequeue()
+
+        if current == target:
+            return reconstruct_path(parent, target)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        for each neighbor in G.adjacent_nodes(current):
+            tentative_g_cost = g_cost[current] + cost(current, neighbor)
+
+            if neighbor not in visited or tentative_g_cost &amp;lt; g_cost[neighbor]:
+                g_cost[neighbor] = tentative_g_cost
+                f_cost[neighbor] = tentative_g_cost + h(neighbor)
+                parent[neighbor] = current
+                priority_queue.enqueue((neighbor, f_cost[neighbor]))
+
+    return 空列表
+
+function reconstruct_path(parent, target):
+    path ← 空列表
+    current ← target
+    while current ≠ null:
+        path.insert(0, current)
+        current ← parent[current]
+    return path
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;将A*算法应用在二维地图路径规划中，如下图，可以看到它成功避开了&lt;strong&gt;局部最优&lt;/strong&gt;的陷阱：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/Astar_maze_1.gif&#34; alt=&#34;Astar_maze_1&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;p&gt;将其应用到之前使用的复杂二维地图路径规划中，效果如下，不难发现A*算法可以找到最优路径：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/Astar_maze_2.gif&#34; alt=&#34;Astar_maze_2&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;h2 id=&#34;算法特性-1&#34;&gt;&lt;a href=&#34;#算法特性-1&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;A * 算法依赖优先队列来存储待扩展的节点。优先队列中的节点依据估计总代价$f(n)$排序，$f(n) &amp;#x3D; g(n) + h(n)$，其中$g(n)$是从起始节点到当前节点$n$的实际代价，$h(n)$是从当前节点$n$到目标节点的估计代价。这种数据结构使得算法能优先扩展那些看起来最有希望通向目标的节点，加速搜索进程。A * 算法的时间复杂度理论上为$(O(b^d))$，其中$b$是分支因子（每个节点平均的子节点数），$d$是解的深度。实际中，由于启发函数的作用，其时间复杂度往往远低于该理论值。而其空间复杂度主要取决于优先队列的大小。因此，其具有以下优缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在满足启发函数$h(n)$满足一定条件时，A*算法能保证找到从起始节点到目标节点的最短路径&lt;/li&gt;
+&lt;li&gt;与无信息搜索算法（如 BFS、DFS）相比，A*算法可以避免遍历大量不必要的节点，减少搜索空间，从而显著提高搜索效率&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;缺点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;启发函数的质量直接影响 A * 算法的性能，若启发函数估计不准确，可能导致算法效率降低&lt;/li&gt;
+&lt;li&gt;内存消耗大且计算开销大&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;应用&#34;&gt;&lt;a href=&#34;#应用&#34; class=&#34;headerlink&#34; title=&#34;应用&#34;&gt;&lt;/a&gt;应用&lt;/h2&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250426154023313.png&#34; alt=&#34;image-20250426154023313&#34; style=&#34;zoom:50%;&#34; /&gt;
+
+&lt;p&gt;数字华容道问题中，华容道的每个状态就是一个节点，我们的目标就是要&lt;strong&gt;从初始节点出发最快到达目标节点&lt;/strong&gt;。这个问题和图搜索是非常类似的。因此，我们可以尝试使用A*算法来解决如图这道8数码华容道问题。&lt;/p&gt;
+&lt;p&gt;对于数字华容道问题而言，其移动代价函数$g(n)$即为从初始状态出发到达目前这个状态的步数，而其启发函数$h(n)$衡量的是当前状态距离目标状态的距离，该函数可以有多种不同定义，最常见的有两种：①不在正确位置的数字块的个数    ②每个数字块距离自己正确位置的距离之和。因为每个方块只能上下左右运动，因此这里第二种定义采用的是曼哈顿距离。接下来，我们分别对比这两种启发函数的定义解决该问题的效果。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/astar_path_0.gif&#34; alt=&#34;astar_path_0&#34;&gt;&lt;/p&gt;
+&lt;center&gt;采用不在正确位置的数字块的个数作为启发函数&lt;/center&gt;
+
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/astar_path.gif&#34; alt=&#34;astar_path&#34;&gt;&lt;/p&gt;
+&lt;center&gt;采用每个数字块距离自己正确位置的距离之和作为启发函数&lt;/center&gt;
+
+&lt;p&gt;从结果上来看，两种定义都可以获得最终结果，且运行的步数都是26步。但采用曼哈顿距离之和的方法，在实际运行中只运行了2000~3000步，优先队列中存放的状态数量只有不到2000个，而采用第一种方法，则需要运行40000多步，且优先队列中存放的状态数量接近20000个。因此，采用曼哈顿距离之和的方法有更明显的趋向性，能使算法得到更高的运行效率。&lt;/p&gt;
+&lt;p&gt;基于以上结论，我们尝试来解决15数码华容道问题。这里附上一道洛夫的经典例题，大家感兴趣的可以去尝试一下：[15-Puzzle Problem](“&lt;a href=&#34;https://www.luogu.com.cn/problem/UVA10181&#34;&gt;UVA10181 15-Puzzle Problem - 洛谷&lt;/a&gt;“)。我们首先还是尝试与8数码华容道问题一样的解法，即只采用A*算法的暴力搜素法。最终搜索迭代了426万次得到结果如下：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/2fc02a9db44e9786e263e2379349757.png&#34; alt=&#34;2fc02a9db44e9786e263e2379349757&#34; style=&#34;zoom:50%;&#34; /&gt;
+
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/solution_Astar.gif&#34; alt=&#34;solution_Astar&#34; style=&#34;zoom:150%;&#34; /&gt;
+
+&lt;p&gt;虽然能够得到最终目标状态，但不难发现A* 实现中，有许多的缺点难以避免：在维护过程中需要记录所有搜索到的状态，需要大量的空间存储状态进行判重，也需要一些时间进行排序。因此我们考虑引入 IDDFS，即&lt;strong&gt;迭代加深&lt;/strong&gt;。迭代加深之前介绍过，不了解的可以看&lt;a href=&#34;%22(https://blog.barbedcotton.cn/25031)%22&#34;&gt;这里&lt;/a&gt;。迭代加深是一种限制步数的深搜方式，它具备深搜的特点，但是每次只搜索深度限制范围内的所有点，再加上我们的估价函数进行剪枝，IDA* 就可以实现了。相较于 A*，IDA*具有 &lt;strong&gt;效率高&lt;/strong&gt;、&lt;strong&gt;空间消耗小&lt;/strong&gt;的优点。&lt;/p&gt;
+&lt;p&gt;最终只迭代了接近265万次就解决了该问题，且能够找到比单纯的A*算法更快速的操作方式。&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/0fbaf8850516c72781a02dc989bebbe.png&#34; alt=&#34;0fbaf8850516c72781a02dc989bebbe&#34; style=&#34;zoom: 67%;&#34; /&gt;
+
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/solution_IDAstar.gif&#34; alt=&#34;solution_IDAstar&#34; style=&#34;zoom:150%;&#34; /&gt;
+
+&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;算法名称&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;原理&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;应用效果&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;算法特性&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;贪婪最佳优先搜索（GBFS）&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;使用优先队列，以启发评估函数 (h(n)) 作为代价函数 (f(n))，即 (f(n)&amp;#x3D;h(n))，(h(n)) 通常用欧氏距离或曼哈顿距离表示，指引搜索往终点靠近&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;- 指向性明显，从起点直扑终点&lt;br /&gt; - 容易陷入局部最优陷阱，找不到最优路径&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;- 优点：搜索效率高，能迅速朝着目标前进，减少不必要搜索；启发式函数赋予明确搜索方向 &lt;br /&gt;- 缺点：容易陷入局部最优解；性能高度依赖启发式函数选择&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;A * 搜索&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;融合 GBFS 和 Dijkstra 算法的代价函数，(f(n)&amp;#x3D;g(n)+h(n))，其中 (g(n)) 为起点到当前扩展节点的移动代价，(h(n)) 是启发函数&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;- 能成功避开局部最优陷阱 &lt;br /&gt;- 可以找到最优路径&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;- 优点：能保证找到最短路径；与无信息搜索算法相比，可减少搜索空间，提高效率 &lt;br /&gt;- 缺点：性能受启发函数质量影响大；内存消耗和计算开销大&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+ ]]></description>
         </item>
         <item>
             <guid isPermalink="true">http://blog.barbedcotton.cn/25031/</guid>
@@ -84,6 +286,9 @@ function reconstruct_path(parent, target):
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/dfs_animation.gif&#34; alt=&#34;dfs_animation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;DFS能够快速地找到一条路径，是一种以时间换空间的方法。将其应用到二维地图的路径规划中，如下图，很显然找到的路径&lt;strong&gt;并不是移动机器人运动规划所需要的最优路径&lt;/strong&gt;&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/dfs_maze.gif&#34; alt=&#34;dfs_maze&#34; style=&#34;zoom:67%;&#34; /&gt;
+
 &lt;h2 id=&#34;算法特性&#34;&gt;&lt;a href=&#34;#算法特性&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;因DFS需要借助递归工作栈的特性，其节点访问顺序取决于压栈顺序，若需要特定顺序（如字母序），可对邻接节点进行排序。在时空复杂度方面，在本次使用&lt;strong&gt;邻接表&lt;/strong&gt;来表示图的情况下，时间复杂度为&lt;strong&gt;O(V+E)&lt;/strong&gt;（V为顶点数，E为边数），空间复杂度为&lt;strong&gt;O(V)&lt;/strong&gt;（最坏情况存储所有节点）。在路径回溯时，通过父节点字典反向追踪路径，并使用头部插入保持路径顺序，实现路径的正常输出。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点：&lt;/p&gt;
@@ -154,6 +359,9 @@ function reconstruct_path(parent, target):
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/bfs_animation.gif&#34; alt=&#34;bfs_animation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;与DFS的“不撞南墙不回头”的个性不同，BFS在搜索时呈&lt;strong&gt;波状推进&lt;/strong&gt;形式，一路稳扎稳打，它是一种&lt;strong&gt;以时间换空间&lt;/strong&gt;的方法，能够保证搜索到的路径是最优的。&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/bfs_maze.gif&#34; alt=&#34;bfs_maze&#34; style=&#34;zoom:67%;&#34; /&gt;
+
 &lt;h2 id=&#34;算法特性-1&#34;&gt;&lt;a href=&#34;#算法特性-1&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;BFS 需要借助队列来工作，其节点访问顺序是按照先进先出（FIFO）的原则，从起始节点开始逐层向外扩展。若需要特定顺序（如字母序），同样可对邻接节点进行排序，使得在同一层中按照特定顺序访问节点。在时空复杂度方面，在本次使用&lt;strong&gt;邻接表&lt;/strong&gt;来表示图的情况下，时间复杂度为&lt;strong&gt;O(V+E)&lt;/strong&gt;（V 为顶点数，E 为边数，因为每个顶点和每条边都最多被访问一次），空间复杂度为&lt;strong&gt;O(V)&lt;/strong&gt;（在最坏情况下，队列中可能存储图中所有的顶点）。在路径回溯时，通过父节点字典反向追踪路径，并使用头部插入保持路径顺序，实现路径的正常输出。综上所述，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点：  &lt;/p&gt;
@@ -236,6 +444,9 @@ function reconstruct_path(parent, target):
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424151927295.png&#34; alt=&#34;image-20250424151927295&#34; style=&#34;zoom:67%;&#34; /&gt;
 
 &lt;p&gt;最终从&lt;code&gt;G&lt;/code&gt;回溯，依次弹出的节点即为所经过的路径：&lt;code&gt;S&lt;/code&gt;-&amp;gt;&lt;code&gt;d&lt;/code&gt;-&amp;gt;&lt;code&gt;e&lt;/code&gt;-&amp;gt;&lt;code&gt;r&lt;/code&gt;-&amp;gt;&lt;code&gt;f&lt;/code&gt;-&amp;gt;&lt;code&gt;G&lt;/code&gt;，总路径长度为10。&lt;/p&gt;
+&lt;p&gt;Dijkstra算法是从一个顶点到其余各顶点的最短路径算法，因此在扩展&lt;strong&gt;相同权值路径&lt;/strong&gt;时也是呈&lt;strong&gt;波状推进&lt;/strong&gt;形式：&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ucs_maze_0.gif&#34; alt=&#34;ucs_maze_0&#34; style=&#34;zoom:67%;&#34; /&gt;
+
 &lt;h2 id=&#34;实现-3&#34;&gt;&lt;a href=&#34;#实现-3&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;根据上述原理，得到一致代价搜索的伪代码：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;算法名称：一致代价搜索（Uniform Cost Search, UCS）
 输入：图 G = (V, E)，起始节点 start，目标节点 target，边的代价函数 cost(u, v)
@@ -281,6 +492,8 @@ function reconstruct_path(parent, target):
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;接下来，我们利用python实现示例图的深度优先搜索，并搭配&lt;code&gt;Graphviz&lt;/code&gt;进行可视化。最终得到下图搜索流程，与原理部分推导一致：&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ucs_animation_1.gif&#34; alt=&#34;ucs_animation_1&#34;&gt;&lt;/p&gt;
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/ucs_maze.gif&#34; alt=&#34;ucs_maze&#34; style=&#34;zoom:67%;&#34; /&gt;
+
 &lt;h2 id=&#34;算法特性-3&#34;&gt;&lt;a href=&#34;#算法特性-3&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;一致代价搜索（UCS）是一种基于优先队列的 “&lt;strong&gt;有记忆&lt;/strong&gt;” &lt;strong&gt;最优搜索算法&lt;/strong&gt;，其核心是按照路径代价从小到大扩展节点，确保首次到达目标节点的路径即为最小代价路径。与 IDDFS 的 “无记忆” 重复搜索不同，UCS 会持续维护从起点到各节点的最小已知代价（g-cost），并利用优先队列动态选择当前代价最小的节点进行扩展。这种特性使得 UCS 无需重置状态，而是通过迭代更新节点的代价信息，逐步逼近目标节点的最优解。&lt;/p&gt;
 &lt;p&gt;UCS 本质上是&lt;strong&gt;Dijkstra 算法的简化版本&lt;/strong&gt;（当目标为单个节点时），其搜索过程等价于在状态空间中以代价为优先级的 “分层扩展”—— 每次扩展代价最小的节点，确保先访问的节点路径代价不大于后访问的节点。这种 “&lt;strong&gt;代价优先&lt;/strong&gt;” 的策略使其能够在边权非负的图中严格保证找到最短路径（最小代价路径），但代价是需要维护优先队列和节点代价表，内存开销随图的规模和边权分布而变化。&lt;/p&gt;
 &lt;p&gt;UCS 通过 “优先队列 + 代价记忆” 的机制，在 “&lt;strong&gt;求解最优路径&lt;/strong&gt;”&lt;strong&gt;和&lt;/strong&gt;“&lt;strong&gt;计算效率&lt;/strong&gt;”之间实现了平衡：既避免了 DFS 无法保证最优解的缺陷，也改进了 BFS 仅适用于等权图的局限性。但其代价是需要更复杂的数据结构（优先队列）和动态更新节点状态的计算开销。综上所述，其具有以下优缺点：&lt;/p&gt;
