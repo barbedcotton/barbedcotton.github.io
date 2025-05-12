@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://blog.barbedcotton.cn</id>
+    <id>https://blog.barbedcotton.cn</id>
     <title>知微書閣</title>
     <subtitle>低头赶路，敬事如仪</subtitle>
-    <icon>http://blog.barbedcotton.cn/assets/favicon.ico</icon>
-    <link href="http://blog.barbedcotton.cn" />
+    <icon>https://blog.barbedcotton.cn/assets/favicon.ico</icon>
+    <link href="https://blog.barbedcotton.cn" />
     <author>
       <name>织心星笛</name>
     </author>
@@ -15,23 +15,99 @@
     <category term="生活" />
     <category term="成长" />
     <entry>
-        <id>http://blog.barbedcotton.cn/25042/</id>
+        <id>https://blog.barbedcotton.cn/25042/</id>
         <title>对抗搜索</title>
-        <link rel="alternate" href="http://blog.barbedcotton.cn/25042/"/>
-        <content type="html"></content>
+        <link rel="alternate" href="https://blog.barbedcotton.cn/25042/"/>
+        <content type="html">&lt;pre&gt;&lt;code&gt;算法名称：Min - Max 算法
+输入：博弈树的当前节点 node，当前玩家 maximizingPlayer（true 表示最大化玩家，false 表示最小化玩家）
+输出：最优行动的评估值
+
+function MinMax(node, maximizingPlayer):
+    if node 是叶节点:
+        return node 的评估值
+    
+    if maximizingPlayer:
+        bestValue ← -∞
+        for each 子节点 child of node:
+            value ← MinMax(child, false)
+            bestValue ← max(bestValue, value)
+        return bestValue
+    else:
+        bestValue ← +∞
+        for each 子节点 child of node:
+            value ← MinMax(child, true)
+            bestValue ← min(bestValue, value)
+        return bestValue
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;算法名称：α - β 剪枝算法
+输入：博弈树的当前节点 node，当前玩家 maximizingPlayer（true 表示最大化玩家，false 表示最小化玩家），α（初始值为 -∞），β（初始值为 +∞）
+输出：最优行动的评估值
+
+function AlphaBeta(node, maximizingPlayer, α, β):
+    if node 是叶节点:
+        return node 的评估值
+    
+    if maximizingPlayer:
+        bestValue ← -∞
+        for each 子节点 child of node:
+            value ← AlphaBeta(child, false, α, β)
+            bestValue ← max(bestValue, value)
+            α ← max(α, bestValue)
+            if β &amp;lt;= α:
+                break  // 剪枝
+        return bestValue
+    else:
+        bestValue ← +∞
+        for each 子节点 child of node:
+            value ← AlphaBeta(child, true, α, β)
+            bestValue ← min(bestValue, value)
+            β ← min(β, bestValue)
+            if β &amp;lt;= α:
+                break  // 剪枝
+        return bestValue
+&lt;/code&gt;&lt;/pre&gt;
+</content>
         <updated>2025-04-26T10:53:43.000Z</updated>
     </entry>
     <entry>
-        <id>http://blog.barbedcotton.cn/25041/</id>
+        <id>https://blog.barbedcotton.cn/25041/</id>
         <title>约束满足问题</title>
-        <link rel="alternate" href="http://blog.barbedcotton.cn/25041/"/>
-        <content type="html"></content>
+        <link rel="alternate" href="https://blog.barbedcotton.cn/25041/"/>
+        <content type="html">&lt;pre&gt;&lt;code&gt;算法名称：AC3算法
+输入：约束满足问题 CSP = (X, D, C)，其中 X 是变量集合，D 是变量的定义域集合，C 是约束集合
+输出：如果成功实现弧一致性返回 true，否则返回 false
+
+procedure AC3(CSP):
+    queue ← 空队列
+    // 初始化队列，将所有弧加入队列
+    for each 约束 c in C:
+        for each 变量对 (xi, xj) 涉及约束 c:
+            queue.enqueue((xi, xj))
+    
+    while queue 非空:
+        (xi, xj) ← queue.dequeue()
+        if Revise(CSP, xi, xj):
+            if D[xi] 为空:
+                return false
+            for each 变量 xk in X 且 (xk, xi) 是弧:
+                queue.enqueue((xk, xi))
+    return true
+
+function Revise(CSP, xi, xj):
+    revised ← false
+    for each 值 vi in D[xi]:
+        找到满足约束 (xi, xj) 的 vj 失败:
+            D[xi].remove(vi)
+            revised ← true
+    return revised
+&lt;/code&gt;&lt;/pre&gt;
+</content>
         <updated>2025-04-20T10:30:04.000Z</updated>
     </entry>
     <entry>
-        <id>http://blog.barbedcotton.cn/25032/</id>
+        <id>https://blog.barbedcotton.cn/25032/</id>
         <title>状态空间搜索——有信息搜索</title>
-        <link rel="alternate" href="http://blog.barbedcotton.cn/25032/"/>
+        <link rel="alternate" href="https://blog.barbedcotton.cn/25032/"/>
         <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;状态空间搜索根据是否使用&lt;strong&gt;启发式信息&lt;/strong&gt;（Heuristic information）分为&lt;strong&gt;无信息搜索&lt;/strong&gt;（Uninformed Search）和&lt;strong&gt;有信息搜索&lt;/strong&gt;（Uninformed Search）。在本文中，我们先对有信息搜索的算法进行学习和复现。常用的无信息搜索算法包括：&lt;strong&gt;贪婪最佳优先算法&lt;/strong&gt;(Greedy Best First Search, GBFS)和&lt;strong&gt;A*算法&lt;/strong&gt;等。在图搜索算法中，使用&lt;strong&gt;代价函数 $f(n)$&lt;/strong&gt; 来作为优先级判断的标准， $f(n)$ 越小，优先级越高，反之优先级越低。&lt;/p&gt;
 &lt;h1 id=&#34;贪心搜索（GS）&#34;&gt;&lt;a href=&#34;#贪心搜索（GS）&#34; class=&#34;headerlink&#34; title=&#34;贪心搜索（GS）&#34;&gt;&lt;/a&gt;贪心搜索（GS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;BFS和DFS的区别主要在于节点的弹出策略，根据弹出策略的区别，分别使用了队列和栈两种数据结构，而栈和队列作为两种相当基本的容器，只将节点进入容器的顺序作为弹出节点的依据，并未考虑目标位置等因素，这就使搜索过程变得漫无目的，导致效率低下。&lt;/p&gt;
 &lt;p&gt;而贪心搜索也是图搜索算法的一种，其使用的数据结构与狄克特拉斯算法的相同，即&lt;strong&gt;优先队列(Priority Queue)&lt;/strong&gt;。普通队列是一种先进先出的数据结构，而在优先队列中元素被赋予了&lt;strong&gt;优先级&lt;/strong&gt;，最高优先级元素优先删除，也就是first in, largest out。&lt;/p&gt;
@@ -96,7 +172,13 @@ function reconstruct_path(parent, target):
 &lt;p&gt;将其应用到之前使用的复杂二维地图路径规划中，效果如下：&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/gs_maze_ou1.gif&#34; alt=&#34;gs_maze_ou1&#34; style=&#34;zoom:67%;&#34; /&gt;
 
-&lt;p&gt;在足够复杂的地图中，采用曼哈顿距离作为启发式函数和采用欧式距离作为启发式函数几乎没有区别。&lt;/p&gt;
+&lt;center&gt;采用欧式距离作为启发式信息的迷宫搜索&lt;/center&gt;
+
+&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/gs_maze_man1.gif&#34; alt=&#34;gs_maze_ou1&#34; style=&#34;zoom:67%;&#34; /&gt;
+
+&lt;center&gt;采用曼哈顿距离作为启发式信息&lt;/center&gt;
+
+&lt;p&gt;在足够复杂的地图中，采用曼哈顿距离作为启发式函数反而更能贴合迷宫行走，与采用欧式距离作为启发式函数相比，能找到更优路径。&lt;/p&gt;
 &lt;h2 id=&#34;算法特性&#34;&gt;&lt;a href=&#34;#算法特性&#34; class=&#34;headerlink&#34; title=&#34;算法特性&#34;&gt;&lt;/a&gt;算法特性&lt;/h2&gt;&lt;p&gt;在最坏情况下，GBFS 需要遍历图中的所有节点，因此时间复杂度为 $(O(V + E))$，在实际应用中，由于启发式信息的引导，算法通常能够在较短的时间内找到目标节点。另外，GBFS 需要使用优先队列来存储待扩展的节点，因此空间复杂度主要取决于优先队列的大小。不难看出，贪心搜索算法在搜索速度和指向性方面具有一定的优势，但在保证最优解和处理复杂地图方面存在明显的不足。因此，其具有以下优缺点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
@@ -119,7 +201,7 @@ function reconstruct_path(parent, target):
 &lt;p&gt;其中 $g(n)$ 为起点到当前扩展节点的移动代价函数， $h(n)$ 是启发函数，用节点到目标点的距离函数来表示。&lt;/p&gt;
 &lt;p&gt;根据这个式子，可以得到A*算法的几个特点：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;如果令 h(n)&amp;#x3D;0 ，A&lt;em&gt;算法就退化为Dijkstra算法；如果令 g(n)&amp;#x3D;0&lt;/em&gt;，&lt;em&gt;A&lt;/em&gt;算法就退化为GBFS算法。&lt;/li&gt;
+&lt;li&gt;如果令 h(n)&amp;#x3D;0 ，A*算法就退化为Dijkstra算法；如果令 g(n)&amp;#x3D;0*，*A*算法就退化为GBFS算法。&lt;/li&gt;
 &lt;li&gt;能否找到最优路径的关键是&lt;strong&gt;启发函数 h(n) 的选取&lt;/strong&gt;，如果 h(n) 在大部分情况下比从当前节点到目标点的移动代价小，则能找到最优路径。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;实现-1&#34;&gt;&lt;a href=&#34;#实现-1&#34; class=&#34;headerlink&#34; title=&#34;实现&#34;&gt;&lt;/a&gt;实现&lt;/h2&gt;&lt;p&gt;由上述原理，不难得到A*算法的伪代码：&lt;/p&gt;
@@ -198,7 +280,7 @@ function reconstruct_path(parent, target):
 &lt;center&gt;采用不在正确位置的数字块的个数作为启发函数&lt;/center&gt;
 
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/astar_path.gif&#34; alt=&#34;astar_path&#34;&gt;&lt;/p&gt;
-&lt;center&gt;采用每个数字块距离自己正确位置的距离之和作为启发函数&lt;/center&gt;
+&lt;center&gt;采用每个数字块距离自己正确位置的曼哈顿距离之和作为启发函数&lt;/center&gt;
 
 &lt;p&gt;从结果上来看，两种定义都可以获得最终结果，且运行的步数都是26步。但采用曼哈顿距离之和的方法，在实际运行中只运行了2000~3000步，优先队列中存放的状态数量只有不到2000个，而采用第一种方法，则需要运行40000多步，且优先队列中存放的状态数量接近20000个。因此，采用曼哈顿距离之和的方法有更明显的趋向性，能使算法得到更高的运行效率。&lt;/p&gt;
 &lt;p&gt;基于以上结论，我们尝试来解决15数码华容道问题。这里附上一道洛夫的经典例题，大家感兴趣的可以去尝试一下：[15-Puzzle Problem](“&lt;a href=&#34;https://www.luogu.com.cn/problem/UVA10181&#34;&gt;UVA10181 15-Puzzle Problem - 洛谷&lt;/a&gt;“)。我们首先还是尝试与8数码华容道问题一样的解法，即只采用A*算法的暴力搜素法。最终搜索迭代了426万次得到结果如下：&lt;/p&gt;
@@ -238,9 +320,9 @@ function reconstruct_path(parent, target):
         <updated>2025-03-29T08:13:22.000Z</updated>
     </entry>
     <entry>
-        <id>http://blog.barbedcotton.cn/25031/</id>
+        <id>https://blog.barbedcotton.cn/25031/</id>
         <title>状态空间搜索——无信息搜索</title>
-        <link rel="alternate" href="http://blog.barbedcotton.cn/25031/"/>
+        <link rel="alternate" href="https://blog.barbedcotton.cn/25031/"/>
         <content type="html">&lt;h1 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;状态空间搜索根据是否使用&lt;strong&gt;启发式信息&lt;/strong&gt;（Heuristic information）分为&lt;strong&gt;无信息搜索&lt;/strong&gt;（Uninformed Search）和&lt;strong&gt;有信息搜索&lt;/strong&gt;（Uninformed Search）。在本文中，我们先对无信息搜索的算法进行学习和复现。常用的无信息搜索算法包括：&lt;strong&gt;深度优先搜索&lt;/strong&gt;（Depth-First Search, DFS）、&lt;strong&gt;广度优先搜索&lt;/strong&gt;（Breadth-First Search, BFS）、&lt;strong&gt;迭代加深搜索&lt;/strong&gt;（Iterative Deepening Depth-First Search, IDDFS）和&lt;strong&gt;一致代价搜索&lt;/strong&gt;（Uniform Cost Search, UCS）。众所周知，连通无回路图与树在本质上是等价的，它们可以相互转换，因此本文只以&lt;strong&gt;无环有向图&lt;/strong&gt;为例来实现各种无信息搜索算法。&lt;/p&gt;
 &lt;h1 id=&#34;深度优先搜索（DFS）&#34;&gt;&lt;a href=&#34;#深度优先搜索（DFS）&#34; class=&#34;headerlink&#34; title=&#34;深度优先搜索（DFS）&#34;&gt;&lt;/a&gt;深度优先搜索（DFS）&lt;/h1&gt;&lt;h2 id=&#34;原理&#34;&gt;&lt;a href=&#34;#原理&#34; class=&#34;headerlink&#34; title=&#34;原理&#34;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;深度优先，顾名思义即深度较大的节点会被优先遍历。在DFS中，使用&lt;strong&gt;栈&lt;/strong&gt;（Stack）数据结构来实现上述特性。栈是一种&lt;strong&gt;先入后出&lt;/strong&gt;（LIFO）的容器，如下图：&lt;/p&gt;
 &lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250415220307113.png&#34; alt=&#34;image-20250415220307113&#34; style=&#34;zoom:50%;&#34; /&gt;
@@ -560,9 +642,9 @@ function reconstruct_path(parent, target):
         <updated>2025-03-22T08:34:11.000Z</updated>
     </entry>
     <entry>
-        <id>http://blog.barbedcotton.cn/24101/</id>
+        <id>https://blog.barbedcotton.cn/24101/</id>
         <title>超算真题一：OpenCAEPoro的优化</title>
-        <link rel="alternate" href="http://blog.barbedcotton.cn/24101/"/>
+        <link rel="alternate" href="https://blog.barbedcotton.cn/24101/"/>
         <content type="html">&lt;h1 id=&#34;赛题编译&#34;&gt;&lt;a href=&#34;#赛题编译&#34; class=&#34;headerlink&#34; title=&#34;赛题编译&#34;&gt;&lt;/a&gt;赛题编译&lt;/h1&gt;&lt;p&gt;在正式开始之前，我尝试配置cuda、git等环境，但都因权限受限没有成功。于是这里直接使用原有的&lt;strong&gt;cuda_12.2&lt;/strong&gt;以及windows本地的&lt;strong&gt;git bash&lt;/strong&gt;，整个克隆、编译及优化过程都是通过 &lt;strong&gt;MobaXterm&lt;/strong&gt; 完成的，这里也非常推荐大家使用这款免费且功能强大的远程终端控制软件。这也是我在个人博客网站利用 &lt;strong&gt;markdown&lt;/strong&gt; 写的第一篇博客，欢迎大家留言讨论！&lt;/p&gt;
 &lt;h2 id=&#34;赛题克隆&#34;&gt;&lt;a href=&#34;#赛题克隆&#34; class=&#34;headerlink&#34; title=&#34;赛题克隆&#34;&gt;&lt;/a&gt;赛题克隆&lt;/h2&gt;&lt;p&gt;首先我们进入项目主页：&lt;a href=&#34;https://github.com/OpenCAEPlus/OpenCAEPoro_ASC2024&#34;&gt;OpenCAEPoro for ASC 2024 &lt;/a&gt;，之后进行下图选择复制该项目的URL。&lt;/p&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; data-src=&#34;https://cdn.jsdelivr.net/gh/barbedcotton/BlogImage@main/img/image-20250424160823766.png&#34; alt=&#34;image-20250424160823766&#34;&gt;&lt;/p&gt;
