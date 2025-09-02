@@ -7,22 +7,6 @@
     "home_page_url": "https://blog.barbedcotton.cn",
     "items": [
         {
-            "id": "https://blog.barbedcotton.cn/25042/",
-            "url": "https://blog.barbedcotton.cn/25042/",
-            "title": "对抗搜索",
-            "date_published": "2025-04-26T10:53:43.000Z",
-            "content_html": "<pre><code>算法名称：Min - Max 算法\n输入：博弈树的当前节点 node，当前玩家 maximizingPlayer（true 表示最大化玩家，false 表示最小化玩家）\n输出：最优行动的评估值\n\nfunction MinMax(node, maximizingPlayer):\n    if node 是叶节点:\n        return node 的评估值\n    \n    if maximizingPlayer:\n        bestValue ← -∞\n        for each 子节点 child of node:\n            value ← MinMax(child, false)\n            bestValue ← max(bestValue, value)\n        return bestValue\n    else:\n        bestValue ← +∞\n        for each 子节点 child of node:\n            value ← MinMax(child, true)\n            bestValue ← min(bestValue, value)\n        return bestValue\n</code></pre>\n<pre><code>算法名称：α - β 剪枝算法\n输入：博弈树的当前节点 node，当前玩家 maximizingPlayer（true 表示最大化玩家，false 表示最小化玩家），α（初始值为 -∞），β（初始值为 +∞）\n输出：最优行动的评估值\n\nfunction AlphaBeta(node, maximizingPlayer, α, β):\n    if node 是叶节点:\n        return node 的评估值\n    \n    if maximizingPlayer:\n        bestValue ← -∞\n        for each 子节点 child of node:\n            value ← AlphaBeta(child, false, α, β)\n            bestValue ← max(bestValue, value)\n            α ← max(α, bestValue)\n            if β &lt;= α:\n                break  // 剪枝\n        return bestValue\n    else:\n        bestValue ← +∞\n        for each 子节点 child of node:\n            value ← AlphaBeta(child, true, α, β)\n            bestValue ← min(bestValue, value)\n            β ← min(β, bestValue)\n            if β &lt;= α:\n                break  // 剪枝\n        return bestValue\n</code></pre>\n",
-            "tags": []
-        },
-        {
-            "id": "https://blog.barbedcotton.cn/25041/",
-            "url": "https://blog.barbedcotton.cn/25041/",
-            "title": "约束满足问题",
-            "date_published": "2025-04-20T10:30:04.000Z",
-            "content_html": "<pre><code>算法名称：AC3算法\n输入：约束满足问题 CSP = (X, D, C)，其中 X 是变量集合，D 是变量的定义域集合，C 是约束集合\n输出：如果成功实现弧一致性返回 true，否则返回 false\n\nprocedure AC3(CSP):\n    queue ← 空队列\n    // 初始化队列，将所有弧加入队列\n    for each 约束 c in C:\n        for each 变量对 (xi, xj) 涉及约束 c:\n            queue.enqueue((xi, xj))\n    \n    while queue 非空:\n        (xi, xj) ← queue.dequeue()\n        if Revise(CSP, xi, xj):\n            if D[xi] 为空:\n                return false\n            for each 变量 xk in X 且 (xk, xi) 是弧:\n                queue.enqueue((xk, xi))\n    return true\n\nfunction Revise(CSP, xi, xj):\n    revised ← false\n    for each 值 vi in D[xi]:\n        找到满足约束 (xi, xj) 的 vj 失败:\n            D[xi].remove(vi)\n            revised ← true\n    return revised\n</code></pre>\n",
-            "tags": []
-        },
-        {
             "id": "https://blog.barbedcotton.cn/25032/",
             "url": "https://blog.barbedcotton.cn/25032/",
             "title": "状态空间搜索——有信息搜索",

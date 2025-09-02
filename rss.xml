@@ -10,103 +10,13 @@
         </author>
         <description>于书页间捕捉求知的微光，于生活中采撷繁花的馥郁</description>
         <language>zh-CN</language>
-        <pubDate>Sat, 26 Apr 2025 18:53:43 +0800</pubDate>
-        <lastBuildDate>Sat, 26 Apr 2025 18:53:43 +0800</lastBuildDate>
+        <pubDate>Sat, 29 Mar 2025 16:13:22 +0800</pubDate>
+        <lastBuildDate>Sat, 29 Mar 2025 16:13:22 +0800</lastBuildDate>
         <category term="高性能计算" />
         <category term="算法设计" />
         <category term="人工智能" />
         <category term="生活" />
         <category term="成长" />
-        <item>
-            <guid isPermalink="true">https://blog.barbedcotton.cn/25042/</guid>
-            <title>对抗搜索</title>
-            <link>https://blog.barbedcotton.cn/25042/</link>
-            <pubDate>Sat, 26 Apr 2025 18:53:43 +0800</pubDate>
-            <description><![CDATA[ &lt;pre&gt;&lt;code&gt;算法名称：Min - Max 算法
-输入：博弈树的当前节点 node，当前玩家 maximizingPlayer（true 表示最大化玩家，false 表示最小化玩家）
-输出：最优行动的评估值
-
-function MinMax(node, maximizingPlayer):
-    if node 是叶节点:
-        return node 的评估值
-    
-    if maximizingPlayer:
-        bestValue ← -∞
-        for each 子节点 child of node:
-            value ← MinMax(child, false)
-            bestValue ← max(bestValue, value)
-        return bestValue
-    else:
-        bestValue ← +∞
-        for each 子节点 child of node:
-            value ← MinMax(child, true)
-            bestValue ← min(bestValue, value)
-        return bestValue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;算法名称：α - β 剪枝算法
-输入：博弈树的当前节点 node，当前玩家 maximizingPlayer（true 表示最大化玩家，false 表示最小化玩家），α（初始值为 -∞），β（初始值为 +∞）
-输出：最优行动的评估值
-
-function AlphaBeta(node, maximizingPlayer, α, β):
-    if node 是叶节点:
-        return node 的评估值
-    
-    if maximizingPlayer:
-        bestValue ← -∞
-        for each 子节点 child of node:
-            value ← AlphaBeta(child, false, α, β)
-            bestValue ← max(bestValue, value)
-            α ← max(α, bestValue)
-            if β &amp;lt;= α:
-                break  // 剪枝
-        return bestValue
-    else:
-        bestValue ← +∞
-        for each 子节点 child of node:
-            value ← AlphaBeta(child, true, α, β)
-            bestValue ← min(bestValue, value)
-            β ← min(β, bestValue)
-            if β &amp;lt;= α:
-                break  // 剪枝
-        return bestValue
-&lt;/code&gt;&lt;/pre&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">https://blog.barbedcotton.cn/25041/</guid>
-            <title>约束满足问题</title>
-            <link>https://blog.barbedcotton.cn/25041/</link>
-            <pubDate>Sun, 20 Apr 2025 18:30:04 +0800</pubDate>
-            <description><![CDATA[ &lt;pre&gt;&lt;code&gt;算法名称：AC3算法
-输入：约束满足问题 CSP = (X, D, C)，其中 X 是变量集合，D 是变量的定义域集合，C 是约束集合
-输出：如果成功实现弧一致性返回 true，否则返回 false
-
-procedure AC3(CSP):
-    queue ← 空队列
-    // 初始化队列，将所有弧加入队列
-    for each 约束 c in C:
-        for each 变量对 (xi, xj) 涉及约束 c:
-            queue.enqueue((xi, xj))
-    
-    while queue 非空:
-        (xi, xj) ← queue.dequeue()
-        if Revise(CSP, xi, xj):
-            if D[xi] 为空:
-                return false
-            for each 变量 xk in X 且 (xk, xi) 是弧:
-                queue.enqueue((xk, xi))
-    return true
-
-function Revise(CSP, xi, xj):
-    revised ← false
-    for each 值 vi in D[xi]:
-        找到满足约束 (xi, xj) 的 vj 失败:
-            D[xi].remove(vi)
-            revised ← true
-    return revised
-&lt;/code&gt;&lt;/pre&gt;
- ]]></description>
-        </item>
         <item>
             <guid isPermalink="true">https://blog.barbedcotton.cn/25032/</guid>
             <title>状态空间搜索——有信息搜索</title>
